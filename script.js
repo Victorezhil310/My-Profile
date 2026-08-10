@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // ----------------------------------------------------
-    // THREE.JS 3D BACKGROUND ENGINE (Cyber Grid Sphere)
+    // THREE.JS 3D BACKGROUND ENGINE (WayneTech Cyber Globe)
     // ----------------------------------------------------
     let scene, camera, renderer, cyberSphere, starField;
     let targetX = 0, targetY = 0;
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Create Scene
         scene = new THREE.Scene();
-        scene.fog = new THREE.FogExp2(0x030307, 0.002);
+        scene.fog = new THREE.FogExp2(0x020204, 0.002);
 
         // Setup Camera
         camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
@@ -27,10 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const mainGroup = new THREE.Group();
         scene.add(mainGroup);
 
-        // Central Cyber Globe Geometry
-        const geometry = new THREE.IcosahedronGeometry(80, 2);
+        // Central Cyber Globe Geometry (WayneTech Energy Core)
+        const geometry = new THREE.IcosahedronGeometry(82, 2);
         const material = new THREE.MeshBasicMaterial({
-            color: 0x00f2fe,
+            color: 0x00b4d8,
             wireframe: true,
             transparent: true,
             opacity: 0.15
@@ -39,9 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
         mainGroup.add(cyberSphere);
 
         // Glowing points on sphere vertices
-        const pointGeometry = new THREE.IcosahedronGeometry(80, 2);
+        const pointGeometry = new THREE.IcosahedronGeometry(82, 2);
         const pointMaterial = new THREE.PointsMaterial({
-            color: 0xff007f,
+            color: 0x00f2fe,
             size: 3.5,
             transparent: true,
             opacity: 0.8
@@ -49,16 +49,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const spherePoints = new THREE.Points(pointGeometry, pointMaterial);
         mainGroup.add(spherePoints);
 
-        // Surrounding Star Field
+        // Surrounding Blue Star Particles
         const starsGeometry = new THREE.BufferGeometry();
-        const starsCount = 600;
+        const starsCount = 700;
         const starPositions = new Float32Array(starsCount * 3);
         const starColors = new Float32Array(starsCount * 3);
 
         const colors = [
-            new THREE.Color(0x00f2fe), // Neon Cyan
-            new THREE.Color(0x9d4edd), // Neon Purple
-            new THREE.Color(0xff007f)  // Cyber Pink
+            new THREE.Color(0x00b4d8), // Electric Blue
+            new THREE.Color(0x0077b6), // Midnight Tech Blue
+            new THREE.Color(0x00f2fe)  // Ice Blue
         ];
 
         for (let i = 0; i < starsCount * 3; i += 3) {
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
         scene.mainGroup = mainGroup;
 
         // Ambient Lighting
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.35);
         scene.add(ambientLight);
 
         // Event Listeners
@@ -103,8 +103,8 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(animate);
 
         if (cyberSphere) {
-            cyberSphere.rotation.y += 0.0015;
-            cyberSphere.rotation.x += 0.0008;
+            cyberSphere.rotation.y += 0.0012;
+            cyberSphere.rotation.x += 0.0006;
         }
 
         if (scene.mainGroup) {
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // SUPER SMOOTH SCROLL REVEAL OBSERVER
     // ----------------------------------------------------
     const setupScrollReveal = () => {
-        const animatedTargets = document.querySelectorAll('.glass-panel, .passion-card, .gallery-item, .studio-card');
+        const animatedTargets = document.querySelectorAll('.glass-panel, .passion-card, .gallery-item');
         
         const observerOptions = {
             threshold: 0.05,
@@ -151,7 +151,6 @@ document.addEventListener('DOMContentLoaded', () => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('revealed');
-                    // Once animated, stop observing this element
                     observer.unobserve(entry.target);
                 }
             });
@@ -172,7 +171,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const liveNotification = document.getElementById('live-notification');
         if (!liveNotification) return;
 
-        // If custom text passed, replace paragraph content
         if (text) {
             const p = liveNotification.querySelector('p');
             if (p) p.textContent = text;
@@ -192,252 +190,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 1500);
 
     // ----------------------------------------------------
-    // CYBERPUNK IMAGE STUDIO (WEBCAM & FILE FILTERING)
-    // ----------------------------------------------------
-    const tabWebcam = document.getElementById('tab-webcam');
-    const tabUpload = document.getElementById('tab-upload');
-    const webcamView = document.getElementById('webcam-view');
-    const uploadView = document.getElementById('upload-view');
-    const video = document.getElementById('webcam-feed');
-    const fileInput = document.getElementById('file-input');
-    const dropzone = document.getElementById('dropzone');
-    
-    const filterCanvas = document.getElementById('filter-canvas');
-    const canvasPlaceholder = document.getElementById('canvas-placeholder');
-    const captureBtn = document.getElementById('capture-photo-btn');
-    const resetBtn = document.getElementById('reset-filter-btn');
-    const saveBtn = document.getElementById('download-render-btn');
-
-    const sliderAberration = document.getElementById('slider-aberration');
-    const sliderGlitch = document.getElementById('slider-glitch');
-    const sliderNeon = document.getElementById('slider-neon');
-
-    const valAberration = document.getElementById('val-aberration');
-    const valGlitch = document.getElementById('val-glitch');
-    const valNeon = document.getElementById('val-neon');
-
-    let stream = null;
-    let sourceImage = null;
-    let imageWidth = 0;
-    let imageHeight = 0;
-
-    const startWebcam = async () => {
-        if (stream) return;
-        try {
-            stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 }, audio: false });
-            if (video) video.srcObject = stream;
-        } catch (err) {
-            console.error("Camera access denied or unavailable: ", err);
-        }
-    };
-
-    const stopWebcam = () => {
-        if (stream) {
-            stream.getTracks().forEach(track => track.stop());
-            stream = null;
-        }
-    };
-
-    // Start Webcam initially
-    startWebcam();
-
-    if (tabWebcam && tabUpload) {
-        tabWebcam.addEventListener('click', () => {
-            tabWebcam.classList.add('active');
-            tabUpload.classList.remove('active');
-            webcamView.classList.remove('hidden');
-            uploadView.classList.add('hidden');
-            startWebcam();
-        });
-
-        tabUpload.addEventListener('click', () => {
-            tabUpload.classList.add('active');
-            tabWebcam.classList.remove('active');
-            uploadView.classList.remove('hidden');
-            webcamView.classList.add('hidden');
-            stopWebcam();
-        });
-    }
-
-    if (dropzone && fileInput) {
-        dropzone.addEventListener('click', () => fileInput.click());
-        
-        fileInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) handleImageFile(file);
-        });
-
-        dropzone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropzone.style.borderColor = 'var(--primary-neon)';
-        });
-
-        dropzone.addEventListener('dragleave', () => {
-            dropzone.style.borderColor = 'var(--border-glass)';
-        });
-
-        dropzone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropzone.style.borderColor = 'var(--border-glass)';
-            const file = e.dataTransfer.files[0];
-            if (file) handleImageFile(file);
-        });
-    }
-
-    const handleImageFile = (file) => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const img = new Image();
-            img.onload = () => {
-                sourceImage = img;
-                imageWidth = img.width;
-                imageHeight = img.height;
-                initCanvas();
-                applyCyberFilters();
-            };
-            img.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-    };
-
-    if (captureBtn && video) {
-        captureBtn.addEventListener('click', () => {
-            if (!video.srcObject) return;
-            const tempCanvas = document.createElement('canvas');
-            tempCanvas.width = video.videoWidth;
-            tempCanvas.height = video.videoHeight;
-            const tempCtx = tempCanvas.getContext('2d');
-            
-            tempCtx.translate(tempCanvas.width, 0);
-            tempCtx.scale(-1, 1);
-            tempCtx.drawImage(video, 0, 0, tempCanvas.width, tempCanvas.height);
-            
-            const img = new Image();
-            img.onload = () => {
-                sourceImage = img;
-                imageWidth = img.width;
-                imageHeight = img.height;
-                initCanvas();
-                applyCyberFilters();
-            };
-            img.src = tempCanvas.toDataURL('image/png');
-        });
-    }
-
-    const initCanvas = () => {
-        if (!filterCanvas) return;
-        const maxDim = 800;
-        let scale = 1;
-        if (imageWidth > maxDim || imageHeight > maxDim) {
-            scale = maxDim / Math.max(imageWidth, imageHeight);
-        }
-        filterCanvas.width = imageWidth * scale;
-        filterCanvas.height = imageHeight * scale;
-        
-        if (canvasPlaceholder) canvasPlaceholder.classList.add('hidden');
-        if (resetBtn) resetBtn.removeAttribute('disabled');
-        if (saveBtn) {
-            saveBtn.style.pointerEvents = 'all';
-            saveBtn.style.opacity = '1';
-        }
-    };
-
-    const applyCyberFilters = () => {
-        if (!sourceImage || !filterCanvas) return;
-        const ctx = filterCanvas.getContext('2d');
-        const w = filterCanvas.width;
-        const h = filterCanvas.height;
-
-        ctx.drawImage(sourceImage, 0, 0, w, h);
-
-        const imgData = ctx.getImageData(0, 0, w, h);
-        const data = imgData.data;
-
-        const splitAmount = parseInt(sliderAberration.value);
-        const glitchProb = parseInt(sliderGlitch.value) / 100;
-        const neonBlend = parseInt(sliderNeon.value) / 100;
-
-        const outData = ctx.createImageData(w, h);
-        const out = outData.data;
-
-        for (let y = 0; y < h; y++) {
-            let rowOffset = 0;
-            if (glitchProb > 0 && Math.random() < glitchProb * 0.08) {
-                rowOffset = Math.floor((Math.random() - 0.5) * w * 0.08);
-            }
-
-            for (let x = 0; x < w; x++) {
-                const targetIdx = (y * w + x) * 4;
-
-                const rx = Math.min(w - 1, Math.max(0, x + rowOffset - splitAmount));
-                const gx = Math.min(w - 1, Math.max(0, x + rowOffset));
-                const bx = Math.min(w - 1, Math.max(0, x + rowOffset + splitAmount));
-
-                const rIdx = (y * w + rx) * 4;
-                const gIdx = (y * w + gx) * 4;
-                const bIdx = (y * w + bx) * 4;
-
-                out[targetIdx] = data[rIdx];
-                out[targetIdx + 1] = data[gIdx + 1];
-                out[targetIdx + 2] = data[bIdx + 2];
-                out[targetIdx + 3] = data[gIdx + 3];
-            }
-        }
-
-        ctx.putImageData(outData, 0, 0);
-
-        ctx.globalCompositeOperation = 'screen';
-        ctx.fillStyle = `rgba(0, 242, 254, ${neonBlend * 0.35})`;
-        ctx.fillRect(0, 0, w, h);
-
-        ctx.fillStyle = `rgba(255, 0, 127, ${neonBlend * 0.25})`;
-        ctx.fillRect(0, 0, w, h);
-
-        ctx.globalCompositeOperation = 'multiply';
-        ctx.strokeStyle = 'rgba(0, 0, 0, 0.15)';
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        for (let i = 0; i < h; i += 4) {
-            ctx.moveTo(0, i);
-            ctx.lineTo(w, i);
-        }
-        ctx.stroke();
-
-        ctx.globalCompositeOperation = 'source-over';
-
-        if (saveBtn) {
-            saveBtn.href = filterCanvas.toDataURL('image/png');
-            saveBtn.download = `victor-cyber-edit-${Date.now()}.png`;
-        }
-    };
-
-    const onSliderChange = () => {
-        if (valAberration) valAberration.textContent = `${sliderAberration.value}px`;
-        if (valGlitch) valGlitch.textContent = `${sliderGlitch.value}%`;
-        if (valNeon) valNeon.textContent = `${sliderNeon.value}%`;
-        applyCyberFilters();
-    };
-
-    if (sliderAberration) sliderAberration.addEventListener('input', onSliderChange);
-    if (sliderGlitch) sliderGlitch.addEventListener('input', onSliderChange);
-    if (sliderNeon) sliderNeon.addEventListener('input', onSliderChange);
-
-    if (resetBtn) {
-        resetBtn.addEventListener('click', () => {
-            sliderAberration.value = 15;
-            sliderGlitch.value = 20;
-            sliderNeon.value = 35;
-            onSliderChange();
-        });
-    }
-
-    // ----------------------------------------------------
-    // UPI QR CODE GENERATOR (Rate 299 INR)
+    // UPI QR CODE GENERATOR (Rate Restored to 7000 INR)
     // ----------------------------------------------------
     const generateUpiQr = () => {
         const upiId = "arasu9629hf@okhdfcbank";
         const payeeName = "Victor Ezhil";
-        const amount = "299"; // Updated to ₹299
+        const amount = "7000"; // Restored to ₹7,000
         const currency = "INR";
         
         const upiLink = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(payeeName)}&am=${amount}&cu=${currency}`;
@@ -568,7 +326,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ----------------------------------------------------
-    // FLOATING DM AI CHATBOT SYSTEM
+    // WAYNETECH SECURE COMMS CHATBOT SYSTEM
     // ----------------------------------------------------
     const dmBubble = document.getElementById('dm-bubble');
     const dmBox = document.getElementById('dm-box');
@@ -611,22 +369,22 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const botReplies = {
-        order: "Outstanding choice! Video editing and graphic thumbnail designs contract starts at a minimum retainer of <strong>₹299</strong>. Send your design brief to <a href='mailto:victorroot9629@gmail.com' class='neon-hover'>victorroot9629@gmail.com</a>, or complete the UPI payment of ₹299 below to secure your slots immediately.",
-        template: "This custom 3D glassmorphic profile codebase is licensed for a fee of <strong>₹299</strong>. Simply scan the UPI QR code on the profile card, execute the transfer to <code>arasu9629hf@okhdfcbank</code>, and email your transaction receipt to victorroot9629@gmail.com to download the full source code ZIP.",
-        project: "Let's collaborate! I study B.Sc. Computer Science and love building interactive software, web tools, or gaming configurations. Email me the syllabus or project criteria at <a href='mailto:victorroot9629@gmail.com' class='neon-hover'>victorroot9629@gmail.com</a> to kick things off.",
-        hello: "Greetings, traveler! 🌌 Thank you for connecting with Victor's AI. Feel free to browse through the <strong>Creative Workshow</strong> section to check out my edit thumbnails, or drop an inquiry."
+        order: "Secure connection verified. Video editing, cinematic visual compositing, and thumbnail graphics contracts begin at a minimum retainer fee of <strong>₹7,000</strong>. Transmission address: <a href='mailto:victorroot9629@gmail.com' class='neon-hover'>victorroot9629@gmail.com</a>, or scanning the payment card secures your bookings.",
+        template: "The WayneTech 3D Profile configuration codebase requires a deployment license fee of <strong>₹7,000</strong>. Transfer to UPI ID <code>arasu9629hf@okhdfcbank</code> and email payment logs to victorroot9629@gmail.com to download files.",
+        project: "B.Sc. Computer Science database models, backend security configurations, and custom script integrations can be commissioned. Send requirements to <a href='mailto:victorroot9629@gmail.com' class='neon-hover'>victorroot9629@gmail.com</a>.",
+        hello: "Handshake verified. 🌌 Welcome to WayneTech Secure Terminal. Feel free to browse Victor's <strong>Creative Workshow</strong> designs or open custom queries."
     };
 
     const triggerBotResponse = (type) => {
         const typingDiv = document.createElement('div');
         typingDiv.className = 'dm-msg bot typing-indicator';
-        typingDiv.innerHTML = '<p>Transmitting data...</p>';
+        typingDiv.innerHTML = '<p>Encrypting transmission...</p>';
         dmMessagesContainer.appendChild(typingDiv);
         scrollToBottom();
 
         setTimeout(() => {
             typingDiv.remove();
-            const replyText = botReplies[type] || "Acknowledged. For complex questions or direct inquiries, please send a transmission to victorroot9629@gmail.com, or complete the UPI contract payment of ₹299.";
+            const replyText = botReplies[type] || "Secure acknowledgement received. For direct custom briefs or scheduling, secure a ₹7,000 retainer or email victorroot9629@gmail.com.";
             addMessage('bot', replyText);
         }, 800);
     };
@@ -652,7 +410,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const lowercaseQuery = query.toLowerCase();
         if (lowercaseQuery.includes('edit') || lowercaseQuery.includes('hire') || lowercaseQuery.includes('work') || lowercaseQuery.includes('rate')) {
             matchedType = 'order';
-        } else if (lowercaseQuery.includes('price') || lowercaseQuery.includes('template') || lowercaseQuery.includes('buy') || lowercaseQuery.includes('code') || lowercaseQuery.includes('299')) {
+        } else if (lowercaseQuery.includes('price') || lowercaseQuery.includes('template') || lowercaseQuery.includes('buy') || lowercaseQuery.includes('code') || lowercaseQuery.includes('7000')) {
             matchedType = 'template';
         } else if (lowercaseQuery.includes('bsc') || lowercaseQuery.includes('science') || lowercaseQuery.includes('project') || lowercaseQuery.includes('study')) {
             matchedType = 'project';
@@ -710,7 +468,6 @@ document.addEventListener('DOMContentLoaded', () => {
         proceedToPayBtn.addEventListener('click', () => {
             cloneModal.classList.remove('show');
             document.body.style.overflow = 'auto';
-            // Smooth scroll to donate section
             const donateSec = document.getElementById('donate');
             if (donateSec) {
                 donateSec.scrollIntoView({ behavior: 'smooth' });
@@ -725,10 +482,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (contactForm) {
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            // Clear inputs
             contactForm.reset();
-            // Trigger customized success notification toast
-            triggerNotification("Transmission successful! Victor's Core AI has logged your inquiry. Check your email shortly.");
+            triggerNotification("Transmission successful! WayneTech secure terminal has logged your message. Status: Dispatched.");
         });
     }
 
