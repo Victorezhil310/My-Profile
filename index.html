@@ -92,9 +92,37 @@
                         <a href="javascript:void(0)" class="btn btn-secondary" id="hero-clone-btn">Deploy Protocol</a>
                     </div>
                 </div>
+                <!-- Glowing Rotating OS Terminal Vector Avatar -->
                 <div class="hero-avatar-wrapper">
                     <div class="avatar-ring"></div>
-                    <img src="assets/victor.jpg" alt="Victor Ezhil Avatar" class="hero-avatar">
+                    <div class="hero-os-avatar">
+                        <!-- Spinning System OS Radar SVG -->
+                        <svg class="sys-os-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Circular grids -->
+                            <circle cx="60" cy="60" r="54" fill="none" stroke="#00b4d8" stroke-width="1.5" stroke-dasharray="8,4" />
+                            <circle cx="60" cy="60" r="48" fill="none" stroke="#0077b6" stroke-width="1" />
+                            <circle cx="60" cy="60" r="44" fill="none" stroke="#00f2fe" stroke-width="1.5" stroke-dasharray="40,10" />
+                            <circle cx="60" cy="60" r="36" fill="none" stroke="rgba(0, 180, 216, 0.2)" stroke-width="1" />
+                            
+                            <!-- Crosshair guides -->
+                            <line x1="60" y1="12" x2="60" y2="108" stroke="rgba(0, 242, 254, 0.2)" stroke-width="1" />
+                            <line x1="12" y1="60" x2="108" y2="60" stroke="rgba(0, 242, 254, 0.2)" stroke-width="1" />
+                            
+                            <!-- Orbital node dots -->
+                            <circle cx="60" cy="12" r="3" fill="#00f2fe" />
+                            <circle cx="60" cy="108" r="3" fill="#00f2fe" />
+                            <circle cx="12" cy="60" r="3" fill="#ffd700" />
+                            <circle cx="108" cy="60" r="3" fill="#ffd700" />
+                            
+                            <!-- Radar sweep vector -->
+                            <line x1="60" y1="60" x2="94" y2="26" stroke="#00f2fe" stroke-width="2" stroke-linecap="round" class="radar-sweep" />
+                            
+                            <!-- Center bat logo core -->
+                            <circle cx="60" cy="60" r="14" fill="#020204" stroke="#00b4d8" stroke-width="1.5" />
+                            <!-- Mini Bat symbol inside core -->
+                            <path d="M60 52c0.3-0.8 0.5-1.6 0.5-1.6h-.8s0.1 0.8 0.5 1.6c0.5 0.9 1.2 1.5 2 1.7C62.4 53.5 61.9 52.8 61.9 52.4c0-.7 1-0.8 1.4-.9.8-.1 1.6.1 2.2.7.4.4.4.9.1 1.5-.6 1-2.1 1.5-2.8 2.2-.7.7-1.1 1.5-1.1 2.5 0 .5.1 1.2.4 1.7.3.5.7 1.1 1.2 1.4.7.4 1.4.4 1.9 0 .5-.3 1.1-.8 1.5-1.4.4-.5 1-1.4 1.5-2.2.9-1.4 1.9-2.8 2.7-4.4.4-.7.4-1.5 1-1.7h1.1s-0.4 1.5-1 3.1c-.7 1.5-1.5 3.2-2.4 4.8-.9 1.6-2 3.1-3.2 4.4-1.3 1.5-2.8 2.4-4.4 2.8-1.7.4-3.6.1-5.3-.8-3.3-1.7-5.2-3.2-6.7-4.9-1.3-1.6-2.4-3.3-3.2-5.2-.7-1.6-1.3-3.2-1.7-4.9h1.1c.5.3.9 1.1 1.7 2.7.7 1.6 1.6 3.1 2.5 4.4.5.8 1.1 1.6 1.5 2.2.4.5.9 1.1 1.5 1.4.5.4 1.2.4 1.9 0 .5-.3 1-0.9 1.2-1.4.3-.5.4-1.2.4-1.7 0-1.1-.4-1.9-1.1-2.5-.7-.7-2.1-1.2-2.9-1.9-.3-.5-.3-1.1.1-1.5.5-.5 1.3-.8 2.2-.7.4.1 1.4.3 1.4 1 0 .4-.5 1.1-.9 1.5.8-.3 1.5-0.8 2-1.7z" fill="#00f2fe" transform="scale(0.8) translate(15, 15)" />
+                        </svg>
+                    </div>
                 </div>
             </div>
             <div class="scroll-indicator">
@@ -757,7 +785,12 @@
     <div id="dm-box" class="dm-chat-box glass-panel">
         <div class="dm-header">
             <div class="dm-avatar-status">
-                <img src="assets/victor.jpg" alt="Victor Ezhil" class="dm-status-img">
+                <!-- Glowing mini Bat SVG in chat header -->
+                <div class="dm-status-avatar-svg-wrapper">
+                    <svg class="dm-status-bat-svg" viewBox="0 0 100 45" fill="currentColor">
+                        <path d="M50 8c1-3 1.5-6 1.5-6h-3s.5 3 1.5 6c1.8 3.5 4.5 5.5 7.5 6.5C59 13.5 57 11 57 9.5c0-2.5 3.5-3 5-3.5 3-.5 6 .5 8 2.5 1.5 1.5 1.5 3.5.5 5.5C67.5 17 62 19 59.5 21.5c-2.5 2.5-4 5.5-4 9.5 0 2 .5 4.5 1.5 6.5 1 2 2.5 4 4.5 5 2.5 1.5 5 1.5 7 0 2-1 4-3 5.5-5 1.5-2 3.5-5 5.5-8 3.5-5 7-10.5 10-16.5C92.5 7 94 4 96 3h4s-1.5 5.5-3.5 11.5C94.5 20 91.5 26.5 88 32.5c-3.5 6-7.5 11.5-12 16.5-5 5.5-10.5 9-16.5 10.5-6.5 1.5-13.5.5-20-3C33 53 26 47.5 20.5 41c-5-6-9-12.5-12-19.5C5.5 15.5 3 9.5 1.5 3h4c2 1 3.5 4 6.5 10C15 19 18.5 24.5 22 29.5c2 3 4 6 5.5 8 1.5 2 3.5 4 5.5 5 2 1.5 4.5 1.5 7 0 2-1 3.5-3 4.5-5 1-2 1.5-4.5 1.5-6.5 0-4-1.5-7-4-9.5C39.5 19 34 17 31 14.5c-1-2-1-4 .5-5.5 2-2 5-3 8-2.5 1.5.5 5 1 5 3.5 0 1.5-2 4-3.5 5.5 3-1 5.7-3 7.5-6.5z" />
+                    </svg>
+                </div>
                 <div>
                     <h4>WayneTech Secure Comms</h4>
                     <span class="dm-status-text"><span class="pulse-dot"></span> Encrypted Core Active</span>

@@ -392,7 +392,7 @@ body {
 }
 
 /* ----------------------------------------------------
-   HERO SECTION
+   HERO SECTION & SYSTEM OS RADAR AVATAR
    ---------------------------------------------------- */
 #hero {
     min-height: 100vh;
@@ -479,7 +479,7 @@ body {
     gap: 1.5rem;
 }
 
-/* Glowing Rotating Avatar */
+/* Glowing Rotating OS Terminal Avatar */
 .hero-avatar-wrapper {
     position: relative;
     width: 320px;
@@ -490,14 +490,42 @@ body {
     justify-content: center;
 }
 
-.hero-avatar {
+.hero-os-avatar {
     width: 280px;
     height: 280px;
     border-radius: 50%;
-    object-fit: cover;
+    background: rgba(3, 6, 15, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-glass-glow);
+    box-shadow: 0 0 40px rgba(0, 180, 216, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
     z-index: 2;
-    border: 3px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 0 35px rgba(0, 0, 0, 0.9);
+    transition: box-shadow var(--transition-speed);
+}
+
+.hero-os-avatar:hover {
+    box-shadow: 0 0 60px rgba(0, 242, 254, 0.65);
+}
+
+.sys-os-svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 8px var(--primary-neon));
+}
+
+.radar-sweep {
+    transform-origin: 60px 60px;
+    animation: sweepRotate 4s linear infinite;
+}
+
+@keyframes sweepRotate {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .avatar-ring {
@@ -1436,15 +1464,26 @@ body {
 .dm-avatar-status {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
 }
 
-.dm-status-img {
-    width: 40px;
-    height: 40px;
+.dm-status-avatar-svg-wrapper {
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    object-fit: cover;
     border: 1px solid var(--primary-neon);
+    background: rgba(3, 6, 15, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px rgba(0, 180, 216, 0.3);
+}
+
+.dm-status-bat-svg {
+    width: 24px;
+    height: 11px;
+    color: var(--primary-neon);
+    filter: drop-shadow(0 0 3px var(--primary-neon));
 }
 
 .dm-avatar-status h4 {
@@ -2029,7 +2068,7 @@ body {
 @keyframes glitch-anim-2 {
     0% { clip: rect(76px, 9999px, 116px, 0); }
     11% { clip: rect(13px, 9999px, 92px, 0); }
-    22% { clip: rect(58px, 9999px, 12px, 0); }
+    22% { fill: rect(58px, 9999px, 12px, 0); }
     33% { clip: rect(104px, 9999px, 76px, 0); }
     44% { clip: rect(3px, 9999px, 119px, 0); }
     55% { clip: rect(82px, 9999px, 4px, 0); }
