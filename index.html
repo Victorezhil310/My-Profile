@@ -33,6 +33,7 @@
                 <li><a href="#about" class="nav-link">About</a></li>
                 <li><a href="#passion" class="nav-link">Passion</a></li>
                 <li><a href="#gallery" class="nav-link">Workshow</a></li>
+                <li><a href="#studio" class="nav-link">Studio</a></li>
                 <li><a href="#skills" class="nav-link">Knowledge</a></li>
                 <li><a href="#iq" class="nav-link">IQ Scale</a></li>
                 <li><a href="#donate" class="nav-link highlight-link">Support Me</a></li>
@@ -59,7 +60,7 @@
                     <p class="hero-desc">Building immersive virtual spaces, crafting visual stories, and executing pixel-perfect code configurations.</p>
                     <div class="hero-actions">
                         <a href="#donate" class="btn btn-primary btn-glow">Hire / Get Template</a>
-                        <a href="#gallery" class="btn btn-secondary">View Workshow</a>
+                        <a href="#studio" class="btn btn-secondary">Open Filter Studio</a>
                     </div>
                 </div>
                 <div class="hero-avatar-wrapper">
@@ -210,6 +211,91 @@
                     <div class="gallery-info">
                         <h4>One Man Squad</h4>
                         <span class="gallery-tag">Graphic Design Cover</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cyberpunk Filter Studio Section -->
+        <section id="studio" class="section-container">
+            <h2 class="section-title">CYBERPUNK FILTER STUDIO</h2>
+            <p class="section-intro-text">Capture a live photo or upload an image to apply real-time cyberpunk chromatic split and digital glitch filters. Create your own premium futuristic avatar.</p>
+            
+            <div class="studio-grid">
+                <!-- Left Panel: Input source (Webcam/Upload) -->
+                <div class="studio-card input-card glass-panel">
+                    <h3>1. Input Source</h3>
+                    
+                    <!-- Tabs -->
+                    <div class="studio-tabs">
+                        <button class="tab-btn active" id="tab-webcam"><i class="fa-solid fa-camera"></i> Live Webcam</button>
+                        <button class="tab-btn" id="tab-upload"><i class="fa-solid fa-file-arrow-up"></i> Upload Photo</button>
+                    </div>
+
+                    <!-- Webcam Container -->
+                    <div class="webcam-container" id="webcam-view">
+                        <video id="webcam-feed" autoplay playsinline></video>
+                        <div class="webcam-viewfinder">
+                            <span></span><span></span><span></span><span></span>
+                        </div>
+                        <div class="camera-lens-overlay"></div>
+                        <button class="btn btn-primary capture-btn" id="capture-photo-btn"><i class="fa-solid fa-circle"></i> Capture Snapshot</button>
+                    </div>
+
+                    <!-- Upload Container -->
+                    <div class="upload-container hidden" id="upload-view">
+                        <div class="upload-dropzone" id="dropzone">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <p>Drag & Drop your image here or click to browse</p>
+                            <input type="file" id="file-input" accept="image/*">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Panel: Canvas & Adjustments -->
+                <div class="studio-card output-card glass-panel">
+                    <h3>2. Filter Dashboard</h3>
+                    
+                    <div class="canvas-render-wrapper">
+                        <canvas id="filter-canvas"></canvas>
+                        <div id="canvas-placeholder" class="canvas-placeholder">
+                            <i class="fa-solid fa-images"></i>
+                            <p>Capture or upload an image to render realistic cyber filters</p>
+                        </div>
+                    </div>
+
+                    <!-- Filter Adjustments -->
+                    <div class="filter-controls">
+                        <!-- Control 1: Chromatic Aberration -->
+                        <div class="control-group">
+                            <div class="control-label">
+                                <span>Chromatic Split (RGB Shift)</span>
+                                <span id="val-aberration">15px</span>
+                            </div>
+                            <input type="range" id="slider-aberration" min="0" max="40" value="15">
+                        </div>
+                        <!-- Control 2: Glitch Row Displacement -->
+                        <div class="control-group">
+                            <div class="control-label">
+                                <span>Horizontal Glitch Noise</span>
+                                <span id="val-glitch">20%</span>
+                            </div>
+                            <input type="range" id="slider-glitch" min="0" max="100" value="20">
+                        </div>
+                        <!-- Control 3: Neon Overlay Intensity -->
+                        <div class="control-group">
+                            <div class="control-label">
+                                <span>Neon Overlay Tint</span>
+                                <span id="val-neon">35%</span>
+                            </div>
+                            <input type="range" id="slider-neon" min="0" max="100" value="35">
+                        </div>
+                    </div>
+
+                    <!-- Action buttons -->
+                    <div class="studio-actions">
+                        <button class="btn btn-secondary" id="reset-filter-btn" disabled><i class="fa-solid fa-rotate-left"></i> Reset</button>
+                        <a class="btn btn-primary btn-glow" id="download-render-btn" style="pointer-events: none; opacity: 0.5;"><i class="fa-solid fa-download"></i> Save Edit</a>
                     </div>
                 </div>
             </div>

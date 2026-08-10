@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // ----------------------------------------------------
-    // THREE.JS 3D BACKGROUND ENGINE
+    // THREE.JS 3D BACKGROUND ENGINE (Cyber Grid Sphere)
     // ----------------------------------------------------
-    let scene, camera, renderer, starField;
+    let scene, camera, renderer, cyberSphere, starField;
     let targetX = 0, targetY = 0;
     let currentX = 0, currentY = 0;
 
@@ -13,37 +13,60 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Create Scene
         scene = new THREE.Scene();
-        scene.fog = new THREE.FogExp2(0x030307, 0.0015);
+        scene.fog = new THREE.FogExp2(0x030307, 0.002);
 
         // Setup Camera
         camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
-        camera.position.z = 250;
+        camera.position.z = 220;
 
         // Setup Renderer
         renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.setSize(window.innerWidth, window.innerHeight);
 
-        // Generate Particles (Star Field)
+        // Group to rotate everything together
+        const mainGroup = new THREE.Group();
+        scene.add(mainGroup);
+
+        // 1. Central Cyber Globe Geometry
+        const geometry = new THREE.IcosahedronGeometry(80, 2);
+        const material = new THREE.MeshBasicMaterial({
+            color: 0x00f2fe,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.15
+        });
+        cyberSphere = new THREE.Mesh(geometry, material);
+        mainGroup.add(cyberSphere);
+
+        // Glowing points on sphere vertices
+        const pointGeometry = new THREE.IcosahedronGeometry(80, 2);
+        const pointMaterial = new THREE.PointsMaterial({
+            color: 0xff007f,
+            size: 3.5,
+            transparent: true,
+            opacity: 0.8
+        });
+        const spherePoints = new THREE.Points(pointGeometry, pointMaterial);
+        mainGroup.add(spherePoints);
+
+        // 2. Surrounding Star Field
         const starsGeometry = new THREE.BufferGeometry();
-        const starsCount = 1200;
+        const starsCount = 600;
         const starPositions = new Float32Array(starsCount * 3);
         const starColors = new Float32Array(starsCount * 3);
 
         const colors = [
             new THREE.Color(0x00f2fe), // Neon Cyan
             new THREE.Color(0x9d4edd), // Neon Purple
-            new THREE.Color(0xff007f), // Cyber Pink
-            new THREE.Color(0xffffff)  // Bright White
+            new THREE.Color(0xff007f)  // Cyber Pink
         ];
 
         for (let i = 0; i < starsCount * 3; i += 3) {
-            // Position coords (wide spread)
-            starPositions[i] = (Math.random() - 0.5) * 800;     // X
-            starPositions[i+1] = (Math.random() - 0.5) * 800;   // Y
-            starPositions[i+2] = (Math.random() - 0.5) * 800;   // Z
+            starPositions[i] = (Math.random() - 0.5) * 800;
+            starPositions[i+1] = (Math.random() - 0.5) * 800;
+            starPositions[i+2] = (Math.random() - 0.5) * 800;
 
-            // Randomly assign one of the theme colors
             const randomColor = colors[Math.floor(Math.random() * colors.length)];
             starColors[i] = randomColor.r;
             starColors[i+1] = randomColor.g;
@@ -53,20 +76,21 @@ document.addEventListener('DOMContentLoaded', () => {
         starsGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
         starsGeometry.setAttribute('color', new THREE.BufferAttribute(starColors, 3));
 
-        // Create Particle Material (Using canvas circles or simple glowing squares)
         const starsMaterial = new THREE.PointsMaterial({
-            size: 2.2,
+            size: 2.0,
             vertexColors: true,
             transparent: true,
-            opacity: 0.85,
+            opacity: 0.6,
             sizeAttenuation: true
         });
 
-        // Create Points Object
         starField = new THREE.Points(starsGeometry, starsMaterial);
-        scene.add(starField);
+        mainGroup.add(starField);
 
-        // Ambient Light
+        // Store reference to rotate
+        scene.mainGroup = mainGroup;
+
+        // Ambient Lighting
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
         scene.add(ambientLight);
 
@@ -81,24 +105,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const animate = () => {
         requestAnimationFrame(animate);
 
-        // Slow automatic rotation
-        if (starField) {
-            starField.rotation.y += 0.0006;
-            starField.rotation.x += 0.0003;
+        // Rotate globe on multiple axes
+        if (cyberSphere) {
+            cyberSphere.rotation.y += 0.0015;
+            cyberSphere.rotation.x += 0.0008;
+        }
 
-            // Mouse parallax lerping (creates smooth floating lag)
-            currentX += (targetX - currentX) * 0.05;
-            currentY += (targetY - currentY) * 0.05;
+        // Parallax mouse movements
+        if (scene.mainGroup) {
+            currentX += (targetX - currentX) * 0.04;
+            currentY += (targetY - currentY) * 0.04;
 
-            starField.rotation.y += currentX * 0.0005;
-            starField.rotation.x += currentY * 0.0005;
+            scene.mainGroup.rotation.y = currentX * 0.25;
+            scene.mainGroup.rotation.x = currentY * 0.25;
         }
 
         renderer.render(scene, camera);
     };
 
     const onMouseMove = (e) => {
-        // Normalize coordinates to range [-1, 1]
         targetX = (e.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
         targetY = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
     };
@@ -113,22 +138,291 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
         initThree();
     } catch(err) {
-        console.warn("WebGL Three.js initialization failed: WebGL not supported or canvas error.", err);
+        console.warn("WebGL Three.js initialization failed: ", err);
     }
 
     // ----------------------------------------------------
-    // UPI QR CODE GENERATOR (Rate Updated to 7000 INR)
+    // CYBERPUNK IMAGE STUDIO (WEBCAM & FILE FILTERING)
+    // ----------------------------------------------------
+    const tabWebcam = document.getElementById('tab-webcam');
+    const tabUpload = document.getElementById('tab-upload');
+    const webcamView = document.getElementById('webcam-view');
+    const uploadView = document.getElementById('upload-view');
+    const video = document.getElementById('webcam-feed');
+    const fileInput = document.getElementById('file-input');
+    const dropzone = document.getElementById('dropzone');
+    
+    const filterCanvas = document.getElementById('filter-canvas');
+    const canvasPlaceholder = document.getElementById('canvas-placeholder');
+    const captureBtn = document.getElementById('capture-photo-btn');
+    const resetBtn = document.getElementById('reset-filter-btn');
+    const saveBtn = document.getElementById('download-render-btn');
+
+    const sliderAberration = document.getElementById('slider-aberration');
+    const sliderGlitch = document.getElementById('slider-glitch');
+    const sliderNeon = document.getElementById('slider-neon');
+
+    const valAberration = document.getElementById('val-aberration');
+    const valGlitch = document.getElementById('val-glitch');
+    const valNeon = document.getElementById('val-neon');
+
+    let stream = null;
+    let sourceImage = null; // Stored HTMLImageElement or Video Frame
+    let imageWidth = 0;
+    let imageHeight = 0;
+
+    // Toggle Tabs
+    if (tabWebcam && tabUpload) {
+        tabWebcam.addEventListener('click', () => {
+            tabWebcam.classList.add('active');
+            tabUpload.classList.remove('active');
+            webcamView.classList.remove('hidden');
+            uploadView.classList.add('hidden');
+            startWebcam();
+        });
+
+        tabUpload.addEventListener('click', () => {
+            tabUpload.classList.add('active');
+            tabWebcam.classList.remove('active');
+            uploadView.classList.remove('hidden');
+            webcamView.classList.add('hidden');
+            stopWebcam();
+        });
+    }
+
+    // Start Webcam Feed
+    const startWebcam = async () => {
+        if (stream) return;
+        try {
+            stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 }, audio: false });
+            if (video) {
+                video.srcObject = stream;
+            }
+        } catch (err) {
+            console.error("Camera access denied or unavailable: ", err);
+        }
+    };
+
+    // Stop Webcam Feed
+    const stopWebcam = () => {
+        if (stream) {
+            stream.getTracks().forEach(track => track.stop());
+            stream = null;
+        }
+    };
+
+    // Auto-init webcam on start
+    startWebcam();
+
+    // Trigger local file browse
+    if (dropzone && fileInput) {
+        dropzone.addEventListener('click', () => fileInput.click());
+        
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) handleImageFile(file);
+        });
+
+        // Drag and Drop
+        dropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropzone.style.borderColor = 'var(--primary-neon)';
+        });
+
+        dropzone.addEventListener('dragleave', () => {
+            dropzone.style.borderColor = 'var(--border-glass)';
+        });
+
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.style.borderColor = 'var(--border-glass)';
+            const file = e.dataTransfer.files[0];
+            if (file) handleImageFile(file);
+        });
+    }
+
+    // Load Image file
+    const handleImageFile = (file) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const img = new Image();
+            img.onload = () => {
+                sourceImage = img;
+                imageWidth = img.width;
+                imageHeight = img.height;
+                initCanvas();
+                applyCyberFilters();
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    };
+
+    // Capture from Webcam
+    if (captureBtn && video) {
+        captureBtn.addEventListener('click', () => {
+            if (!video.srcObject) return;
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = video.videoWidth;
+            tempCanvas.height = video.videoHeight;
+            const tempCtx = tempCanvas.getContext('2d');
+            
+            // Mirror camera frame capture
+            tempCtx.translate(tempCanvas.width, 0);
+            tempCtx.scale(-1, 1);
+            tempCtx.drawImage(video, 0, 0, tempCanvas.width, tempCanvas.height);
+            
+            const img = new Image();
+            img.onload = () => {
+                sourceImage = img;
+                imageWidth = img.width;
+                imageHeight = img.height;
+                initCanvas();
+                applyCyberFilters();
+            };
+            img.src = tempCanvas.toDataURL('image/png');
+        });
+    }
+
+    // Initialize Canvas Dimensions
+    const initCanvas = () => {
+        if (!filterCanvas) return;
+        // Limit max rendering size for smoother pixel pipeline processing
+        const maxDim = 800;
+        let scale = 1;
+        if (imageWidth > maxDim || imageHeight > maxDim) {
+            scale = maxDim / Math.max(imageWidth, imageHeight);
+        }
+        filterCanvas.width = imageWidth * scale;
+        filterCanvas.height = imageHeight * scale;
+        
+        if (canvasPlaceholder) canvasPlaceholder.classList.add('hidden');
+        if (resetBtn) resetBtn.removeAttribute('disabled');
+        if (saveBtn) {
+            saveBtn.style.pointerEvents = 'all';
+            saveBtn.style.opacity = '1';
+        }
+    };
+
+    // Pixel shader / CPU filter pipeline logic
+    const applyCyberFilters = () => {
+        if (!sourceImage || !filterCanvas) return;
+        const ctx = filterCanvas.getContext('2d');
+        const w = filterCanvas.width;
+        const h = filterCanvas.height;
+
+        // Draw clean base image onto canvas first
+        ctx.drawImage(sourceImage, 0, 0, w, h);
+
+        // Fetch image pixels data
+        const imgData = ctx.getImageData(0, 0, w, h);
+        const data = imgData.data;
+
+        // Get filter slider parameters
+        const splitAmount = parseInt(sliderAberration.value);
+        const glitchProb = parseInt(sliderGlitch.value) / 100;
+        const neonBlend = parseInt(sliderNeon.value) / 100;
+
+        // Create secondary buffer array for pixel transformation
+        const outData = ctx.createImageData(w, h);
+        const out = outData.data;
+
+        // 1. Apply Chromatic Aberration (RGB Shift) and row displacements
+        for (let y = 0; y < h; y++) {
+            // Check if this horizontal line of pixels gets glitched (displaced)
+            let rowOffset = 0;
+            if (glitchProb > 0 && Math.random() < glitchProb * 0.08) {
+                // displace line horizontally by random offset
+                rowOffset = Math.floor((Math.random() - 0.5) * w * 0.08);
+            }
+
+            for (let x = 0; x < w; x++) {
+                const targetIdx = (y * w + x) * 4;
+
+                // Source X positions for R, G, and B channel displacement
+                const rx = Math.min(w - 1, Math.max(0, x + rowOffset - splitAmount));
+                const gx = Math.min(w - 1, Math.max(0, x + rowOffset));
+                const bx = Math.min(w - 1, Math.max(0, x + rowOffset + splitAmount));
+
+                // Pixel index positions inside source data
+                const rIdx = (y * w + rx) * 4;
+                const gIdx = (y * w + gx) * 4;
+                const bIdx = (y * w + bx) * 4;
+
+                // Shift RGB colors
+                out[targetIdx] = data[rIdx];       // R channel
+                out[targetIdx + 1] = data[gIdx + 1]; // G channel
+                out[targetIdx + 2] = data[bIdx + 2]; // B channel
+                out[targetIdx + 3] = data[gIdx + 3]; // Alpha channel
+            }
+        }
+
+        // Draw chromatic glitch pixels back onto canvas
+        ctx.putImageData(outData, 0, 0);
+
+        // 2. Draw Tint / Scanline Overlays
+        // Cyan and Pink neon gradient map
+        ctx.globalCompositeOperation = 'screen';
+        ctx.fillStyle = `rgba(0, 242, 254, ${neonBlend * 0.35})`; // Cyan Tint
+        ctx.fillRect(0, 0, w, h);
+
+        ctx.fillStyle = `rgba(255, 0, 127, ${neonBlend * 0.25})`; // Cyber Pink Tint
+        ctx.fillRect(0, 0, w, h);
+
+        // Scanline lines
+        ctx.globalCompositeOperation = 'multiply';
+        ctx.strokeStyle = 'rgba(0, 0, 0, 0.15)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        for (let i = 0; i < h; i += 4) {
+            ctx.moveTo(0, i);
+            ctx.lineTo(w, i);
+        }
+        ctx.stroke();
+
+        // Reset composite operations
+        ctx.globalCompositeOperation = 'source-over';
+
+        // Update download hyperlink
+        if (saveBtn) {
+            saveBtn.href = filterCanvas.toDataURL('image/png');
+            saveBtn.download = `victor-cyber-edit-${Date.now()}.png`;
+        }
+    };
+
+    // Listen to Slider changes
+    const onSliderChange = () => {
+        if (valAberration) valAberration.textContent = `${sliderAberration.value}px`;
+        if (valGlitch) valGlitch.textContent = `${sliderGlitch.value}%`;
+        if (valNeon) valNeon.textContent = `${sliderNeon.value}%`;
+        applyCyberFilters();
+    };
+
+    if (sliderAberration) sliderAberration.addEventListener('input', onSliderChange);
+    if (sliderGlitch) sliderGlitch.addEventListener('input', onSliderChange);
+    if (sliderNeon) sliderNeon.addEventListener('input', onSliderChange);
+
+    // Reset Canvas Filters
+    if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+            sliderAberration.value = 15;
+            sliderGlitch.value = 20;
+            sliderNeon.value = 35;
+            onSliderChange();
+        });
+    }
+
+    // ----------------------------------------------------
+    // UPI QR CODE GENERATOR (Rate 7000 INR)
     // ----------------------------------------------------
     const generateUpiQr = () => {
         const upiId = "arasu9629hf@okhdfcbank";
         const payeeName = "Victor Ezhil";
-        const amount = "7000"; // Updated to ₹7,000
+        const amount = "7000";
         const currency = "INR";
         
-        // Formulate standard UPI Deep Link Scheme
         const upiLink = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(payeeName)}&am=${amount}&cu=${currency}`;
         
-        // Generate QR code URL using standard QR Code API
         const qrImage = document.getElementById('upi-qr');
         if (qrImage) {
             qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiLink)}&color=000000&bgcolor=FFFFFF&margin=10`;
@@ -147,7 +441,6 @@ document.addEventListener('DOMContentLoaded', () => {
         copyButton.addEventListener('click', () => {
             const textToCopy = copyButton.getAttribute('data-clipboard');
             navigator.clipboard.writeText(textToCopy).then(() => {
-                // Show Toast Notification
                 if (copyToast) {
                     copyToast.classList.add('show');
                     setTimeout(() => {
@@ -173,7 +466,6 @@ document.addEventListener('DOMContentLoaded', () => {
             mobileMenu.classList.toggle('active');
         });
 
-        // Close menu when clicking link (mobile experience)
         links.forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
@@ -192,17 +484,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const handleScroll = () => {
         if (!header) return;
         
-        // Header background transition
         if (window.scrollY > 50) {
             header.classList.add('scrolled');
         } else {
             header.classList.remove('scrolled');
         }
 
-        // Active link highlighting
         let currentSectionId = '';
         sections.forEach(section => {
-            const sectionTop = section.offsetTop - 120; // offset for nav header height
+            const sectionTop = section.offsetTop - 120;
             const sectionHeight = section.clientHeight;
             if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
                 currentSectionId = section.getAttribute('id');
@@ -270,12 +560,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const quickReplyButtons = document.querySelectorAll('.quick-reply-btn');
     const notificationDot = document.querySelector('.dm-notification-dot');
 
-    // Toggle Chatbox
     if (dmBubble && dmBox) {
         dmBubble.addEventListener('click', () => {
             dmBox.classList.toggle('show');
             if (notificationDot) {
-                notificationDot.style.opacity = '0'; // Hide notification once opened
+                notificationDot.style.opacity = '0';
             }
             scrollToBottom();
         });
@@ -287,14 +576,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Scroll chat to bottom
     const scrollToBottom = () => {
         if (dmMessagesContainer) {
             dmMessagesContainer.scrollTop = dmMessagesContainer.scrollHeight;
         }
     };
 
-    // Add message bubble
     const addMessage = (sender, text) => {
         if (!dmMessagesContainer) return;
         const msgDiv = document.createElement('div');
@@ -304,7 +591,6 @@ document.addEventListener('DOMContentLoaded', () => {
         scrollToBottom();
     };
 
-    // Bot replies dictionary
     const botReplies = {
         order: "Outstanding choice! Video editing and graphic thumbnail designs contract starts at a minimum retainer of <strong>₹7,000</strong>. Send your design brief to <a href='mailto:victorroot9629@gmail.com' class='neon-hover'>victorroot9629@gmail.com</a>, or complete the UPI payment of ₹7,000 below to secure your slots immediately.",
         template: "This custom 3D glassmorphic profile codebase is licensed for a fee of <strong>₹7,000</strong>. Simply scan the UPI QR code on the profile card, execute the transfer to <code>arasu9629hf@okhdfcbank</code>, and email your transaction receipt to victorroot9629@gmail.com to download the full source code ZIP.",
@@ -312,9 +598,7 @@ document.addEventListener('DOMContentLoaded', () => {
         hello: "Greetings, traveler! 🌌 Thank you for connecting with Victor's AI. Feel free to browse through the <strong>Creative Workshow</strong> section to check out my edit thumbnails, or drop an inquiry."
     };
 
-    // Bot replies handling
     const triggerBotResponse = (type) => {
-        // Show simulated typing status
         const typingDiv = document.createElement('div');
         typingDiv.className = 'dm-msg bot typing-indicator';
         typingDiv.innerHTML = '<p>Transmitting data...</p>';
@@ -328,7 +612,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 800);
     };
 
-    // Listen to Quick Replies
     quickReplyButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             const type = btn.getAttribute('data-reply');
@@ -338,7 +621,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Listen to Text Inputs
     const handleInputSend = () => {
         if (!dmInput) return;
         const query = dmInput.value.trim();
@@ -347,7 +629,6 @@ document.addEventListener('DOMContentLoaded', () => {
         addMessage('user', query);
         dmInput.value = '';
 
-        // Match keywords
         let matchedType = 'default';
         const lowercaseQuery = query.toLowerCase();
         if (lowercaseQuery.includes('edit') || lowercaseQuery.includes('hire') || lowercaseQuery.includes('work') || lowercaseQuery.includes('rate')) {
@@ -385,7 +666,7 @@ document.addEventListener('DOMContentLoaded', () => {
         openBtn.addEventListener('click', (e) => {
             e.preventDefault();
             modal.classList.add('show');
-            document.body.style.overflow = 'hidden'; // prevent scrolling underneath
+            document.body.style.overflow = 'hidden';
         });
 
         if (closeBtn) {
@@ -395,7 +676,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Close on overlay click
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
                 modal.classList.remove('show');

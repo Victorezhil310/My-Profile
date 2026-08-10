@@ -192,6 +192,10 @@ body {
     box-shadow: 0 0 30px rgba(0, 242, 254, 0.8), 0 0 15px rgba(157, 77, 221, 0.5);
 }
 
+.hidden {
+    display: none !important;
+}
+
 /* ----------------------------------------------------
    HEADER & NAVBAR
    ---------------------------------------------------- */
@@ -231,13 +235,13 @@ body {
 .nav-links {
     display: flex;
     list-style: none;
-    gap: 2rem;
+    gap: 1.5rem;
     align-items: center;
 }
 
 .nav-link {
     font-family: var(--font-heading);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 500;
     color: var(--text-secondary);
     text-decoration: none;
@@ -694,6 +698,277 @@ body {
     letter-spacing: 1px;
     color: var(--secondary-neon);
     font-weight: 600;
+}
+
+/* ----------------------------------------------------
+   CYBERPUNK FILTER STUDIO
+   ---------------------------------------------------- */
+.studio-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    margin-top: 2rem;
+}
+
+.studio-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary-neon);
+}
+
+/* Tabs */
+.studio-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 10px;
+}
+
+.tab-btn {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-glass);
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    color: var(--text-secondary);
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tab-btn:hover {
+    color: var(--primary-neon);
+    border-color: var(--primary-neon);
+}
+
+.tab-btn.active {
+    background: rgba(0, 242, 254, 0.08);
+    color: var(--primary-neon);
+    border-color: var(--primary-neon);
+    box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
+}
+
+/* Camera feed viewport */
+.webcam-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1.4;
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border-glass);
+}
+
+#webcam-feed {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scaleX(-1); /* Mirror camera feed */
+}
+
+.webcam-viewfinder {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    pointer-events: none;
+}
+
+.webcam-viewfinder span {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--accent-neon);
+    box-shadow: 0 0 8px var(--accent-neon);
+}
+
+.webcam-viewfinder span:nth-child(1) { top: 0; left: 0; border-right: none; border-bottom: none; }
+.webcam-viewfinder span:nth-child(2) { top: 0; right: 0; border-left: none; border-bottom: none; }
+.webcam-viewfinder span:nth-child(3) { bottom: 0; left: 0; border-right: none; border-top: none; }
+.webcam-viewfinder span:nth-child(4) { bottom: 0; right: 0; border-left: none; border-top: none; }
+
+.camera-lens-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, transparent 40%, rgba(3, 3, 7, 0.7) 100%);
+    pointer-events: none;
+    border-radius: 12px;
+}
+
+.capture-btn {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 20px var(--accent-neon);
+}
+
+.capture-btn i {
+    color: var(--accent-neon);
+}
+
+/* Upload dropzone */
+.upload-container {
+    width: 100%;
+    aspect-ratio: 1.4;
+}
+
+.upload-dropzone {
+    width: 100%;
+    height: 100%;
+    border: 2px dashed var(--border-glass);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-align: center;
+    padding: 2rem;
+    transition: all var(--transition-speed);
+    background: rgba(255, 255, 255, 0.01);
+}
+
+.upload-dropzone:hover {
+    border-color: var(--primary-neon);
+    background: rgba(0, 242, 254, 0.02);
+}
+
+.upload-dropzone i {
+    font-size: 3rem;
+    color: var(--primary-neon);
+    margin-bottom: 1rem;
+    text-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+}
+
+.upload-dropzone p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    max-width: 250px;
+}
+
+.upload-dropzone input {
+    display: none;
+}
+
+/* Output render area */
+.canvas-render-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1.4;
+    background: #030307;
+    border-radius: 12px;
+    border: 1px solid var(--border-glass);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+#filter-canvas {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.canvas-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+    background: rgba(3, 3, 7, 0.9);
+    z-index: 2;
+}
+
+.canvas-placeholder i {
+    font-size: 3.5rem;
+    color: var(--border-glass-glow);
+    margin-bottom: 1.2rem;
+    text-shadow: 0 0 15px rgba(0, 242, 254, 0.1);
+}
+
+.canvas-placeholder p {
+    max-width: 280px;
+    font-size: 0.95rem;
+}
+
+/* Range adjustment controls */
+.filter-controls {
+    margin-top: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.control-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.control-label span:last-child {
+    color: var(--primary-neon);
+}
+
+/* Slider Bar styling */
+.control-group input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 3px;
+    outline: none;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.control-group input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--primary-neon);
+    cursor: pointer;
+    box-shadow: 0 0 10px var(--primary-neon);
+    transition: transform var(--transition-speed);
+}
+
+.control-group input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+.studio-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.studio-actions .btn {
+    flex-grow: 1;
 }
 
 /* ----------------------------------------------------
@@ -1218,7 +1493,7 @@ body {
     pointer-events: none;
     transform: translateY(30px) scale(0.95);
     transition: all var(--transition-speed) var(--transition-curve);
-    padding: 0; /* Clear default card padding */
+    padding: 0;
     overflow: hidden;
 }
 
@@ -1632,14 +1907,14 @@ body {
     }
     
     .hero-avatar-wrapper {
-        order: -1; /* Avatar on top for mobile */
+        order: -1;
     }
     
     .hero-actions {
         justify-content: center;
     }
     
-    .about-grid, .iq-container, .donation-grid, .contact-grid {
+    .about-grid, .iq-container, .donation-grid, .contact-grid, .studio-grid {
         grid-template-columns: 1fr;
         gap: 2.5rem;
     }
@@ -1732,12 +2007,8 @@ body {
    KEYFRAME ANIMATIONS
    ---------------------------------------------------- */
 @keyframes rotateRing {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 @keyframes fadeIn {
