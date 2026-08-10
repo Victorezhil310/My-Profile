@@ -287,7 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', handleScroll);
 
     // ----------------------------------------------------
-    // GALLERY LIGHTBOX EVENT LISTENERS
+    // GALLERY LIGHTBOX EVENT LISTENERS (SVG & IMAGE DUAL SETUP)
     // ----------------------------------------------------
     const lightboxModal = document.getElementById('lightbox-modal');
     const lightboxImg = document.getElementById('lightbox-img');
@@ -299,28 +299,49 @@ document.addEventListener('DOMContentLoaded', () => {
     if (lightboxModal && lightboxImg) {
         galleryItems.forEach(item => {
             item.addEventListener('click', () => {
-                const src = item.getAttribute('data-src');
                 const title = item.getAttribute('data-title');
                 const desc = item.getAttribute('data-desc');
+                const type = item.getAttribute('data-type');
 
-                lightboxImg.src = src;
                 lightboxTitle.textContent = title;
                 lightboxDesc.textContent = desc;
+
+                // Clear any existing cloned SVGs inside the lightbox wrapper
+                const existingSvg = lightboxModal.querySelector('.lightbox-content-wrapper .tech-chip-svg');
+                if (existingSvg) existingSvg.remove();
+
+                if (type === 'svg') {
+                    // Clone the SVG inside the card and place it in the lightbox dynamically
+                    const originalSvg = item.querySelector('.tech-chip-svg');
+                    if (originalSvg) {
+                        const clonedSvg = originalSvg.cloneNode(true);
+                        lightboxImg.style.display = 'none'; // Hide the default image tag
+                        lightboxModal.querySelector('.lightbox-content-wrapper').insertBefore(clonedSvg, lightboxImg);
+                    }
+                } else {
+                    const src = item.getAttribute('data-src');
+                    lightboxImg.src = src;
+                    lightboxImg.style.display = 'block'; // Show the image tag
+                }
 
                 lightboxModal.classList.add('show');
                 document.body.style.overflow = 'hidden';
             });
         });
 
-        lightboxClose.addEventListener('click', () => {
+        const closeLightbox = () => {
             lightboxModal.classList.remove('show');
             document.body.style.overflow = 'auto';
-        });
+            // Cleanup cloned SVG on close
+            const existingSvg = lightboxModal.querySelector('.lightbox-content-wrapper .tech-chip-svg');
+            if (existingSvg) existingSvg.remove();
+        };
+
+        lightboxClose.addEventListener('click', closeLightbox);
 
         lightboxModal.addEventListener('click', (e) => {
             if (e.target === lightboxModal) {
-                lightboxModal.classList.remove('show');
-                document.body.style.overflow = 'auto';
+                closeLightbox();
             }
         });
     }
