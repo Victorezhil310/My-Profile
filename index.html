@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Victor Ezhil | 3D Creative Portfolio & Editor</title>
+    <!-- Meta Descriptions for SEO -->
+    <meta name="description" content="Official 3D creative portfolio of Victor Ezhil - B.Sc Computer Science Student, Professional Video Editor, Esports Gamer, and Web Developer.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Style Sheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- 3D Canvas Background -->
+    <canvas id="three-canvas"></canvas>
+    
+    <!-- Cyber Scanlines overlay for futuristic aesthetic -->
+    <div class="scanlines"></div>
+
+    <!-- Navigation Header -->
+    <header id="main-header">
+        <nav class="navbar">
+            <div class="logo">
+                <a href="#hero">V<span class="neon-text">E</span>.</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#passion" class="nav-link">Passion</a></li>
+                <li><a href="#gallery" class="nav-link">Workshow</a></li>
+                <li><a href="#skills" class="nav-link">Knowledge</a></li>
+                <li><a href="#iq" class="nav-link">IQ Scale</a></li>
+                <li><a href="#donate" class="nav-link highlight-link">Support Me</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero">
+            <div class="hero-layout">
+                <div class="hero-container">
+                    <div class="hero-badge">
+                        <span class="pulse-dot"></span> Available for Freelance & Editing
+                    </div>
+                    <h1 class="glitch-name" data-text="VICTOR EZHIL">VICTOR EZHIL</h1>
+                    <p class="hero-subtitle">B.Sc. Computer Science &bull; Editor &bull; Gamer</p>
+                    <p class="hero-desc">Building immersive virtual spaces, crafting visual stories, and executing pixel-perfect code configurations.</p>
+                    <div class="hero-actions">
+                        <a href="#donate" class="btn btn-primary btn-glow">Hire / Get Template</a>
+                        <a href="#gallery" class="btn btn-secondary">View Workshow</a>
+                    </div>
+                </div>
+                <div class="hero-avatar-wrapper">
+                    <div class="avatar-ring"></div>
+                    <img src="assets/victor.jpg" alt="Victor Ezhil Avatar" class="hero-avatar">
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <span>SCROLL DOWN</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section-container">
+            <h2 class="section-title">ABOUT ME</h2>
+            <div class="about-grid">
+                <div class="about-text-card glass-panel">
+                    <div class="card-icon"><i class="fa-solid fa-user-astronaut"></i></div>
+                    <h3>Who is Victor?</h3>
+                    <p>I am a highly motivated <strong>B.Sc. Computer Science</strong> student from India. By blending core technical foundations with visual storytelling and interactive design, I create web experiences that push visual boundaries.</p>
+                    <p>Outside of code, I am an active <strong>Gamer</strong> and <strong>Video Editor</strong>, meaning I appreciate both the logical mechanics of gameplay/systems and the artistic flow of frame-by-frame compositions.</p>
+                    <div class="about-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Location:</span>
+                            <span class="detail-val">Tamil Nadu, India</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Email:</span>
+                            <a href="mailto:victorroot9629@gmail.com" class="detail-val neon-hover">victorroot9629@gmail.com</a>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Education:</span>
+                            <span class="detail-val">B.Sc. Computer Science</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quote and Stats Panel -->
+                <div class="about-stats glass-panel">
+                    <blockquote class="cyber-quote">
+                        "The best way to predict the future is to program it, edit it, and play it at 120 frames per second."
+                    </blockquote>
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <span class="stat-num">99.9%</span>
+                            <span class="stat-lbl">Creativity</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-num">160+</span>
+                            <span class="stat-lbl">Target IQ</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-num">200+</span>
+                            <span class="stat-lbl">Videos Edited</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-num">10k+</span>
+                            <span class="stat-lbl">Hours Gamed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Passion & Profession Section -->
+        <section id="passion" class="section-container">
+            <h2 class="section-title">PASSION & PROFESSION</h2>
+            <div class="passion-cards-grid">
+                <!-- Card 1: B.Sc Computer Science -->
+                <div class="passion-card glass-panel" data-tilt>
+                    <div class="passion-badge"><i class="fa-solid fa-laptop-code"></i></div>
+                    <h3>Computer Science</h3>
+                    <p class="passion-role">Developer & Systems Thinker</p>
+                    <p class="passion-body">Studying the science behind computers, algorithms, network architectures, and advanced databases. Applying theoretical foundations to construct robust frontend and backend structures.</p>
+                    <ul class="passion-list">
+                        <li><i class="fa-solid fa-circle-check"></i> Clean Architecture Design</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Web Automation & Scripting</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Mathematical Logic</li>
+                    </ul>
+                </div>
+                <!-- Card 2: Gamer -->
+                <div class="passion-card glass-panel" data-tilt>
+                    <div class="passion-badge"><i class="fa-solid fa-gamepad"></i></div>
+                    <h3>Professional Gaming</h3>
+                    <p class="passion-role">Strategist & Competitor</p>
+                    <p class="passion-body">Competitive gaming has taught me split-second decision making, resource management, and team cooperation. Highly analytical approach to game mechanics and engine architectures.</p>
+                    <ul class="passion-list">
+                        <li><i class="fa-solid fa-circle-check"></i> Strategic Thinking & Reflexes</li>
+                        <li><i class="fa-solid fa-circle-check"></i> In-depth Game Physics Knowledge</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Performance Tweaking & Overclocking</li>
+                    </ul>
+                </div>
+                <!-- Card 3: Video Editor -->
+                <div class="passion-card glass-panel" data-tilt>
+                    <div class="passion-badge"><i class="fa-solid fa-video"></i></div>
+                    <h3>Video Editing & VFX</h3>
+                    <p class="passion-role">Visual Storyteller & Creator</p>
+                    <p class="passion-body">Transforming raw sequences into cinematic masterworks. Advanced proficiency in pacing, audio alignment, color correction, and embedding glitch overlays to hook viewers.</p>
+                    <ul class="passion-list">
+                        <li><i class="fa-solid fa-circle-check"></i> Kinetic Typography & Effects</li>
+                        <li><i class="fa-solid fa-circle-check"></i> High-End Audio Engineering</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Custom Transitions & Color Grading</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Creative Workshow Section -->
+        <section id="gallery" class="section-container">
+            <h2 class="section-title">CREATIVE WORKSHOW</h2>
+            <p class="section-intro-text">Explore my real hand-crafted thumbnail creations, esports poster overlays, and cinematic video edits.</p>
+            <div class="gallery-grid">
+                <!-- Gallery Item 1 -->
+                <div class="gallery-item glass-panel" data-src="assets/thala_waiting.jpg" data-title="Thala Waiting..." data-desc="Cinematic Video Composition & VFX Thumbnail design featuring Ajith Kumar.">
+                    <div class="gallery-img-wrapper">
+                        <img src="assets/thala_waiting.jpg" alt="Thala Waiting Thumbnail" class="gallery-img">
+                        <div class="gallery-zoom-overlay">
+                            <i class="fa-solid fa-magnifying-glass-plus"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-info">
+                        <h4>Thala Waiting...</h4>
+                        <span class="gallery-tag">Video Editing Work</span>
+                    </div>
+                </div>
+                <!-- Gallery Item 2 -->
+                <div class="gallery-item glass-panel" data-src="assets/ezhil_is_live.jpg" data-title="Ezhil Is Live" data-desc="Custom PUBG Mobile live stream thumbnail layout featuring custom composite graphics.">
+                    <div class="gallery-img-wrapper">
+                        <img src="assets/ezhil_is_live.jpg" alt="Ezhil Is Live PUBG" class="gallery-img">
+                        <div class="gallery-zoom-overlay">
+                            <i class="fa-solid fa-magnifying-glass-plus"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-info">
+                        <h4>Ezhil Is Live</h4>
+                        <span class="gallery-tag">Esports / Gaming Poster</span>
+                    </div>
+                </div>
+                <!-- Gallery Item 3 -->
+                <div class="gallery-item glass-panel" data-src="assets/one_man_squad.jpg" data-title="One Man Squad" data-desc="Cinematic 4K gaming composite cover design emphasizing 'One Man Squad' esports aesthetic.">
+                    <div class="gallery-img-wrapper">
+                        <img src="assets/one_man_squad.jpg" alt="One Man Squad PUBG Mobile" class="gallery-img">
+                        <div class="gallery-zoom-overlay">
+                            <i class="fa-solid fa-magnifying-glass-plus"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-info">
+                        <h4>One Man Squad</h4>
+                        <span class="gallery-tag">Graphic Design Cover</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Knowledge & Skills Section -->
+        <section id="skills" class="section-container">
+            <h2 class="section-title">MY KNOWLEDGE</h2>
+            <div class="skills-wrapper glass-panel">
+                <p class="section-intro-text">Equipped with a diverse set of modern skills matching the fast-paced nature of code, media, and esports.</p>
+                <div class="skills-grid">
+                    <!-- Left: Technical & Development -->
+                    <div class="skills-category">
+                        <h3>Coding & Development</h3>
+                        <div class="skill-item-bar">
+                            <div class="skill-info">
+                                <span>HTML5 / CSS3 / Modern JS</span>
+                                <span class="skill-percentage">95%</span>
+                            </div>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item-bar">
+                            <div class="skill-info">
+                                <span>3D Rendering & WebGL (Three.js)</span>
+                                <span class="skill-percentage">85%</span>
+                            </div>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item-bar">
+                            <div class="skill-info">
+                                <span>Python & Backend Automation</span>
+                                <span class="skill-percentage">90%</span>
+                            </div>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" style="width: 90%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Right: Media & Execution -->
+                    <div class="skills-category">
+                        <h3>Creative Media & Strategy</h3>
+                        <div class="skill-item-bar">
+                            <div class="skill-info">
+                                <span>Video Editing & Sound Design</span>
+                                <span class="skill-percentage">98%</span>
+                            </div>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" style="width: 98%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item-bar">
+                            <div class="skill-info">
+                                <span>VFX & Cybernetic Glitch Animation</span>
+                                <span class="skill-percentage">92%</span>
+                            </div>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" style="width: 92%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item-bar">
+                            <div class="skill-info">
+                                <span>Competitive Gaming Strategy & Reflexes</span>
+                                <span class="skill-percentage">96%</span>
+                            </div>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" style="width: 96%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- IQ Comparison Section -->
+        <section id="iq" class="section-container">
+            <h2 class="section-title">IQ PERFORMANCE ANALYSIS</h2>
+            <div class="iq-container glass-panel">
+                <div class="iq-info-text">
+                    <h3>Cognitive Intelligence Benchmark</h3>
+                    <p>Comparing general problem-solving, cognitive processing speed, and algorithmic analysis capacity. A visual chart demonstrating cognitive metrics compared to global cohorts.</p>
+                </div>
+                <div class="iq-chart">
+                    <!-- IQ Bar 1: Average Human -->
+                    <div class="iq-bar-group">
+                        <div class="iq-bar-label">
+                            <span class="iq-subject">Average Human</span>
+                            <span class="iq-score">IQ 100</span>
+                        </div>
+                        <div class="iq-bar-track">
+                            <div class="iq-bar-fill-bar average" style="width: 62.5%"></div>
+                        </div>
+                    </div>
+                    <!-- IQ Bar 2: Genius Threshold -->
+                    <div class="iq-bar-group">
+                        <div class="iq-bar-label">
+                            <span class="iq-subject">Genius Baseline</span>
+                            <span class="iq-score">IQ 130</span>
+                        </div>
+                        <div class="iq-bar-track">
+                            <div class="iq-bar-fill-bar genius" style="width: 81.2%"></div>
+                        </div>
+                    </div>
+                    <!-- IQ Bar 3: Albert Einstein -->
+                    <div class="iq-bar-group">
+                        <div class="iq-bar-label">
+                            <span class="iq-subject">Albert Einstein (Estimate)</span>
+                            <span class="iq-score">IQ 160</span>
+                        </div>
+                        <div class="iq-bar-track">
+                            <div class="iq-bar-fill-bar einstein" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <!-- IQ Bar 4: Victor Ezhil -->
+                    <div class="iq-bar-group victor-iq-group">
+                        <div class="iq-bar-label">
+                            <span class="iq-subject text-glow">Victor Ezhil</span>
+                            <span class="iq-score text-glow">IQ 160+ (Cognitive Max)</span>
+                        </div>
+                        <div class="iq-bar-track victor-track">
+                            <div class="iq-bar-fill-bar victor-bar" style="width: 100%"></div>
+                        </div>
+                        <div class="iq-glitch-badge">OUTSTANDING</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- UPI Donation & QR Section -->
+        <section id="donate" class="section-container">
+            <h2 class="section-title">ACQUIRE TEMPLATE & CONTRACT</h2>
+            <div class="donation-grid">
+                <!-- QR Code Display Card -->
+                <div class="donation-card qr-card glass-panel">
+                    <div class="qr-glow-layer"></div>
+                    <h3>Scan to Initiate Booking</h3>
+                    <p class="qr-sub">Scan the QR code below using Google Pay, PhonePe, Paytm, or any BHIM UPI App to secure your contract or buy the full 3D template bundle.</p>
+                    
+                    <!-- QR Box -->
+                    <div class="qr-code-wrapper">
+                        <img id="upi-qr" src="" alt="UPI 7000 INR Booking QR Code">
+                        <div class="qr-corner-dots">
+                            <span></span><span></span><span></span><span></span>
+                        </div>
+                    </div>
+
+                    <!-- Payment details -->
+                    <div class="payment-summary">
+                        <div class="summary-row">
+                            <span>Initial Rate (Minimum):</span>
+                            <span class="amount-val">₹7000.00 INR</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>UPI ID:</span>
+                            <span class="upi-id-val">arasu9629hf@okhdfcbank</span>
+                        </div>
+                    </div>
+
+                    <!-- Action Button to Copy UPI ID -->
+                    <button class="btn btn-secondary copy-btn" id="copy-upi-btn" data-clipboard="arasu9629hf@okhdfcbank">
+                        <i class="fa-regular fa-copy"></i> Copy UPI ID
+                    </button>
+                    <div id="copy-toast">UPI ID Copied!</div>
+                </div>
+
+                <!-- Text Instructions & Details Card -->
+                <div class="donation-card info-card glass-panel">
+                    <div class="card-icon neon-pulse-icon"><i class="fa-solid fa-file-contract"></i></div>
+                    <h3>Project Booking & Source License</h3>
+                    <p>Securing a project with Victor Ezhil starts at a minimum retainer of <strong>₹7,000</strong>. This locks in premium development or editing availability. You can also purchase this exact source code structure with lifetime rights:</p>
+                    
+                    <ul class="benefit-list">
+                        <li><i class="fa-solid fa-code"></i> Full 3D Interactive Codebase License</li>
+                        <li><i class="fa-solid fa-cubes"></i> Three.js Particle Constellation Setup</li>
+                        <li><i class="fa-solid fa-envelope-open-text"></i> Interactive Neural Chat Assistant Integration</li>
+                        <li><i class="fa-solid fa-user-gear"></i> Custom Color Calibration & Branding Support</li>
+                    </ul>
+
+                    <div class="license-notice">
+                        <p><strong>Notice:</strong> After completing the UPI transfer of <strong>₹7000</strong>, please send a copy of your receipt alongside project requirements to <a href="mailto:victorroot9629@gmail.com" class="neon-hover">victorroot9629@gmail.com</a>, or DM me directly using the chat portal on the bottom right.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section-container">
+            <h2 class="section-title">GET IN TOUCH</h2>
+            <div class="contact-grid">
+                <!-- Info details -->
+                <div class="contact-details-card glass-panel">
+                    <h3>Contact Information</h3>
+                    <p>Have questions about the profile, need customizations, or looking to collaborate on B.Sc. projects or video editing orders? Drop a message!</p>
+                    
+                    <div class="contact-list">
+                        <div class="contact-list-item">
+                            <i class="fa-solid fa-envelope"></i>
+                            <div>
+                                <span>Gmail</span>
+                                <a href="mailto:victorroot9629@gmail.com">victorroot9629@gmail.com</a>
+                            </div>
+                        </div>
+                        <div class="contact-list-item">
+                            <i class="fa-solid fa-qrcode"></i>
+                            <div>
+                                <span>Support Desk (UPI)</span>
+                                <span>arasu9629hf@okhdfcbank</span>
+                            </div>
+                        </div>
+                        <div class="contact-list-item">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                            <div>
+                                <span>Current Focus</span>
+                                <span>B.Sc. Computer Science</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <div class="contact-form-card glass-panel">
+                    <h3>Send Message</h3>
+                    <form id="contact-form" action="https://formspree.io/f/your-form-id" method="POST" onsubmit="event.preventDefault(); alert('Message sent successfully! (Simulation)');">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="form-name">Name</label>
+                                <input type="text" id="form-name" placeholder="John Doe" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="form-email">Email</label>
+                                <input type="email" id="form-email" placeholder="john@example.com" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="form-subject">Subject</label>
+                            <input type="text" id="form-subject" placeholder="Project Inquiry / Purchase License" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="form-message">Message</label>
+                            <textarea id="form-message" rows="5" placeholder="Write your message here..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-glow">Send Transmission</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="main-footer">
+        <div class="footer-content">
+            <div class="footer-info">
+                <h3>Victor Ezhil</h3>
+                <p>Creating visual paradigms using code, design, and audio-visual arts.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Legal / Links</h4>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#donate">Support</a></li>
+                    <li><a href="javascript:void(0)" id="open-privacy">Privacy Policy</a></li>
+                    <li><a href="javascript:void(0)" id="open-terms">Terms & Conditions</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Victor Ezhil. All rights reserved. Created in Premium 3D Glassmorphism.</p>
+        </div>
+    </footer>
+
+    <!-- FLOATING DM CHATBOT -->
+    <div id="dm-bubble" class="dm-bubble-btn">
+        <i class="fa-solid fa-comments"></i>
+        <span class="dm-notification-dot"></span>
+    </div>
+
+    <div id="dm-box" class="dm-chat-box glass-panel">
+        <div class="dm-header">
+            <div class="dm-avatar-status">
+                <img src="assets/victor.jpg" alt="Victor Ezhil" class="dm-status-img">
+                <div>
+                    <h4>Victor's Neural AI</h4>
+                    <span class="dm-status-text"><span class="pulse-dot"></span> Online</span>
+                </div>
+            </div>
+            <button class="close-dm" id="close-dm-btn">&times;</button>
+        </div>
+        <div class="dm-messages" id="dm-messages-container">
+            <div class="dm-msg bot">
+                <p>Salutations! I am Victor's neural virtual assistant. Looking to acquire a template, check gaming availability, or commission professional edits? Select an option below:</p>
+            </div>
+        </div>
+        <div class="dm-quick-replies">
+            <button class="quick-reply-btn" data-reply="order">Hire for Editing (₹7,000+)</button>
+            <button class="quick-reply-btn" data-reply="template">Buy 3D Portfolio (₹7,000)</button>
+            <button class="quick-reply-btn" data-reply="project">B.Sc. CS Project Collab</button>
+            <button class="quick-reply-btn" data-reply="hello">Say Hello</button>
+        </div>
+        <div class="dm-input-area">
+            <input type="text" id="dm-input-field" placeholder="Type a transmission...">
+            <button id="send-dm-btn"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- LIGHTBOX MODAL FOR GALLERY ZOOM -->
+    <div id="lightbox-modal" class="lightbox-modal">
+        <span class="lightbox-close" id="lightbox-close-btn">&times;</span>
+        <div class="lightbox-content-wrapper">
+            <img class="lightbox-img" id="lightbox-img" src="" alt="Zoom Image">
+            <div class="lightbox-caption">
+                <h4 id="lightbox-title"></h4>
+                <p id="lightbox-desc"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL BOX: Privacy Policy -->
+    <div class="modal" id="privacy-modal">
+        <div class="modal-content glass-panel">
+            <div class="modal-header">
+                <h2>Privacy Policy</h2>
+                <button class="close-modal" id="close-privacy">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Effective Date: August 10, 2026</strong></p>
+                <p>Welcome to Victor Ezhil's Profile Website. Your privacy is paramount. This page informs you of our policies regarding the collection, use, and disclosure of personal data when you visit this website.</p>
+                
+                <h3>1. Information Collection</h3>
+                <p>We do not collect any personally identifiable information when you browse this site. If you use the contact form or send an email, we will only use your provided email and name to answer your inquiry.</p>
+
+                <h3>2. Cookies and Tracking</h3>
+                <p>This website is static and does not deploy tracking cookies or pixel tags. Your visit is anonymous.</p>
+
+                <h3>3. UPI and Transactions</h3>
+                <p>All booking payments are processed external to this website via standard third-party UPI applications (e.g., GPay, PhonePe, Paytm). We do not collect or store credit card details, bank account numbers, or transaction IDs on our servers.</p>
+
+                <h3>4. Contact Us</h3>
+                <p>For questions about this policy, contact us at: <a href="mailto:victorroot9629@gmail.com">victorroot9629@gmail.com</a>.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL BOX: Terms & Conditions -->
+    <div class="modal" id="terms-modal">
+        <div class="modal-content glass-panel">
+            <div class="modal-header">
+                <h2>Terms and Conditions</h2>
+                <button class="close-modal" id="close-terms">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Effective Date: August 10, 2026</strong></p>
+                <p>By accessing or utilizing Victor Ezhil's Profile Website, you agree to comply with and be bound by the following terms. Please read these terms carefully.</p>
+
+                <h3>1. Intended Use</h3>
+                <p>This website serves as a personal profile portfolio. Users may browse the profile, review the skills list, and secure project bookings.</p>
+
+                <h3>2. Project Booking Rates</h3>
+                <p>When you transfer ₹7000 via UPI to the ID <code>arasu9629hf@okhdfcbank</code>, you are securing a project booking slot. The booking fee forms a minimum project retainer. Custom deliverables require final signed agreements. All retainer fees are final and non-refundable once work commences.</p>
+
+                <h3>3. Intellectual Property</h3>
+                <p>The code layout, styling definitions, customized 3D algorithms, and asset files are the properties of Victor Ezhil. Unauthorized reselling of the unmodified package is prohibited.</p>
+
+                <h3>4. Limitations of Liability</h3>
+                <p>We are not liable for any discrepancies, payment failures within external UPI applications, or issues arising from website hosting configurations performed by the user.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Three.js Library CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Main Script -->
+    <script src="script.js"></script>
+</body>
+</html>
