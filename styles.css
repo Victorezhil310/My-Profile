@@ -143,6 +143,19 @@ body {
     margin-bottom: 2.5rem;
 }
 
+/* Scroll reveal class animations */
+.reveal-element {
+    opacity: 0;
+    transform: translateY(35px) scale(0.97);
+    transition: opacity 0.85s var(--transition-curve), transform 0.85s var(--transition-curve);
+    will-change: transform, opacity;
+}
+
+.reveal-element.revealed {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
 /* Buttons */
 .btn {
     display: inline-flex;
@@ -197,6 +210,62 @@ body {
 }
 
 /* ----------------------------------------------------
+   NOTIFICATION TOAST ALERT
+   ---------------------------------------------------- */
+.notification-toast {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    width: 340px;
+    z-index: 2100;
+    padding: 1.2rem;
+    transform: translateX(400px);
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: all;
+    border-color: var(--border-glass-glow);
+    box-shadow: 0 10px 40px rgba(0, 242, 254, 0.2), 0 0 20px rgba(157, 77, 221, 0.15);
+}
+
+.notification-toast.show {
+    transform: translateX(0);
+}
+
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.notification-title-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.notification-title-group h4 {
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.notification-time {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.notification-toast p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.pulse-icon {
+    animation: pulse 1.5s infinite;
+}
+
+/* ----------------------------------------------------
    HEADER & NAVBAR
    ---------------------------------------------------- */
 #main-header {
@@ -235,13 +304,13 @@ body {
 .nav-links {
     display: flex;
     list-style: none;
-    gap: 1.5rem;
+    gap: 1.2rem;
     align-items: center;
 }
 
 .nav-link {
     font-family: var(--font-heading);
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 500;
     color: var(--text-secondary);
     text-decoration: none;
@@ -256,7 +325,7 @@ body {
 
 .highlight-link {
     border: 1px solid var(--primary-neon);
-    padding: 0.5rem 1.2rem;
+    padding: 0.5rem 1rem;
     border-radius: 6px;
     box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
 }
@@ -265,6 +334,18 @@ body {
     background-color: var(--primary-neon);
     color: #000 !important;
     box-shadow: 0 0 20px rgba(0, 242, 254, 0.6);
+}
+
+.clone-nav-btn {
+    border-color: var(--accent-neon);
+    color: var(--accent-neon);
+    box-shadow: 0 0 10px rgba(255, 0, 127, 0.15);
+}
+
+.clone-nav-btn:hover {
+    background-color: var(--accent-neon);
+    color: #fff !important;
+    box-shadow: 0 0 20px rgba(255, 0, 127, 0.6);
 }
 
 /* Mobile Menu Trigger */
@@ -322,16 +403,6 @@ body {
     color: var(--primary-neon);
     margin-bottom: 2rem;
     letter-spacing: 1px;
-}
-
-.pulse-dot {
-    width: 8px;
-    height: 8px;
-    background-color: var(--primary-neon);
-    border-radius: 50%;
-    margin-right: 8px;
-    box-shadow: 0 0 8px var(--primary-neon);
-    animation: pulse 1.8s infinite;
 }
 
 .hero-subtitle {
@@ -629,7 +700,7 @@ body {
    ---------------------------------------------------- */
 .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 2rem;
     margin-top: 2rem;
 }
@@ -768,7 +839,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transform: scaleX(-1); /* Mirror camera feed */
+    transform: scaleX(-1);
 }
 
 .webcam-viewfinder {
@@ -972,7 +1043,7 @@ body {
 }
 
 /* ----------------------------------------------------
-   KNOWLEDGE & SKILLS
+   KNOWLEDGE & SKILLS (3 Columns)
    ---------------------------------------------------- */
 .skills-wrapper {
     padding: 3rem;
@@ -980,18 +1051,19 @@ body {
 
 .skills-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
     margin-top: 2rem;
 }
 
 .skills-category h3 {
     font-family: var(--font-heading);
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     margin-bottom: 2rem;
     border-left: 2px solid var(--primary-neon);
     padding-left: 10px;
     letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
 .skill-item-bar {
@@ -1003,6 +1075,7 @@ body {
     justify-content: space-between;
     margin-bottom: 0.6rem;
     font-weight: 500;
+    font-size: 0.9rem;
 }
 
 .skill-percentage {
@@ -1025,6 +1098,62 @@ body {
     transform: scaleX(0);
     transform-origin: left;
     animation: fillBar 1.5s forwards cubic-bezier(0.1, 0.8, 0.2, 1);
+}
+
+/* ----------------------------------------------------
+   CLONE WIZARD GUIDE STYLES
+   ---------------------------------------------------- */
+.step-guide {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin: 1.5rem 0;
+}
+
+.step-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    padding: 1rem;
+    border-radius: 10px;
+}
+
+.step-num-badge {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--accent-neon);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    flex-shrink: 0;
+    box-shadow: 0 0 10px var(--accent-neon);
+}
+
+.step-item p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.step-item p strong {
+    color: var(--text-primary);
+}
+
+.modal-action-row {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.modal-action-row .btn {
+    width: 100%;
+    max-width: 300px;
 }
 
 /* ----------------------------------------------------
@@ -1804,7 +1933,7 @@ body {
 }
 
 /* ----------------------------------------------------
-   MODALS (PRIVACY & TERMS)
+   MODALS (PRIVACY, TERMS, CLONE WIZARD)
    ---------------------------------------------------- */
 .modal {
     position: fixed;

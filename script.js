@@ -24,11 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.setSize(window.innerWidth, window.innerHeight);
 
-        // Group to rotate everything together
         const mainGroup = new THREE.Group();
         scene.add(mainGroup);
 
-        // 1. Central Cyber Globe Geometry
+        // Central Cyber Globe Geometry
         const geometry = new THREE.IcosahedronGeometry(80, 2);
         const material = new THREE.MeshBasicMaterial({
             color: 0x00f2fe,
@@ -50,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const spherePoints = new THREE.Points(pointGeometry, pointMaterial);
         mainGroup.add(spherePoints);
 
-        // 2. Surrounding Star Field
+        // Surrounding Star Field
         const starsGeometry = new THREE.BufferGeometry();
         const starsCount = 600;
         const starPositions = new Float32Array(starsCount * 3);
@@ -87,7 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
         starField = new THREE.Points(starsGeometry, starsMaterial);
         mainGroup.add(starField);
 
-        // Store reference to rotate
         scene.mainGroup = mainGroup;
 
         // Ambient Lighting
@@ -98,20 +96,17 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('resize', onWindowResize);
         document.addEventListener('mousemove', onMouseMove);
 
-        // Start Animation Loop
         animate();
     };
 
     const animate = () => {
         requestAnimationFrame(animate);
 
-        // Rotate globe on multiple axes
         if (cyberSphere) {
             cyberSphere.rotation.y += 0.0015;
             cyberSphere.rotation.x += 0.0008;
         }
 
-        // Parallax mouse movements
         if (scene.mainGroup) {
             currentX += (targetX - currentX) * 0.04;
             currentY += (targetY - currentY) * 0.04;
@@ -142,6 +137,61 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ----------------------------------------------------
+    // SUPER SMOOTH SCROLL REVEAL OBSERVER
+    // ----------------------------------------------------
+    const setupScrollReveal = () => {
+        const animatedTargets = document.querySelectorAll('.glass-panel, .passion-card, .gallery-item, .studio-card');
+        
+        const observerOptions = {
+            threshold: 0.05,
+            rootMargin: '0px 0px -40px 0px'
+        };
+
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    // Once animated, stop observing this element
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        animatedTargets.forEach(target => {
+            target.classList.add('reveal-element');
+            revealObserver.observe(target);
+        });
+    };
+
+    setupScrollReveal();
+
+    // ----------------------------------------------------
+    // SYSTEM ALERTS & ON-LOAD NOTIFICATIONS
+    // ----------------------------------------------------
+    const triggerNotification = (text) => {
+        const liveNotification = document.getElementById('live-notification');
+        if (!liveNotification) return;
+
+        // If custom text passed, replace paragraph content
+        if (text) {
+            const p = liveNotification.querySelector('p');
+            if (p) p.textContent = text;
+        }
+
+        liveNotification.classList.add('show');
+
+        // Dismiss automatically after 6 seconds
+        setTimeout(() => {
+            liveNotification.classList.remove('show');
+        }, 6000);
+    };
+
+    // Trigger greeting notification on window load
+    setTimeout(() => {
+        triggerNotification();
+    }, 1500);
+
+    // ----------------------------------------------------
     // CYBERPUNK IMAGE STUDIO (WEBCAM & FILE FILTERING)
     // ----------------------------------------------------
     const tabWebcam = document.getElementById('tab-webcam');
@@ -167,11 +217,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const valNeon = document.getElementById('val-neon');
 
     let stream = null;
-    let sourceImage = null; // Stored HTMLImageElement or Video Frame
+    let sourceImage = null;
     let imageWidth = 0;
     let imageHeight = 0;
 
-    // Toggle Tabs
+    const startWebcam = async () => {
+        if (stream) return;
+        try {
+            stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 }, audio: false });
+            if (video) video.srcObject = stream;
+        } catch (err) {
+            console.error("Camera access denied or unavailable: ", err);
+        }
+    };
+
+    const stopWebcam = () => {
+        if (stream) {
+            stream.getTracks().forEach(track => track.stop());
+            stream = null;
+        }
+    };
+
+    // Start Webcam initially
+    startWebcam();
+
     if (tabWebcam && tabUpload) {
         tabWebcam.addEventListener('click', () => {
             tabWebcam.classList.add('active');
@@ -190,31 +259,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Start Webcam Feed
-    const startWebcam = async () => {
-        if (stream) return;
-        try {
-            stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 }, audio: false });
-            if (video) {
-                video.srcObject = stream;
-            }
-        } catch (err) {
-            console.error("Camera access denied or unavailable: ", err);
-        }
-    };
-
-    // Stop Webcam Feed
-    const stopWebcam = () => {
-        if (stream) {
-            stream.getTracks().forEach(track => track.stop());
-            stream = null;
-        }
-    };
-
-    // Auto-init webcam on start
-    startWebcam();
-
-    // Trigger local file browse
     if (dropzone && fileInput) {
         dropzone.addEventListener('click', () => fileInput.click());
         
@@ -223,7 +267,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (file) handleImageFile(file);
         });
 
-        // Drag and Drop
         dropzone.addEventListener('dragover', (e) => {
             e.preventDefault();
             dropzone.style.borderColor = 'var(--primary-neon)';
@@ -241,7 +284,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Load Image file
     const handleImageFile = (file) => {
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -258,7 +300,6 @@ document.addEventListener('DOMContentLoaded', () => {
         reader.readAsDataURL(file);
     };
 
-    // Capture from Webcam
     if (captureBtn && video) {
         captureBtn.addEventListener('click', () => {
             if (!video.srcObject) return;
@@ -267,7 +308,6 @@ document.addEventListener('DOMContentLoaded', () => {
             tempCanvas.height = video.videoHeight;
             const tempCtx = tempCanvas.getContext('2d');
             
-            // Mirror camera frame capture
             tempCtx.translate(tempCanvas.width, 0);
             tempCtx.scale(-1, 1);
             tempCtx.drawImage(video, 0, 0, tempCanvas.width, tempCanvas.height);
@@ -284,10 +324,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Initialize Canvas Dimensions
     const initCanvas = () => {
         if (!filterCanvas) return;
-        // Limit max rendering size for smoother pixel pipeline processing
         const maxDim = 800;
         let scale = 1;
         if (imageWidth > maxDim || imageHeight > maxDim) {
@@ -304,72 +342,57 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Pixel shader / CPU filter pipeline logic
     const applyCyberFilters = () => {
         if (!sourceImage || !filterCanvas) return;
         const ctx = filterCanvas.getContext('2d');
         const w = filterCanvas.width;
         const h = filterCanvas.height;
 
-        // Draw clean base image onto canvas first
         ctx.drawImage(sourceImage, 0, 0, w, h);
 
-        // Fetch image pixels data
         const imgData = ctx.getImageData(0, 0, w, h);
         const data = imgData.data;
 
-        // Get filter slider parameters
         const splitAmount = parseInt(sliderAberration.value);
         const glitchProb = parseInt(sliderGlitch.value) / 100;
         const neonBlend = parseInt(sliderNeon.value) / 100;
 
-        // Create secondary buffer array for pixel transformation
         const outData = ctx.createImageData(w, h);
         const out = outData.data;
 
-        // 1. Apply Chromatic Aberration (RGB Shift) and row displacements
         for (let y = 0; y < h; y++) {
-            // Check if this horizontal line of pixels gets glitched (displaced)
             let rowOffset = 0;
             if (glitchProb > 0 && Math.random() < glitchProb * 0.08) {
-                // displace line horizontally by random offset
                 rowOffset = Math.floor((Math.random() - 0.5) * w * 0.08);
             }
 
             for (let x = 0; x < w; x++) {
                 const targetIdx = (y * w + x) * 4;
 
-                // Source X positions for R, G, and B channel displacement
                 const rx = Math.min(w - 1, Math.max(0, x + rowOffset - splitAmount));
                 const gx = Math.min(w - 1, Math.max(0, x + rowOffset));
                 const bx = Math.min(w - 1, Math.max(0, x + rowOffset + splitAmount));
 
-                // Pixel index positions inside source data
                 const rIdx = (y * w + rx) * 4;
                 const gIdx = (y * w + gx) * 4;
                 const bIdx = (y * w + bx) * 4;
 
-                // Shift RGB colors
-                out[targetIdx] = data[rIdx];       // R channel
-                out[targetIdx + 1] = data[gIdx + 1]; // G channel
-                out[targetIdx + 2] = data[bIdx + 2]; // B channel
-                out[targetIdx + 3] = data[gIdx + 3]; // Alpha channel
+                out[targetIdx] = data[rIdx];
+                out[targetIdx + 1] = data[gIdx + 1];
+                out[targetIdx + 2] = data[bIdx + 2];
+                out[targetIdx + 3] = data[gIdx + 3];
             }
         }
 
-        // Draw chromatic glitch pixels back onto canvas
         ctx.putImageData(outData, 0, 0);
 
-        // 2. Draw Tint / Scanline Overlays
-        // Cyan and Pink neon gradient map
         ctx.globalCompositeOperation = 'screen';
-        ctx.fillStyle = `rgba(0, 242, 254, ${neonBlend * 0.35})`; // Cyan Tint
+        ctx.fillStyle = `rgba(0, 242, 254, ${neonBlend * 0.35})`;
         ctx.fillRect(0, 0, w, h);
 
-        ctx.fillStyle = `rgba(255, 0, 127, ${neonBlend * 0.25})`; // Cyber Pink Tint
+        ctx.fillStyle = `rgba(255, 0, 127, ${neonBlend * 0.25})`;
         ctx.fillRect(0, 0, w, h);
 
-        // Scanline lines
         ctx.globalCompositeOperation = 'multiply';
         ctx.strokeStyle = 'rgba(0, 0, 0, 0.15)';
         ctx.lineWidth = 1;
@@ -380,17 +403,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         ctx.stroke();
 
-        // Reset composite operations
         ctx.globalCompositeOperation = 'source-over';
 
-        // Update download hyperlink
         if (saveBtn) {
             saveBtn.href = filterCanvas.toDataURL('image/png');
             saveBtn.download = `victor-cyber-edit-${Date.now()}.png`;
         }
     };
 
-    // Listen to Slider changes
     const onSliderChange = () => {
         if (valAberration) valAberration.textContent = `${sliderAberration.value}px`;
         if (valGlitch) valGlitch.textContent = `${sliderGlitch.value}%`;
@@ -402,7 +422,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (sliderGlitch) sliderGlitch.addEventListener('input', onSliderChange);
     if (sliderNeon) sliderNeon.addEventListener('input', onSliderChange);
 
-    // Reset Canvas Filters
     if (resetBtn) {
         resetBtn.addEventListener('click', () => {
             sliderAberration.value = 15;
@@ -413,12 +432,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ----------------------------------------------------
-    // UPI QR CODE GENERATOR (Rate 7000 INR)
+    // UPI QR CODE GENERATOR (Rate 299 INR)
     // ----------------------------------------------------
     const generateUpiQr = () => {
         const upiId = "arasu9629hf@okhdfcbank";
         const payeeName = "Victor Ezhil";
-        const amount = "7000";
+        const amount = "299"; // Updated to ₹299
         const currency = "INR";
         
         const upiLink = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(payeeName)}&am=${amount}&cu=${currency}`;
@@ -592,8 +611,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const botReplies = {
-        order: "Outstanding choice! Video editing and graphic thumbnail designs contract starts at a minimum retainer of <strong>₹7,000</strong>. Send your design brief to <a href='mailto:victorroot9629@gmail.com' class='neon-hover'>victorroot9629@gmail.com</a>, or complete the UPI payment of ₹7,000 below to secure your slots immediately.",
-        template: "This custom 3D glassmorphic profile codebase is licensed for a fee of <strong>₹7,000</strong>. Simply scan the UPI QR code on the profile card, execute the transfer to <code>arasu9629hf@okhdfcbank</code>, and email your transaction receipt to victorroot9629@gmail.com to download the full source code ZIP.",
+        order: "Outstanding choice! Video editing and graphic thumbnail designs contract starts at a minimum retainer of <strong>₹299</strong>. Send your design brief to <a href='mailto:victorroot9629@gmail.com' class='neon-hover'>victorroot9629@gmail.com</a>, or complete the UPI payment of ₹299 below to secure your slots immediately.",
+        template: "This custom 3D glassmorphic profile codebase is licensed for a fee of <strong>₹299</strong>. Simply scan the UPI QR code on the profile card, execute the transfer to <code>arasu9629hf@okhdfcbank</code>, and email your transaction receipt to victorroot9629@gmail.com to download the full source code ZIP.",
         project: "Let's collaborate! I study B.Sc. Computer Science and love building interactive software, web tools, or gaming configurations. Email me the syllabus or project criteria at <a href='mailto:victorroot9629@gmail.com' class='neon-hover'>victorroot9629@gmail.com</a> to kick things off.",
         hello: "Greetings, traveler! 🌌 Thank you for connecting with Victor's AI. Feel free to browse through the <strong>Creative Workshow</strong> section to check out my edit thumbnails, or drop an inquiry."
     };
@@ -607,7 +626,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         setTimeout(() => {
             typingDiv.remove();
-            const replyText = botReplies[type] || "Acknowledged. For complex questions or direct inquiries, please send a transmission to victorroot9629@gmail.com, or complete the UPI contract payment of ₹7,000.";
+            const replyText = botReplies[type] || "Acknowledged. For complex questions or direct inquiries, please send a transmission to victorroot9629@gmail.com, or complete the UPI contract payment of ₹299.";
             addMessage('bot', replyText);
         }, 800);
     };
@@ -633,7 +652,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const lowercaseQuery = query.toLowerCase();
         if (lowercaseQuery.includes('edit') || lowercaseQuery.includes('hire') || lowercaseQuery.includes('work') || lowercaseQuery.includes('rate')) {
             matchedType = 'order';
-        } else if (lowercaseQuery.includes('price') || lowercaseQuery.includes('template') || lowercaseQuery.includes('buy') || lowercaseQuery.includes('code') || lowercaseQuery.includes('7000')) {
+        } else if (lowercaseQuery.includes('price') || lowercaseQuery.includes('template') || lowercaseQuery.includes('buy') || lowercaseQuery.includes('code') || lowercaseQuery.includes('299')) {
             matchedType = 'template';
         } else if (lowercaseQuery.includes('bsc') || lowercaseQuery.includes('science') || lowercaseQuery.includes('project') || lowercaseQuery.includes('study')) {
             matchedType = 'project';
@@ -650,6 +669,66 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.key === 'Enter') {
                 handleInputSend();
             }
+        });
+    }
+
+    // ----------------------------------------------------
+    // CLONE SITE WIZARD MODAL LOGIC
+    // ----------------------------------------------------
+    const cloneModal = document.getElementById('clone-modal');
+    const openCloneBtn = document.getElementById('open-clone-wizard');
+    const heroCloneBtn = document.getElementById('hero-clone-btn');
+    const closeCloneBtn = document.getElementById('close-clone-wizard');
+    const proceedToPayBtn = document.getElementById('modal-pay-btn');
+
+    const openCloneModal = (e) => {
+        if (e) e.preventDefault();
+        if (cloneModal) {
+            cloneModal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+    };
+
+    if (openCloneBtn) openCloneBtn.addEventListener('click', openCloneModal);
+    if (heroCloneBtn) heroCloneBtn.addEventListener('click', openCloneModal);
+
+    if (cloneModal && closeCloneBtn) {
+        closeCloneBtn.addEventListener('click', () => {
+            cloneModal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        });
+
+        cloneModal.addEventListener('click', (e) => {
+            if (e.target === cloneModal) {
+                cloneModal.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    }
+
+    if (proceedToPayBtn && cloneModal) {
+        proceedToPayBtn.addEventListener('click', () => {
+            cloneModal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+            // Smooth scroll to donate section
+            const donateSec = document.getElementById('donate');
+            if (donateSec) {
+                donateSec.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    }
+
+    // ----------------------------------------------------
+    // CONTACT FORM INTERCEPTOR -> TRIGGER TOAST
+    // ----------------------------------------------------
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Clear inputs
+            contactForm.reset();
+            // Trigger customized success notification toast
+            triggerNotification("Transmission successful! Victor's Core AI has logged your inquiry. Check your email shortly.");
         });
     }
 

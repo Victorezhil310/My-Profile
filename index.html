@@ -23,6 +23,18 @@
     <!-- Cyber Scanlines overlay for futuristic aesthetic -->
     <div class="scanlines"></div>
 
+    <!-- Live Neural Notification Toast -->
+    <div id="live-notification" class="notification-toast glass-panel">
+        <div class="notification-header">
+            <div class="notification-title-group">
+                <i class="fa-solid fa-bell neon-text pulse-icon"></i>
+                <h4>Core Transmission</h4>
+            </div>
+            <span class="notification-time">Now</span>
+        </div>
+        <p>Telemetry sync successful. Chat portal active. Click DM to initiate project bookings.</p>
+    </div>
+
     <!-- Navigation Header -->
     <header id="main-header">
         <nav class="navbar">
@@ -37,6 +49,7 @@
                 <li><a href="#skills" class="nav-link">Knowledge</a></li>
                 <li><a href="#iq" class="nav-link">IQ Scale</a></li>
                 <li><a href="#donate" class="nav-link highlight-link">Support Me</a></li>
+                <li><a href="javascript:void(0)" class="nav-link highlight-link clone-nav-btn" id="open-clone-wizard">Build Yours</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
             <div class="menu-toggle" id="mobile-menu">
@@ -60,7 +73,7 @@
                     <p class="hero-desc">Building immersive virtual spaces, crafting visual stories, and executing pixel-perfect code configurations.</p>
                     <div class="hero-actions">
                         <a href="#donate" class="btn btn-primary btn-glow">Hire / Get Template</a>
-                        <a href="#studio" class="btn btn-secondary">Open Filter Studio</a>
+                        <a href="javascript:void(0)" class="btn btn-secondary" id="hero-clone-btn">Build Yours</a>
                     </div>
                 </div>
                 <div class="hero-avatar-wrapper">
@@ -213,6 +226,45 @@
                         <span class="gallery-tag">Graphic Design Cover</span>
                     </div>
                 </div>
+                <!-- Gallery Item 4: BMW M4 Car -->
+                <div class="gallery-item glass-panel" data-src="assets/car_bmw.jpg" data-title="BMW M4 Performance Concept" data-desc="Futuristic automotive VFX rendering and color grading layout.">
+                    <div class="gallery-img-wrapper">
+                        <img src="assets/car_bmw.jpg" alt="BMW M4 Concept" class="gallery-img">
+                        <div class="gallery-zoom-overlay">
+                            <i class="fa-solid fa-magnifying-glass-plus"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-info">
+                        <h4>BMW M4 Concept</h4>
+                        <span class="gallery-tag">Automotive Edit</span>
+                    </div>
+                </div>
+                <!-- Gallery Item 5: BMW S1000RR Bike -->
+                <div class="gallery-item glass-panel" data-src="assets/bike_bmw.jpg" data-title="BMW S1000RR Motion Art" data-desc="Esports motion thumbnail composited with dramatic background lighting.">
+                    <div class="gallery-img-wrapper">
+                        <img src="assets/bike_bmw.jpg" alt="BMW S1000RR Superbike" class="gallery-img">
+                        <div class="gallery-zoom-overlay">
+                            <i class="fa-solid fa-magnifying-glass-plus"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-info">
+                        <h4>BMW S1000RR Beast</h4>
+                        <span class="gallery-tag">Vehicle Graphic</span>
+                    </div>
+                </div>
+                <!-- Gallery Item 6: Toyota Supra Car -->
+                <div class="gallery-item glass-panel" data-src="assets/car_supra.jpg" data-title="Supra MK4 Cinematic" data-desc="Retro JDM poster design with customized filters and scanline overlay details.">
+                    <div class="gallery-img-wrapper">
+                        <img src="assets/car_supra.jpg" alt="Toyota Supra MK4" class="gallery-img">
+                        <div class="gallery-zoom-overlay">
+                            <i class="fa-solid fa-magnifying-glass-plus"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-info">
+                        <h4>Supra MK4 Classic</h4>
+                        <span class="gallery-tag">Cinematic Poster</span>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -305,14 +357,23 @@
         <section id="skills" class="section-container">
             <h2 class="section-title">MY KNOWLEDGE</h2>
             <div class="skills-wrapper glass-panel">
-                <p class="section-intro-text">Equipped with a diverse set of modern skills matching the fast-paced nature of code, media, and esports.</p>
+                <p class="section-intro-text">Equipped with a diverse set of modern skills matching the fast-paced nature of code, media, and academic science.</p>
                 <div class="skills-grid">
-                    <!-- Left: Technical & Development -->
+                    <!-- Column 1: Technical & Development -->
                     <div class="skills-category">
                         <h3>Coding & Development</h3>
                         <div class="skill-item-bar">
                             <div class="skill-info">
                                 <span>HTML5 / CSS3 / Modern JS</span>
+                                <span class="skill-percentage">95%</span>
+                            </div>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item-bar">
+                            <div class="skill-info">
+                                <span>Neural Networks & LLM Deployment</span>
                                 <span class="skill-percentage">95%</span>
                             </div>
                             <div class="skill-bar-bg">
@@ -328,17 +389,39 @@
                                 <div class="skill-bar-fill" style="width: 85%"></div>
                             </div>
                         </div>
+                    </div>
+                    <!-- Column 2: Academic Sciences (New!) -->
+                    <div class="skills-category">
+                        <h3>Academic Sciences</h3>
                         <div class="skill-item-bar">
                             <div class="skill-info">
-                                <span>Python & Backend Automation</span>
+                                <span>Applied Physics (Mechanics & Quantum)</span>
                                 <span class="skill-percentage">90%</span>
                             </div>
                             <div class="skill-bar-bg">
                                 <div class="skill-bar-fill" style="width: 90%"></div>
                             </div>
                         </div>
+                        <div class="skill-item-bar">
+                            <div class="skill-info">
+                                <span>Computational Chemistry & Kinetics</span>
+                                <span class="skill-percentage">88%</span>
+                            </div>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" style="width: 88%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item-bar">
+                            <div class="skill-info">
+                                <span>Mathematical & Bio-Systems Biology</span>
+                                <span class="skill-percentage">85%</span>
+                            </div>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" style="width: 85%"></div>
+                            </div>
+                        </div>
                     </div>
-                    <!-- Right: Media & Execution -->
+                    <!-- Column 3: Creative Media & Strategy -->
                     <div class="skills-category">
                         <h3>Creative Media & Strategy</h3>
                         <div class="skill-item-bar">
@@ -439,7 +522,7 @@
                     
                     <!-- QR Box -->
                     <div class="qr-code-wrapper">
-                        <img id="upi-qr" src="" alt="UPI 7000 INR Booking QR Code">
+                        <img id="upi-qr" src="" alt="UPI 299 INR Booking QR Code">
                         <div class="qr-corner-dots">
                             <span></span><span></span><span></span><span></span>
                         </div>
@@ -448,8 +531,8 @@
                     <!-- Payment details -->
                     <div class="payment-summary">
                         <div class="summary-row">
-                            <span>Initial Rate (Minimum):</span>
-                            <span class="amount-val">₹7000.00 INR</span>
+                            <span>Booking Rate:</span>
+                            <span class="amount-val">₹299.00 INR</span>
                         </div>
                         <div class="summary-row">
                             <span>UPI ID:</span>
@@ -468,7 +551,7 @@
                 <div class="donation-card info-card glass-panel">
                     <div class="card-icon neon-pulse-icon"><i class="fa-solid fa-file-contract"></i></div>
                     <h3>Project Booking & Source License</h3>
-                    <p>Securing a project with Victor Ezhil starts at a minimum retainer of <strong>₹7,000</strong>. This locks in premium development or editing availability. You can also purchase this exact source code structure with lifetime rights:</p>
+                    <p>Securing a project with Victor Ezhil starts at an initial booking rate of <strong>₹299</strong>. This locks in premium development or editing availability. You can also purchase this exact source code structure with lifetime rights:</p>
                     
                     <ul class="benefit-list">
                         <li><i class="fa-solid fa-code"></i> Full 3D Interactive Codebase License</li>
@@ -478,7 +561,7 @@
                     </ul>
 
                     <div class="license-notice">
-                        <p><strong>Notice:</strong> After completing the UPI transfer of <strong>₹7000</strong>, please send a copy of your receipt alongside project requirements to <a href="mailto:victorroot9629@gmail.com" class="neon-hover">victorroot9629@gmail.com</a>, or DM me directly using the chat portal on the bottom right.</p>
+                        <p><strong>Notice:</strong> After completing the UPI transfer of <strong>₹299</strong>, please send a copy of your receipt alongside project requirements to <a href="mailto:victorroot9629@gmail.com" class="neon-hover">victorroot9629@gmail.com</a>, or DM me directly using the chat portal on the bottom right.</p>
                     </div>
                 </div>
             </div>
@@ -521,7 +604,7 @@
                 <!-- Form -->
                 <div class="contact-form-card glass-panel">
                     <h3>Send Message</h3>
-                    <form id="contact-form" action="https://formspree.io/f/your-form-id" method="POST" onsubmit="event.preventDefault(); alert('Message sent successfully! (Simulation)');">
+                    <form id="contact-form" action="https://formspree.io/f/your-form-id" method="POST">
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="form-name">Name</label>
@@ -592,8 +675,8 @@
             </div>
         </div>
         <div class="dm-quick-replies">
-            <button class="quick-reply-btn" data-reply="order">Hire for Editing (₹7,000+)</button>
-            <button class="quick-reply-btn" data-reply="template">Buy 3D Portfolio (₹7,000)</button>
+            <button class="quick-reply-btn" data-reply="order">Hire for Editing (₹299 booking)</button>
+            <button class="quick-reply-btn" data-reply="template">Buy 3D Portfolio (₹299)</button>
             <button class="quick-reply-btn" data-reply="project">B.Sc. CS Project Collab</button>
             <button class="quick-reply-btn" data-reply="hello">Say Hello</button>
         </div>
@@ -611,6 +694,39 @@
             <div class="lightbox-caption">
                 <h4 id="lightbox-title"></h4>
                 <p id="lightbox-desc"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL BOX: Build Your Profile Clone Wizard -->
+    <div class="modal" id="clone-modal">
+        <div class="modal-content glass-panel">
+            <div class="modal-header">
+                <h2>Deploy Your 3D Profile</h2>
+                <button class="close-modal" id="close-clone-wizard">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Deploy a premium profile like this in less than 10 minutes.</strong></p>
+                <p>You can purchase a license to copy this complete 3D interactive, glassmorphic portfolio site. All scripts, Three.js 3D globe assets, and your custom AI assistant are included.</p>
+                
+                <div class="step-guide">
+                    <div class="step-item">
+                        <span class="step-num-badge">1</span>
+                        <p>Initiate a booking rate transfer of <strong>₹299 INR</strong> via UPI to <code>arasu9629hf@okhdfcbank</code>.</p>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-num-badge">2</span>
+                        <p>Email your transaction receipt screenshot and desired profile details to <a href="mailto:victorroot9629@gmail.com">victorroot9629@gmail.com</a>.</p>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-num-badge">3</span>
+                        <p>Receive your personalized, deploy-ready code ZIP folder via email in less than 10 minutes.</p>
+                    </div>
+                </div>
+
+                <div class="modal-action-row">
+                    <a href="#donate" class="btn btn-primary btn-glow" id="modal-pay-btn">Proceed to Payment QR</a>
+                </div>
             </div>
         </div>
     </div>
@@ -656,7 +772,7 @@
                 <p>This website serves as a personal profile portfolio. Users may browse the profile, review the skills list, and secure project bookings.</p>
 
                 <h3>2. Project Booking Rates</h3>
-                <p>When you transfer ₹7000 via UPI to the ID <code>arasu9629hf@okhdfcbank</code>, you are securing a project booking slot. The booking fee forms a minimum project retainer. Custom deliverables require final signed agreements. All retainer fees are final and non-refundable once work commences.</p>
+                <p>When you transfer ₹299 via UPI to the ID <code>arasu9629hf@okhdfcbank</code>, you are securing a project booking slot. The booking fee forms a minimum project retainer. Custom deliverables require final signed agreements. All retainer fees are final and non-refundable once work commences.</p>
 
                 <h3>3. Intellectual Property</h3>
                 <p>The code layout, styling definitions, customized 3D algorithms, and asset files are the properties of Victor Ezhil. Unauthorized reselling of the unmodified package is prohibited.</p>
