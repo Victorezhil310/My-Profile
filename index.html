@@ -3,892 +3,534 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Victor Ezhil | WayneTech 3D Creative Portfolio</title>
+    <title>WayneTech Video Editor Studio | CapCut & VN Web Edition</title>
     <!-- Meta Descriptions for SEO -->
-    <meta name="description" content="Official WayneTech 3D portfolio of Victor Ezhil - The Dark Knight of Code. B.Sc Computer Science Student, Professional Editor, and Gamer.">
+    <meta name="description" content="Free Web Video Editor Studio. Trim, split, apply 3D cyber-glitch filters, overlays, stickers, and export videos at 90fps, 120fps, and 144fps without lag.">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome for Premium Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Main Style Sheet -->
+    <!-- Style Sheet -->
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="editor-body">
 
-    <!-- 3D Canvas Background -->
-    <canvas id="three-canvas"></canvas>
-    
-    <!-- Cyber Scanlines overlay for futuristic aesthetic -->
+    <!-- Cyber Scanlines overlay for terminal aesthetic -->
     <div class="scanlines"></div>
 
-    <!-- Live Neural Notification Toast -->
-    <div id="live-notification" class="notification-toast glass-panel">
-        <div class="notification-header">
-            <div class="notification-title-group">
-                <!-- SVG Bat Icon inside Notification -->
-                <svg class="notification-bat-icon pulse-icon" viewBox="0 0 100 45" fill="currentColor">
+    <!-- MAIN EDITOR CONTAINER -->
+    <div class="editor-container">
+        
+        <!-- HEADER BAR -->
+        <header class="editor-header">
+            <div class="header-logo">
+                <!-- SVG Bat Logo -->
+                <svg class="header-bat-logo" viewBox="0 0 100 45" fill="currentColor">
                     <path d="M50 8c1-3 1.5-6 1.5-6h-3s.5 3 1.5 6c1.8 3.5 4.5 5.5 7.5 6.5C59 13.5 57 11 57 9.5c0-2.5 3.5-3 5-3.5 3-.5 6 .5 8 2.5 1.5 1.5 1.5 3.5.5 5.5C67.5 17 62 19 59.5 21.5c-2.5 2.5-4 5.5-4 9.5 0 2 .5 4.5 1.5 6.5 1 2 2.5 4 4.5 5 2.5 1.5 5 1.5 7 0 2-1 4-3 5.5-5 1.5-2 3.5-5 5.5-8 3.5-5 7-10.5 10-16.5C92.5 7 94 4 96 3h4s-1.5 5.5-3.5 11.5C94.5 20 91.5 26.5 88 32.5c-3.5 6-7.5 11.5-12 16.5-5 5.5-10.5 9-16.5 10.5-6.5 1.5-13.5.5-20-3C33 53 26 47.5 20.5 41c-5-6-9-12.5-12-19.5C5.5 15.5 3 9.5 1.5 3h4c2 1 3.5 4 6.5 10C15 19 18.5 24.5 22 29.5c2 3 4 6 5.5 8 1.5 2 3.5 4 5.5 5 2 1.5 4.5 1.5 7 0 2-1 3.5-3 4.5-5 1-2 1.5-4.5 1.5-6.5 0-4-1.5-7-4-9.5C39.5 19 34 17 31 14.5c-1-2-1-4 .5-5.5 2-2 5-3 8-2.5 1.5.5 5 1 5 3.5 0 1.5-2 4-3.5 5.5 3-1 5.7-3 7.5-6.5z" />
                 </svg>
-                <h4>WayneTech Comms</h4>
+                <span>WAYNETECH VIDEO STUDIO</span>
             </div>
-            <span class="notification-time">Secure</span>
+            
+            <div class="header-menu">
+                <span class="header-menu-item" id="btn-import-header"><i class="fa-solid fa-file-import"></i> Import File</span>
+                <span class="header-menu-item" id="btn-reset-header"><i class="fa-solid fa-rotate-left"></i> Reset Project</span>
+            </div>
+            
+            <div class="header-actions">
+                <div class="membership-badge badge-free" id="membership-badge">
+                    <i class="fa-solid fa-user"></i> Free Account
+                </div>
+                <button class="btn btn-upgrade-header" id="btn-upgrade-promo"><i class="fa-solid fa-gem"></i> Go Pro</button>
+                <button class="btn btn-export-header btn-glow" id="btn-open-export"><i class="fa-solid fa-circle-arrow-down"></i> Export Video</button>
+            </div>
+        </header>
+
+        <!-- MAIN WORKSPACE -->
+        <div class="editor-workspace">
+            
+            <!-- SIDEBAR BAR SELECTORS -->
+            <aside class="sidebar-selectors">
+                <div class="selector-btn active" data-tab="media">
+                    <i class="fa-solid fa-photo-film"></i>
+                    <span>Media</span>
+                </div>
+                <div class="selector-btn" data-tab="filters">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span>Filters</span>
+                </div>
+                <div class="selector-btn" data-tab="stickers">
+                    <i class="fa-solid fa-face-smile"></i>
+                    <span>Stickers</span>
+                </div>
+                <div class="selector-btn" data-tab="text">
+                    <i class="fa-solid fa-font"></i>
+                    <span>Text</span>
+                </div>
+                <div class="selector-btn" data-tab="transforms">
+                    <i class="fa-solid fa-cube"></i>
+                    <span>3D Effect</span>
+                </div>
+                <div class="selector-btn highlight-selector" data-tab="upgrade">
+                    <i class="fa-solid fa-gem"></i>
+                    <span>Upgrade</span>
+                </div>
+            </aside>
+
+            <!-- TAB CONTENT AREA -->
+            <section class="tab-contents glass-panel">
+                
+                <!-- Tab 1: Media Panel -->
+                <div class="tab-pane active" id="pane-media">
+                    <h3>Media Library</h3>
+                    <p class="tab-sub">Upload a video/audio file or select from sample tracks to start editing.</p>
+                    
+                    <div class="media-upload-zone" id="media-dropzone">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <p>Drag & Drop local video or audio files</p>
+                        <span>or click to browse</span>
+                        <input type="file" id="media-file-input" accept="video/*,audio/*">
+                    </div>
+
+                    <h4 class="sub-pane-title">Sample Assets</h4>
+                    <div class="sample-assets-list">
+                        <!-- Sample 1 -->
+                        <div class="sample-asset-item" data-url="https://assets.mixkit.co/videos/preview/mixkit-matrix-style-glowing-digital-cube-43177-large.mp4" data-type="video" data-name="Digital Core Cube">
+                            <div class="sample-thumbnail">
+                                <i class="fa-solid fa-circle-play"></i>
+                            </div>
+                            <div class="sample-info">
+                                <h5>Digital Cube (Video)</h5>
+                                <span>15 Seconds &bull; MP4</span>
+                            </div>
+                        </div>
+                        <!-- Sample 2 -->
+                        <div class="sample-asset-item" data-url="https://assets.mixkit.co/videos/preview/mixkit-futuristic-digital-cpu-chipset-43178-large.mp4" data-type="video" data-name="Silicon Processor CPU">
+                            <div class="sample-thumbnail">
+                                <i class="fa-solid fa-circle-play"></i>
+                            </div>
+                            <div class="sample-info">
+                                <h5>Silicon CPU (Video)</h5>
+                                <span>10 Seconds &bull; MP4</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Filters Panel -->
+                <div class="tab-pane" id="pane-filters">
+                    <h3>Shader Filters</h3>
+                    <p class="tab-sub">Choose visual color maps and glitch shaders applied dynamically to the preview canvas.</p>
+                    
+                    <div class="filters-grid">
+                        <div class="filter-card active" data-filter="none">
+                            <div class="filter-preview none-prev">Normal</div>
+                            <span>No Filter</span>
+                        </div>
+                        <div class="filter-card" data-filter="glitch">
+                            <div class="filter-preview glitch-prev">GLITCH</div>
+                            <span>Cyber Glitch</span>
+                        </div>
+                        <div class="filter-card" data-filter="chroma">
+                            <div class="filter-preview chroma-prev">SPLIT</div>
+                            <span>Chrome Split</span>
+                        </div>
+                        <div class="filter-card" data-filter="neon">
+                            <div class="filter-preview neon-prev">NEON</div>
+                            <span>Electric Blue</span>
+                        </div>
+                        <div class="filter-card" data-filter="grayscale">
+                            <div class="filter-preview gray-prev">GRAY</div>
+                            <span>Monochrome</span>
+                        </div>
+                        <div class="filter-card" data-filter="vintage">
+                            <div class="filter-preview vintage-prev">RETRO</div>
+                            <span>Vintage Sepia</span>
+                        </div>
+                    </div>
+
+                    <h4 class="sub-pane-title">Manual Tuning</h4>
+                    <div class="tuner-list">
+                        <div class="tuner-group">
+                            <div class="tuner-label"><span>Brightness</span><span id="val-brightness">100%</span></div>
+                            <input type="range" id="slider-brightness" min="50" max="150" value="100">
+                        </div>
+                        <div class="tuner-group">
+                            <div class="tuner-label"><span>Contrast</span><span id="val-contrast">100%</span></div>
+                            <input type="range" id="slider-contrast" min="50" max="150" value="100">
+                        </div>
+                        <div class="tuner-group">
+                            <div class="tuner-label"><span>Saturation</span><span id="val-saturation">100%</span></div>
+                            <input type="range" id="slider-saturation" min="0" max="200" value="100">
+                        </div>
+                        <div class="tuner-group">
+                            <div class="tuner-label"><span>Blur</span><span id="val-blur">0px</span></div>
+                            <input type="range" id="slider-blur" min="0" max="10" value="0">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Stickers Panel -->
+                <div class="tab-pane" id="pane-stickers">
+                    <h3>Sticker Overlays</h3>
+                    <p class="tab-sub">Click a sticker to insert it on top of the video canvas. Drag inside viewer to reposition.</p>
+                    
+                    <div class="stickers-selector-grid">
+                        <!-- Sticker 1: Batman Logo -->
+                        <div class="sticker-selector-item" data-sticker="bat">
+                            <svg viewBox="0 0 100 45" fill="#00b4d8" style="width: 50px;">
+                                <path d="M50 8c1-3 1.5-6 1.5-6h-3s.5 3 1.5 6c1.8 3.5 4.5 5.5 7.5 6.5C59 13.5 57 11 57 9.5c0-2.5 3.5-3 5-3.5 3-.5 6 .5 8 2.5 1.5 1.5 1.5 3.5.5 5.5C67.5 17 62 19 59.5 21.5c-2.5 2.5-4 5.5-4 9.5 0 2 .5 4.5 1.5 6.5 1 2 2.5 4 4.5 5 2.5 1.5 5 1.5 7 0 2-1 4-3 5.5-5 1.5-2 3.5-5 5.5-8 3.5-5 7-10.5 10-16.5C92.5 7 94 4 96 3h4s-1.5 5.5-3.5 11.5C94.5 20 91.5 26.5 88 32.5c-3.5 6-7.5 11.5-12 16.5-5 5.5-10.5 9-16.5 10.5-6.5 1.5-13.5.5-20-3C33 53 26 47.5 20.5 41c-5-6-9-12.5-12-19.5C5.5 15.5 3 9.5 1.5 3h4c2 1 3.5 4 6.5 10C15 19 18.5 24.5 22 29.5c2 3 4 6 5.5 8 1.5 2 3.5 4 5.5 5 2 1.5 4.5 1.5 7 0 2-1 3.5-3 4.5-5 1-2 1.5-4.5 1.5-6.5 0-4-1.5-7-4-9.5C39.5 19 34 17 31 14.5c-1-2-1-4 .5-5.5 2-2 5-3 8-2.5 1.5.5 5 1 5 3.5 0 1.5-2 4-3.5 5.5 3-1 5.7-3 7.5-6.5z" />
+                            </svg>
+                            <span>Bat Logo</span>
+                        </div>
+                        <!-- Sticker 2: Neon Crosshair -->
+                        <div class="sticker-selector-item" data-sticker="crosshair">
+                            <i class="fa-solid fa-crosshairs" style="font-size: 2.2rem; color: #00f2fe;"></i>
+                            <span>Crosshair</span>
+                        </div>
+                        <!-- Sticker 3: Bolt -->
+                        <div class="sticker-selector-item" data-sticker="bolt">
+                            <i class="fa-solid fa-bolt" style="font-size: 2.2rem; color: #ffd700;"></i>
+                            <span>Energy Bolt</span>
+                        </div>
+                        <!-- Sticker 4: Target Scope -->
+                        <div class="sticker-selector-item" data-sticker="target">
+                            <i class="fa-solid fa-location-crosshairs" style="font-size: 2.2rem; color: #ff0055;"></i>
+                            <span>Target Blip</span>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-secondary" id="btn-clear-stickers" style="margin-top: 2rem; width: 100%;">
+                        <i class="fa-solid fa-trash"></i> Remove Active Sticker
+                    </button>
+                </div>
+
+                <!-- Tab 4: Text Overlay Panel -->
+                <div class="tab-pane" id="pane-text">
+                    <h3>Text overlays</h3>
+                    <p class="tab-sub">Enter text cards positioned over the preview screen. Select fonts and colors.</p>
+                    
+                    <div class="form-group">
+                        <label for="input-overlay-text">Overlay Text</label>
+                        <input type="text" id="input-overlay-text" placeholder="Type text here..." value="WAYNETECH ACTIVE">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="select-text-font">Font Family</label>
+                            <select id="select-text-font">
+                                <option value="Orbitron">Orbitron (Digital)</option>
+                                <option value="Space Grotesk">Space Grotesk</option>
+                                <option value="monospace">Courier (Code)</option>
+                                <option value="sans-serif">System Sans</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-text-color">Font Color</label>
+                            <input type="color" id="input-text-color" value="#00f2fe">
+                        </div>
+                    </div>
+
+                    <div class="tuner-group" style="margin-top: 1rem;">
+                        <div class="tuner-label"><span>Font Size</span><span id="val-font-size">24px</span></div>
+                        <input type="range" id="slider-font-size" min="14" max="60" value="24">
+                    </div>
+
+                    <button class="btn btn-primary" id="btn-apply-text" style="width: 100%; margin-top: 1.5rem;">
+                        <i class="fa-solid fa-font"></i> Render Text
+                    </button>
+                </div>
+
+                <!-- Tab 5: 3D Transforms Panel -->
+                <div class="tab-pane" id="pane-transforms">
+                    <h3>3D Canvas Rotation</h3>
+                    <p class="tab-sub">Tilt the video preview player dynamically inside three-dimensional space coordinates.</p>
+                    
+                    <div class="tuner-list">
+                        <div class="tuner-group">
+                            <div class="tuner-label"><span>Rotate X (Pitch)</span><span id="val-rot-x">0 deg</span></div>
+                            <input type="range" id="slider-rot-x" min="-45" max="45" value="0">
+                        </div>
+                        <div class="tuner-group">
+                            <div class="tuner-label"><span>Rotate Y (Yaw)</span><span id="val-rot-y">0 deg</span></div>
+                            <input type="range" id="slider-rot-y" min="-45" max="45" value="0">
+                        </div>
+                        <div class="tuner-group">
+                            <div class="tuner-label"><span>Rotate Z (Roll)</span><span id="val-rot-z">0 deg</span></div>
+                            <input type="range" id="slider-rot-z" min="-45" max="45" value="0">
+                        </div>
+                    </div>
+
+                    <button class="btn btn-secondary" id="btn-reset-transforms" style="margin-top: 2rem; width: 100%;">
+                        <i class="fa-solid fa-rotate"></i> Reset Rotation coordinates
+                    </button>
+                </div>
+
+                <!-- Tab 6: Upgrade Panel -->
+                <div class="tab-pane" id="pane-upgrade">
+                    <h3>Unlock Premium Studio</h3>
+                    <p class="tab-sub">Acquire the lifetime WayneTech license to compile at **144 FPS** and remove all watermarks.</p>
+                    
+                    <div class="upgrade-card-wrapper">
+                        <!-- QR Code Frame -->
+                        <div class="checkout-qr-box">
+                            <img id="checkout-upi-qr" src="" alt="WayneTech UPI Upgrade QR Code">
+                            <div class="qr-corners"><span></span><span></span><span></span><span></span></div>
+                        </div>
+
+                        <!-- Price Detail summary -->
+                        <div class="checkout-summary">
+                            <div class="summary-row">
+                                <span>License Fee:</span>
+                                <span class="amount-val">₹7000.00 INR</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Secure UPI ID:</span>
+                                <span class="upi-id-val">arasu9629hf@okhdfcbank</span>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary btn-glow" id="btn-copy-checkout-upi" data-clipboard="arasu9629hf@okhdfcbank">
+                            <i class="fa-regular fa-copy"></i> Copy UPI Checkout ID
+                        </button>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- VIEWER PLAYER PANEL -->
+            <section class="viewer-panel">
+                
+                <!-- Live Video Render Area -->
+                <div class="canvas-viewport-wrapper">
+                    <!-- The Canvas playing the video frames with shaders applied -->
+                    <div class="canvas-3d-perspective" id="perspective-element">
+                        <canvas id="video-canvas"></canvas>
+                        <!-- Draggable Sticker element overlay inside viewport -->
+                        <div id="canvas-sticker-overlay" class="draggable-overlay hidden">
+                            <!-- Cloned sticker code will be dynamically placed here -->
+                        </div>
+                        <!-- Draggable Text overlay element inside viewport -->
+                        <div id="canvas-text-overlay" class="draggable-overlay hidden">
+                            <span>WAYNETECH ACTIVE</span>
+                        </div>
+                    </div>
+
+                    <!-- Hidden `<video>` and `<audio>` feeds parsed in JavaScript -->
+                    <video id="hidden-video-feed" crossorigin="anonymous" playsinline loop muted style="display:none;"></video>
+                    <audio id="hidden-audio-feed" crossorigin="anonymous" loop style="display:none;"></audio>
+                </div>
+
+                <!-- Viewport Toolbar controls -->
+                <div class="viewer-toolbar">
+                    <div class="toolbar-left">
+                        <button class="viewer-btn" id="btn-play-pause" title="Play / Pause"><i class="fa-solid fa-play"></i></button>
+                        <button class="viewer-btn" id="btn-split-clip" title="Split Clip at Playhead"><i class="fa-solid fa-scissors"></i> Split</button>
+                    </div>
+                    
+                    <div class="toolbar-center">
+                        <span id="player-time-current">00:00:00</span>
+                        <span class="time-divider">/</span>
+                        <span id="player-time-total">00:00:00</span>
+                    </div>
+
+                    <div class="toolbar-right">
+                        <span class="fps-badge"><span id="lbl-fps-display">90</span> FPS</span>
+                    </div>
+                </div>
+
+            </section>
+
         </div>
-        <p>Encrypted handshake successful. WayneTech Secure Terminal online. Click the comms bubble to message.</p>
+
+        <!-- TIMELINE PANEL -->
+        <section class="editor-timeline-panel glass-panel">
+            
+            <!-- Timeline Ruler header -->
+            <div class="timeline-ruler">
+                <div class="ruler-ticks" id="timeline-ruler-ticks">
+                    <!-- Ticks dynamically generated -->
+                </div>
+                <!-- Interactive draggable timeline Playhead -->
+                <div class="timeline-playhead" id="timeline-playhead-bar">
+                    <div class="playhead-knob"><i class="fa-solid fa-caret-down"></i></div>
+                </div>
+            </div>
+
+            <!-- Timeline Multi-Tracks container -->
+            <div class="timeline-tracks-area">
+                
+                <!-- Track 1: Video Clip Track -->
+                <div class="timeline-track" id="track-video">
+                    <div class="track-info-label"><i class="fa-solid fa-video"></i> Video Track</div>
+                    <div class="track-clip-container">
+                        <!-- Clip block represent the active loaded video -->
+                        <div class="track-clip active-clip" id="video-clip-block" style="width: 70%; left: 0%;">
+                            <span class="clip-title">Sample_Video.mp4</span>
+                            <div class="clip-trim-handle left-handle"></div>
+                            <div class="clip-trim-handle right-handle"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Track 2: Audio Track -->
+                <div class="timeline-track" id="track-audio">
+                    <div class="track-info-label"><i class="fa-solid fa-music"></i> Audio Track</div>
+                    <div class="track-clip-container">
+                        <div class="track-clip audio-clip" id="audio-clip-block" style="width: 70%; left: 0%;">
+                            <span class="clip-title">Ambient_Music.mp3</span>
+                            <div class="clip-trim-handle left-handle"></div>
+                            <div class="clip-trim-handle right-handle"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Track 3: Sticker Overlay Track -->
+                <div class="timeline-track" id="track-stickers">
+                    <div class="track-info-label"><i class="fa-solid fa-face-smile"></i> Stickers</div>
+                    <div class="track-clip-container" id="timeline-stickers-container">
+                        <!-- Clones place dynamically when stickers added -->
+                    </div>
+                </div>
+
+                <!-- Track 4: Text Overlay Track -->
+                <div class="timeline-track" id="track-text">
+                    <div class="track-info-label"><i class="fa-solid fa-font"></i> Text</div>
+                    <div class="track-clip-container" id="timeline-text-container">
+                        <!-- Clones place dynamically when text added -->
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- FOOTER LINKS -->
+        <footer class="editor-footer">
+            <div class="footer-legal-links">
+                <a href="javascript:void(0)" id="open-about-modal">About Studio</a>
+                <span class="sep">&bull;</span>
+                <a href="javascript:void(0)" id="open-privacy-modal">Privacy Guidelines</a>
+                <span class="sep">&bull;</span>
+                <a href="javascript:void(0)" id="open-terms-modal">Terms & Usage</a>
+            </div>
+            <div class="footer-copyright">
+                &copy; 2026 WayneTech Silicon Labs. Powered by HTML5 144 FPS Engine.
+            </div>
+        </footer>
+
     </div>
 
-    <!-- Navigation Header -->
-    <header id="main-header">
-        <nav class="navbar">
-            <div class="logo">
-                <a href="#hero" class="logo-bat-link">
-                    <!-- SVG Batman Logo in Navbar -->
-                    <svg class="nav-bat-logo" viewBox="0 0 100 45" fill="currentColor">
-                        <path d="M50 8c1-3 1.5-6 1.5-6h-3s.5 3 1.5 6c1.8 3.5 4.5 5.5 7.5 6.5C59 13.5 57 11 57 9.5c0-2.5 3.5-3 5-3.5 3-.5 6 .5 8 2.5 1.5 1.5 1.5 3.5.5 5.5C67.5 17 62 19 59.5 21.5c-2.5 2.5-4 5.5-4 9.5 0 2 .5 4.5 1.5 6.5 1 2 2.5 4 4.5 5 2.5 1.5 5 1.5 7 0 2-1 4-3 5.5-5 1.5-2 3.5-5 5.5-8 3.5-5 7-10.5 10-16.5C92.5 7 94 4 96 3h4s-1.5 5.5-3.5 11.5C94.5 20 91.5 26.5 88 32.5c-3.5 6-7.5 11.5-12 16.5-5 5.5-10.5 9-16.5 10.5-6.5 1.5-13.5.5-20-3C33 53 26 47.5 20.5 41c-5-6-9-12.5-12-19.5C5.5 15.5 3 9.5 1.5 3h4c2 1 3.5 4 6.5 10C15 19 18.5 24.5 22 29.5c2 3 4 6 5.5 8 1.5 2 3.5 4 5.5 5 2 1.5 4.5 1.5 7 0 2-1 3.5-3 4.5-5 1-2 1.5-4.5 1.5-6.5 0-4-1.5-7-4-9.5C39.5 19 34 17 31 14.5c-1-2-1-4 .5-5.5 2-2 5-3 8-2.5 1.5.5 5 1 5 3.5 0 1.5-2 4-3.5 5.5 3-1 5.7-3 7.5-6.5z" />
-                    </svg>
-                    <span>WAYNETECH</span>
-                </a>
+    <!-- MODAL BOX: EXPORT OPTIONS & RENDER PROGRESS -->
+    <div class="modal" id="modal-export">
+        <div class="modal-content glass-panel" style="max-width: 480px;">
+            <div class="modal-header">
+                <h2>Export Settings</h2>
+                <button class="close-modal" id="btn-close-export">&times;</button>
             </div>
-            <ul class="nav-links">
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#passion" class="nav-link">Passion</a></li>
-                <li><a href="#gallery" class="nav-link">Tech Lab</a></li>
-                <li><a href="#skills" class="nav-link">Knowledge</a></li>
-                <li><a href="#iq" class="nav-link">IQ Scale</a></li>
-                <li><a href="#donate" class="nav-link highlight-link">Secure Booking</a></li>
-                <li><a href="javascript:void(0)" class="nav-link highlight-link clone-nav-btn" id="open-clone-wizard">Build Yours</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
-            <div class="menu-toggle" id="mobile-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-        </nav>
-    </header>
-
-    <main>
-        <!-- Hero Section -->
-        <section id="hero">
-            <div class="hero-layout">
-                <div class="hero-container">
-                    <div class="hero-badge">
-                        <span class="pulse-dot"></span> Secure Connection Active
-                    </div>
-                    
-                    <!-- SVG Batman Logo floating in Hero -->
-                    <div class="hero-bat-logo-wrapper">
-                        <svg class="hero-bat-logo" viewBox="0 0 100 45" fill="currentColor">
-                            <path d="M50 8c1-3 1.5-6 1.5-6h-3s.5 3 1.5 6c1.8 3.5 4.5 5.5 7.5 6.5C59 13.5 57 11 57 9.5c0-2.5 3.5-3 5-3.5 3-.5 6 .5 8 2.5 1.5 1.5 1.5 3.5.5 5.5C67.5 17 62 19 59.5 21.5c-2.5 2.5-4 5.5-4 9.5 0 2 .5 4.5 1.5 6.5 1 2 2.5 4 4.5 5 2.5 1.5 5 1.5 7 0 2-1 4-3 5.5-5 1.5-2 3.5-5 5.5-8 3.5-5 7-10.5 10-16.5C92.5 7 94 4 96 3h4s-1.5 5.5-3.5 11.5C94.5 20 91.5 26.5 88 32.5c-3.5 6-7.5 11.5-12 16.5-5 5.5-10.5 9-16.5 10.5-6.5 1.5-13.5.5-20-3C33 53 26 47.5 20.5 41c-5-6-9-12.5-12-19.5C5.5 15.5 3 9.5 1.5 3h4c2 1 3.5 4 6.5 10C15 19 18.5 24.5 22 29.5c2 3 4 6 5.5 8 1.5 2 3.5 4 5.5 5 2 1.5 4.5 1.5 7 0 2-1 3.5-3 4.5-5 1-2 1.5-4.5 1.5-6.5 0-4-1.5-7-4-9.5C39.5 19 34 17 31 14.5c-1-2-1-4 .5-5.5 2-2 5-3 8-2.5 1.5.5 5 1 5 3.5 0 1.5-2 4-3.5 5.5 3-1 5.7-3 7.5-6.5z" />
-                        </svg>
-                    </div>
-
-                    <h1 class="glitch-name" data-text="VICTOR EZHIL">VICTOR EZHIL</h1>
-                    <p class="hero-subtitle">The Dark Knight of Code &bull; Editor &bull; Gamer</p>
-                    <p class="hero-desc">Working in the shadows to construct secure, high-performance web structures, craft cinematic visual editing masterpieces, and dominate competitive gaming terrains.</p>
-                    <div class="hero-actions">
-                        <a href="#donate" class="btn btn-primary btn-glow">WayneTech Retainer (₹7,000)</a>
-                        <a href="javascript:void(0)" class="btn btn-secondary" id="hero-clone-btn">Deploy Protocol</a>
-                    </div>
-                </div>
-                <!-- Glowing Rotating OS Terminal Vector Avatar -->
-                <div class="hero-avatar-wrapper">
-                    <div class="avatar-ring"></div>
-                    <div class="hero-os-avatar">
-                        <!-- Spinning System OS Radar SVG -->
-                        <svg class="sys-os-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Circular grids -->
-                            <circle cx="60" cy="60" r="54" fill="none" stroke="#00b4d8" stroke-width="1.5" stroke-dasharray="8,4" />
-                            <circle cx="60" cy="60" r="48" fill="none" stroke="#0077b6" stroke-width="1" />
-                            <circle cx="60" cy="60" r="44" fill="none" stroke="#00f2fe" stroke-width="1.5" stroke-dasharray="40,10" />
-                            <circle cx="60" cy="60" r="36" fill="none" stroke="rgba(0, 180, 216, 0.2)" stroke-width="1" />
-                            
-                            <!-- Crosshair guides -->
-                            <line x1="60" y1="12" x2="60" y2="108" stroke="rgba(0, 242, 254, 0.2)" stroke-width="1" />
-                            <line x1="12" y1="60" x2="108" y2="60" stroke="rgba(0, 242, 254, 0.2)" stroke-width="1" />
-                            
-                            <!-- Orbital node dots -->
-                            <circle cx="60" cy="12" r="3" fill="#00f2fe" />
-                            <circle cx="60" cy="108" r="3" fill="#00f2fe" />
-                            <circle cx="12" cy="60" r="3" fill="#ffd700" />
-                            <circle cx="108" cy="60" r="3" fill="#ffd700" />
-                            
-                            <!-- Radar sweep vector -->
-                            <line x1="60" y1="60" x2="94" y2="26" stroke="#00f2fe" stroke-width="2" stroke-linecap="round" class="radar-sweep" />
-                            
-                            <!-- Center bat logo core -->
-                            <circle cx="60" cy="60" r="14" fill="#020204" stroke="#00b4d8" stroke-width="1.5" />
-                            <!-- Mini Bat symbol inside core -->
-                            <path d="M60 52c0.3-0.8 0.5-1.6 0.5-1.6h-.8s0.1 0.8 0.5 1.6c0.5 0.9 1.2 1.5 2 1.7C62.4 53.5 61.9 52.8 61.9 52.4c0-.7 1-0.8 1.4-.9.8-.1 1.6.1 2.2.7.4.4.4.9.1 1.5-.6 1-2.1 1.5-2.8 2.2-.7.7-1.1 1.5-1.1 2.5 0 .5.1 1.2.4 1.7.3.5.7 1.1 1.2 1.4.7.4 1.4.4 1.9 0 .5-.3 1.1-.8 1.5-1.4.4-.5 1-1.4 1.5-2.2.9-1.4 1.9-2.8 2.7-4.4.4-.7.4-1.5 1-1.7h1.1s-0.4 1.5-1 3.1c-.7 1.5-1.5 3.2-2.4 4.8-.9 1.6-2 3.1-3.2 4.4-1.3 1.5-2.8 2.4-4.4 2.8-1.7.4-3.6.1-5.3-.8-3.3-1.7-5.2-3.2-6.7-4.9-1.3-1.6-2.4-3.3-3.2-5.2-.7-1.6-1.3-3.2-1.7-4.9h1.1c.5.3.9 1.1 1.7 2.7.7 1.6 1.6 3.1 2.5 4.4.5.8 1.1 1.6 1.5 2.2.4.5.9 1.1 1.5 1.4.5.4 1.2.4 1.9 0 .5-.3 1-0.9 1.2-1.4.3-.5.4-1.2.4-1.7 0-1.1-.4-1.9-1.1-2.5-.7-.7-2.1-1.2-2.9-1.9-.3-.5-.3-1.1.1-1.5.5-.5 1.3-.8 2.2-.7.4.1 1.4.3 1.4 1 0 .4-.5 1.1-.9 1.5.8-.3 1.5-0.8 2-1.7z" fill="#00f2fe" transform="scale(0.8) translate(15, 15)" />
-                        </svg>
-                    </div>
-                </div>
-            </div>
-            <div class="scroll-indicator">
-                <span>SCROLL DOWN</span>
-                <i class="fa-solid fa-chevron-down"></i>
-            </div>
-        </section>
-
-        <!-- About Section -->
-        <section id="about" class="section-container">
-            <h2 class="section-title">ABOUT ME</h2>
-            <div class="about-grid">
-                <div class="about-text-card glass-panel">
-                    <div class="card-icon"><i class="fa-solid fa-mask"></i></div>
-                    <h3>The Developer in the Shadows</h3>
-                    <p>I am a highly motivated <strong>B.Sc. Computer Science</strong> student from India. Guided by analytical precision and tactical design, I construct custom web systems that operate flawlessly under high-traffic payloads.</p>
-                    <p>Outside of software engineering, I am a competitive <strong>Gamer</strong> and cinematic <strong>Video Editor</strong>. I bring the focus of a vigilante and the precision of a dark knight to every timeline transition, gaming lobby, and repository setup.</p>
-                    <div class="about-details">
-                        <div class="detail-item">
-                            <span class="detail-label">Location:</span>
-                            <span class="detail-val">Tamil Nadu, India</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">Secure Channel (Email):</span>
-                            <a href="mailto:victorroot9629@gmail.com" class="detail-val neon-hover">victorroot9629@gmail.com</a>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">Academic Profile:</span>
-                            <span class="detail-val">B.Sc. Computer Science</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="modal-body" id="export-settings-body">
+                <p>Select target resolution and frame rates. Higher frame rates require browser acceleration.</p>
                 
-                <!-- Quote and Stats Panel -->
-                <div class="about-stats glass-panel">
-                    <blockquote class="cyber-quote">
-                        "I am the night. I write code in the shadows, align keyframes in the dark, and execute gaming tactics to dominate."
-                    </blockquote>
-                    <div class="stats-grid">
-                        <div class="stat-box">
-                            <span class="stat-num">99.9%</span>
-                            <span class="stat-lbl">Creativity</span>
-                        </div>
-                        <div class="stat-box">
-                            <span class="stat-num">160+</span>
-                            <span class="stat-lbl">Target IQ</span>
-                        </div>
-                        <div class="stat-box">
-                            <span class="stat-num">200+</span>
-                            <span class="stat-lbl">Videos Edited</span>
-                        </div>
-                        <div class="stat-box">
-                            <span class="stat-num">10k+</span>
-                            <span class="stat-lbl">Hours Gamed</span>
-                        </div>
-                    </div>
+                <div class="form-group">
+                    <label for="export-select-fps">Target Frame Rate</label>
+                    <select id="export-select-fps">
+                        <option value="90">90 FPS (Standard Hardware)</option>
+                        <option value="120">120 FPS (Ultra Smooth)</option>
+                        <option value="144" class="pro-option">144 FPS (Pro Retainer Max)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="export-select-res">Resolution</label>
+                    <select id="export-select-res">
+                        <option value="1080">1080p Full HD</option>
+                        <option value="1440" class="pro-option">2K Quad HD (Pro Only)</option>
+                        <option value="2160" class="pro-option">4K Ultra HD (Pro Only)</option>
+                    </select>
+                </div>
+
+                <div class="pro-watermark-warning" id="watermark-notice">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span>Free accounts export with a **WayneTech** overlay watermark. Upgrade to Go Pro.</span>
+                </div>
+
+                <button class="btn btn-primary btn-glow" id="btn-start-rendering" style="width: 100%; margin-top: 1.5rem;">
+                    <i class="fa-solid fa-film"></i> Start Encoding
+                </button>
+            </div>
+
+            <!-- Dynamic Rendering progress body -->
+            <div class="modal-body hidden" id="export-rendering-body">
+                <h3>Encoding Video Stream...</h3>
+                <p class="render-status-txt" id="lbl-render-status">Configuring canvas capture loops...</p>
+                
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="render-progress-fill" style="width: 0%"></div>
+                </div>
+
+                <div class="render-specs">
+                    <div><span>Frames Processed:</span><span id="lbl-frames-processed">0</span></div>
+                    <div><span>Target Speed:</span><span id="lbl-render-fps">90 FPS</span></div>
+                </div>
+
+                <div class="render-warning-msg">
+                    Please keep this tab open while compiling frames.
                 </div>
             </div>
-        </section>
 
-        <!-- Passion & Profession Section -->
-        <section id="passion" class="section-container">
-            <h2 class="section-title">PASSION & PROFESSION</h2>
-            <div class="passion-cards-grid">
-                <!-- Card 1: B.Sc Computer Science -->
-                <div class="passion-card glass-panel" data-tilt>
-                    <div class="passion-badge"><i class="fa-solid fa-shield-halved"></i></div>
-                    <h3>Computer Science</h3>
-                    <p class="passion-role">Vigilante Developer & Architect</p>
-                    <p class="passion-body">Studying systems programming, security mechanics, advanced data logic, and networks. Constructing backend databases and premium frontend codebases with robust cryptographic alignments.</p>
-                    <ul class="passion-list">
-                        <li><i class="fa-solid fa-circle-check"></i> High-Security Implementations</li>
-                        <li><i class="fa-solid fa-circle-check"></i> Algorithmic Complexity Optimization</li>
-                        <li><i class="fa-solid fa-circle-check"></i> Script Automations & Operations</li>
-                    </ul>
+            <!-- Complete/Download body -->
+            <div class="modal-body hidden" id="export-complete-body">
+                <div class="success-icon-wrapper">
+                    <i class="fa-solid fa-circle-check"></i>
                 </div>
-                <!-- Card 2: Gamer -->
-                <div class="passion-card glass-panel" data-tilt>
-                    <div class="passion-badge"><i class="fa-solid fa-crosshairs"></i></div>
-                    <h3>Esports Gaming</h3>
-                    <p class="passion-role">Tactical Strategist & Leader</p>
-                    <p class="passion-body">Esports gaming demands absolute reflexes, team alignment, and calculated risks. Deep understanding of physics engines, server ticks, latency optimizations, and competitive tactics.</p>
-                    <ul class="passion-list">
-                        <li><i class="fa-solid fa-circle-check"></i> Tactical Precision & Reflexes</li>
-                        <li><i class="fa-solid fa-circle-check"></i> Real-time System Tweaking</li>
-                        <li><i class="fa-solid fa-circle-check"></i> In-depth Game Physics Logic</li>
-                    </ul>
-                </div>
-                <!-- Card 3: Video Editor -->
-                <div class="passion-card glass-panel" data-tilt>
-                    <div class="passion-badge"><i class="fa-solid fa-film"></i></div>
-                    <h3>Cinematic Video Editing</h3>
-                    <p class="passion-role">Visual Storyteller & Editor</p>
-                    <p class="passion-body">Compositing cinematic footage, syncing heavy sound effects, grading color tones, and crafting customized cyber-glitch transitions that captivate audiences in the first 3 seconds.</p>
-                    <ul class="passion-list">
-                        <li><i class="fa-solid fa-circle-check"></i> High-End Color Tuning</li>
-                        <li><i class="fa-solid fa-circle-check"></i> Custom 3D Overlay Composition</li>
-                        <li><i class="fa-solid fa-circle-check"></i> Kinetic Sound Engineering</li>
-                    </ul>
+                <h3>Export Complete!</h3>
+                <p>Your video clip was compiled successfully at target frame rates.</p>
+
+                <div class="modal-action-row" style="margin-top: 2rem;">
+                    <a href="" class="btn btn-primary btn-glow" id="btn-download-result"><i class="fa-solid fa-download"></i> Save Video File</a>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
 
-        <!-- Creative Workshow / Tech Lab Section -->
-        <section id="gallery" class="section-container">
-            <h2 class="section-title">WAYNETECH SILICON LAB</h2>
-            <p class="section-intro-text">Explore custom silicon core blueprints, quantum encryption modules, and autonomous hardware chips designed in the shadows.</p>
-            <div class="gallery-grid">
-                <!-- Silicon Item 1: Bat-Silicon NPU -->
-                <div class="gallery-item glass-panel" data-type="svg" data-title="Bat-Silicon NPU v1.0" data-desc="Vigilante Neural Processing Unit configured for real-time tactical pathfinding, dark-ambient target tracking, and high-performance video rendering logic.">
-                    <div class="gallery-img-wrapper tech-chip-wrapper">
-                        <!-- Custom SVG Microchip Drawing -->
-                        <svg class="tech-chip-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Circuit Board Base Grid -->
-                            <rect x="10" y="10" width="100" height="100" rx="12" fill="#080d1a" stroke="#00b4d8" stroke-width="2" />
-                            <path d="M 20 20 L 100 20 L 100 100 L 20 100 Z" fill="#03060c" stroke="rgba(0, 180, 216, 0.3)" stroke-dasharray="3,3" />
-                            
-                            <!-- Trace lines -->
-                            <path d="M 10 30 h 15 M 10 50 h 15 M 10 70 h 15 M 10 90 h 15" stroke="#00b4d8" stroke-width="1" />
-                            <path d="M 110 30 h -15 M 110 50 h -15 M 110 70 h -15 M 110 90 h -15" stroke="#00b4d8" stroke-width="1" />
-                            <path d="M 30 10 v 15 M 50 10 v 15 M 70 10 v 15 M 90 10 v 15" stroke="#00b4d8" stroke-width="1" />
-                            <path d="M 30 110 v -15 M 50 110 v -15 M 70 110 v -15 M 90 110 v -15" stroke="#00b4d8" stroke-width="1" />
-                            
-                            <!-- Circuit Traces inside -->
-                            <path d="M 25 30 L 45 45 H 75 L 95 30" fill="none" stroke="#00b4d8" stroke-width="1" opacity="0.6" />
-                            <path d="M 25 90 L 45 75 H 75 L 95 90" fill="none" stroke="#00f2fe" stroke-width="1" opacity="0.6" />
-                            
-                            <!-- Gold Contact Pads -->
-                            <rect x="8" y="27" width="5" height="6" fill="#ffd700" />
-                            <rect x="8" y="47" width="5" height="6" fill="#ffd700" />
-                            <rect x="8" y="67" width="5" height="6" fill="#ffd700" />
-                            <rect x="8" y="87" width="5" height="6" fill="#ffd700" />
-                            <rect x="107" y="27" width="5" height="6" fill="#ffd700" />
-                            <rect x="107" y="47" width="5" height="6" fill="#ffd700" />
-                            <rect x="107" y="67" width="5" height="6" fill="#ffd700" />
-                            <rect x="107" y="87" width="5" height="6" fill="#ffd700" />
-
-                            <!-- Central Processor Die -->
-                            <rect x="42" y="42" width="36" height="36" rx="4" fill="#1b263b" stroke="#00f2fe" stroke-width="2" />
-                            
-                            <!-- SVG Batman Logo inside the Silicon Core -->
-                            <path d="M60 48c0.4-1.2 0.6-2.4 0.6-2.4h-1.2s0.2 1.2 0.6 2.4c0.7 1.4 1.8 2.2 3 2.6C63.6 50.2 62.8 49.2 62.8 48.6c0-1 1.4-1.2 2-1.4 1.2-.2 2.4.2 3.2 1 0.6 0.6 0.6 1.4.2 2.2C67 51.6 64.8 52.4 63.8 53.4c-1 1-1.6 2.2-1.6 3.8 0 .8.2 1.8.6 2.6.4.8 1 1.6 1.8 2 1 .6 2 .6 2.8 0 .8-.4 1.6-1.2 2.2-2 .6-.8 1.4-2 2.2-3.2 1.4-2 2.8-4.2 4-6.6.6-1 .6-2.2 1.4-2.6h1.6s-0.6 2.2-1.4 4.6c-1 2.2-2.2 4.8-3.6 7.2c-1.4 2.4-3 4.6-4.8 6.6-2 2.2-4.2 3.6-6.6 4.2-2.6.6-5.4.2-8-1.2c-5-2.6-7.8-4.8-10-7.4-2-2.4-3.6-5-4.8-7.8c-1-2.4-2-4.8-2.6-7.4h1.6c.8.4 1.4 1.6 2.6 4c1 2.4 2.4 4.6 3.8 6.6.8 1.2 1.6 2.4 2.2 3.2.6.8 1.4 1.6 2.2 2 .8.6 1.8.6 2.8 0 .8-.4 1.4-1.2 1.8-2 .4-.8.6-1.8.6-2.6 0-1.6-.6-2.8-1.6-3.8c-1-1-3.2-1.8-4.4-2.8-.4-.8-.4-1.6.2-2.2.8-.8 2-1.2 3.2-1 .6.2 2 .4 2 1.4 0 .6-.8 1.6-1.4 2.2 1.2-.4 2.3-1.2 3-2.6z" fill="#00b4d8" transform="scale(0.8) translate(15, 12)" />
-                            
-                            <!-- Silicon Text -->
-                            <text x="60" y="88" fill="#00f2fe" font-family="'Orbitron', sans-serif" font-size="6" text-anchor="middle" font-weight="900" letter-spacing="1">NPU-V1</text>
-                        </svg>
-                        <div class="gallery-zoom-overlay">
-                            <i class="fa-solid fa-microchip"></i>
-                        </div>
-                    </div>
-                    <div class="gallery-info">
-                        <h4>Bat-Silicon NPU v1.0</h4>
-                        <span class="gallery-tag">Silicon Architecture</span>
-                    </div>
-                </div>
-
-                <!-- Silicon Item 2: Quantum Encryption Core -->
-                <div class="gallery-item glass-panel" data-type="svg" data-title="Quantum Cryptographic Core (QEC-9)" data-desc="WayneTech cryptographic hardware processor engineered to secure satellite links, local data logs, and quantum-level transaction encryption protocols.">
-                    <div class="gallery-img-wrapper tech-chip-wrapper">
-                        <svg class="tech-chip-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Circuit Board Base -->
-                            <rect x="10" y="10" width="100" height="100" rx="12" fill="#060913" stroke="#0077b6" stroke-width="2" />
-                            
-                            <!-- Hexagonal Core Grid -->
-                            <polygon points="60,20 95,40 95,80 60,100 25,80 25,40" fill="#020408" stroke="#00b4d8" stroke-width="1.5" />
-                            <polygon points="60,30 87,45 87,75 60,90 33,75 33,45" fill="none" stroke="rgba(0, 242, 254, 0.4)" stroke-dasharray="2,2" />
-                            
-                            <!-- Central Node Connection -->
-                            <circle cx="60" cy="60" r="14" fill="#1b263b" stroke="#00f2fe" stroke-width="1.5" />
-                            
-                            <!-- Connected Logic Paths -->
-                            <line x1="60" y1="20" x2="60" y2="46" stroke="#00b4d8" stroke-width="1.5" />
-                            <line x1="25" y1="40" x2="48" y2="53" stroke="#00b4d8" stroke-width="1.5" />
-                            <line x1="25" y1="80" x2="48" y2="67" stroke="#00b4d8" stroke-width="1.5" />
-                            <line x1="60" y1="100" x2="60" y2="74" stroke="#00f2fe" stroke-width="1.5" />
-                            <line x1="95" y1="80" x2="72" y2="67" stroke="#00f2fe" stroke-width="1.5" />
-                            <line x1="95" y1="40" x2="72" y2="53" stroke="#00f2fe" stroke-width="1.5" />
-                            
-                            <!-- Quantum Node Dots -->
-                            <circle cx="60" cy="20" r="4" fill="#ffd700" />
-                            <circle cx="25" cy="40" r="4" fill="#00f2fe" />
-                            <circle cx="25" cy="80" r="4" fill="#00f2fe" />
-                            <circle cx="60" cy="100" r="4" fill="#ffd700" />
-                            <circle cx="95" cy="80" r="4" fill="#00f2fe" />
-                            <circle cx="95" cy="40" r="4" fill="#00f2fe" />
-                            <circle cx="60" cy="60" r="6" fill="#00b4d8" />
-
-                            <text x="60" y="63" fill="#000" font-family="'Orbitron', sans-serif" font-size="5" text-anchor="middle" font-weight="900">Q9</text>
-                            <text x="60" y="112" fill="#00b4d8" font-family="'Orbitron', sans-serif" font-size="6" text-anchor="middle" font-weight="900" letter-spacing="1">QEC-CORE</text>
-                        </svg>
-                        <div class="gallery-zoom-overlay">
-                            <i class="fa-solid fa-key"></i>
-                        </div>
-                    </div>
-                    <div class="gallery-info">
-                        <h4>Quantum Cryptographic Core</h4>
-                        <span class="gallery-tag">Hardware Encryption</span>
-                    </div>
-                </div>
-
-                <!-- Silicon Item 3: Adrenaline Sensor -->
-                <div class="gallery-item glass-panel" data-type="svg" data-title="Wayne-Bio Telemetry Monitor" data-desc="Microchip interface analyzing bio-telemetry, neural response spikes, heart-rate variability, and somatic diagnostics for real-time combat stats tracking.">
-                    <div class="gallery-img-wrapper tech-chip-wrapper">
-                        <svg class="tech-chip-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Circuit Base -->
-                            <rect x="10" y="10" width="100" height="100" rx="12" fill="#040810" stroke="#0077b6" stroke-width="2" />
-                            
-                            <!-- Circular Sensor Pad -->
-                            <circle cx="60" cy="60" r="38" fill="#020306" stroke="rgba(0, 180, 216, 0.4)" stroke-width="1" />
-                            <circle cx="60" cy="60" r="32" fill="none" stroke="#00b4d8" stroke-dasharray="6,4" stroke-width="1.5" />
-                            
-                            <!-- ECG Pulse Trace Line -->
-                            <path d="M 28 60 H 42 L 47 45 L 53 75 L 58 55 L 63 65 L 68 60 H 92" fill="none" stroke="#00f2fe" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            
-                            <!-- Dynamic Dots -->
-                            <circle cx="47" cy="45" r="2.5" fill="#ffd700" />
-                            <circle cx="53" cy="75" r="2.5" fill="#ffd700" />
-                            
-                            <!-- Peripheral Contacts -->
-                            <line x1="60" y1="10" x2="60" y2="22" stroke="#00b4d8" stroke-width="1.5" />
-                            <line x1="60" y1="110" x2="60" y2="98" stroke="#00b4d8" stroke-width="1.5" />
-                            <line x1="10" y1="60" x2="22" y2="60" stroke="#00b4d8" stroke-width="1.5" />
-                            <line x1="110" y1="60" x2="98" y2="60" stroke="#00b4d8" stroke-width="1.5" />
-
-                            <text x="60" y="112" fill="#00f2fe" font-family="'Orbitron', sans-serif" font-size="6" text-anchor="middle" font-weight="900" letter-spacing="1">WAYNE-BIO v2.4</text>
-                        </svg>
-                        <div class="gallery-zoom-overlay">
-                            <i class="fa-solid fa-heart-pulse"></i>
-                        </div>
-                    </div>
-                    <div class="gallery-info">
-                        <h4>Wayne-Bio Telemetry Monitor</h4>
-                        <span class="gallery-tag">Bio-Diagnostics</span>
-                    </div>
-                </div>
-
-                <!-- Silicon Item 4: Comms-Sec Transceiver -->
-                <div class="gallery-item glass-panel" data-type="svg" data-title="Quantum Comms Transceiver" data-desc="Radio frequency hardware module handling encrypted tactical data packet exchanges, remote server ticks, and digital signal modulation.">
-                    <div class="gallery-img-wrapper tech-chip-wrapper">
-                        <svg class="tech-chip-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Base -->
-                            <rect x="10" y="10" width="100" height="100" rx="12" fill="#050a14" stroke="#00b4d8" stroke-width="2" />
-                            
-                            <!-- RF Grid Pattern -->
-                            <rect x="25" y="30" width="70" height="48" rx="6" fill="#020408" stroke="rgba(0, 242, 254, 0.4)" stroke-width="1.5" />
-                            
-                            <!-- RF Lines -->
-                            <line x1="30" y1="38" x2="90" y2="38" stroke="#0077b6" stroke-width="1" stroke-dasharray="4,2" />
-                            <line x1="30" y1="46" x2="90" y2="46" stroke="#00f2fe" stroke-width="1.5" />
-                            <line x1="30" y1="54" x2="90" y2="54" stroke="#0077b6" stroke-width="1" stroke-dasharray="4,2" />
-                            <line x1="30" y1="62" x2="90" y2="62" stroke="#00f2fe" stroke-width="1.5" />
-                            <line x1="30" y1="70" x2="90" y2="70" stroke="#0077b6" stroke-width="1" stroke-dasharray="4,2" />
-
-                            <!-- Wave symbols inside -->
-                            <path d="M 40 46 Q 45 35 50 46 T 60 46 T 70 46 T 80 46" fill="none" stroke="#ffd700" stroke-width="1.2" opacity="0.8" />
-                            
-                            <!-- Pins -->
-                            <rect x="35" y="78" width="8" height="12" fill="#1b263b" stroke="#00b4d8" stroke-width="1" />
-                            <rect x="55" y="78" width="8" height="12" fill="#1b263b" stroke="#00b4d8" stroke-width="1" />
-                            <rect x="75" y="78" width="8" height="12" fill="#1b263b" stroke="#00b4d8" stroke-width="1" />
-                            
-                            <!-- Gold Points -->
-                            <circle cx="39" cy="84" r="2" fill="#ffd700" />
-                            <circle cx="59" cy="84" r="2" fill="#ffd700" />
-                            <circle cx="79" cy="84" r="2" fill="#ffd700" />
-
-                            <text x="60" y="112" fill="#00b4d8" font-family="'Orbitron', sans-serif" font-size="6" text-anchor="middle" font-weight="900" letter-spacing="1">COMMS-SEC TRANS</text>
-                        </svg>
-                        <div class="gallery-zoom-overlay">
-                            <i class="fa-solid fa-tower-cell"></i>
-                        </div>
-                    </div>
-                    <div class="gallery-info">
-                        <h4>Comms Transceiver Core</h4>
-                        <span class="gallery-tag">Quantum RF Signal</span>
-                    </div>
-                </div>
-
-                <!-- Silicon Item 5: Bat-Nav Lidar Core -->
-                <div class="gallery-item glass-panel" data-type="svg" data-title="Tactical Lidar Navigation Unit" data-desc="Triangulation hardware controller configured with radial trace grids for autonomic drone flight mapping and radar tracking sweeps.">
-                    <div class="gallery-img-wrapper tech-chip-wrapper">
-                        <svg class="tech-chip-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Base -->
-                            <rect x="10" y="10" width="100" height="100" rx="12" fill="#040912" stroke="#0077b6" stroke-width="2" />
-                            
-                            <!-- Coordinate Radar Circle -->
-                            <circle cx="60" cy="55" r="36" fill="#020408" stroke="#00b4d8" stroke-width="1.2" />
-                            <circle cx="60" cy="55" r="24" fill="none" stroke="rgba(0, 180, 216, 0.4)" stroke-dasharray="3,3" />
-                            <circle cx="60" cy="55" r="12" fill="none" stroke="rgba(0, 180, 216, 0.2)" />
-                            
-                            <!-- Crosshairs -->
-                            <line x1="60" y1="19" x2="60" y2="91" stroke="rgba(0, 242, 254, 0.3)" stroke-width="1" />
-                            <line x1="24" y1="55" x2="96" y2="55" stroke="rgba(0, 242, 254, 0.3)" stroke-width="1" />
-                            
-                            <!-- Sweep Vector Line -->
-                            <line x1="60" y1="55" x2="84" y2="31" stroke="#00f2fe" stroke-width="2" stroke-linecap="round" />
-                            
-                            <!-- Target Blips -->
-                            <circle cx="45" cy="40" r="3" fill="#ffd700" />
-                            <circle cx="78" cy="68" r="2" fill="#ff0055" opacity="0.8" />
-                            <circle cx="35" cy="65" r="2.5" fill="#ffd700" />
-
-                            <text x="60" y="112" fill="#00f2fe" font-family="'Orbitron', sans-serif" font-size="6" text-anchor="middle" font-weight="900" letter-spacing="1">BAT-NAV LIDAR</text>
-                        </svg>
-                        <div class="gallery-zoom-overlay">
-                            <i class="fa-solid fa-location-crosshairs"></i>
-                        </div>
-                    </div>
-                    <div class="gallery-info">
-                        <h4>Lidar Navigation Unit</h4>
-                        <span class="gallery-tag">Autonomic Vectors</span>
-                    </div>
-                </div>
-
-                <!-- Silicon Item 6: Reactor Power Gate -->
-                <div class="gallery-item glass-panel" data-type="svg" data-title="Wayne-Reactor Power Gate" data-desc="High-voltage power distribution silicon controller gate. Directs energy relays and safe overload channels across custom 3D grid backdrops.">
-                    <div class="gallery-img-wrapper tech-chip-wrapper">
-                        <svg class="tech-chip-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Base -->
-                            <rect x="10" y="10" width="100" height="100" rx="12" fill="#060a16" stroke="#00b4d8" stroke-width="2" />
-                            
-                            <!-- Octagonal Grid Core -->
-                            <polygon points="60,16 91,29 104,60 91,91 60,104 29,91 16,60 29,29" fill="#020408" stroke="#0077b6" stroke-width="1.5" />
-                            
-                            <!-- Power Grid Node Lines -->
-                            <path d="M 60 16 L 60 104 M 16 60 L 104 60" stroke="rgba(0, 242, 254, 0.4)" stroke-width="1" />
-                            <path d="M 29 29 L 91 91 M 29 91 L 91 29" stroke="rgba(0, 180, 216, 0.3)" stroke-width="1" />
-                            
-                            <!-- Reactor Core Center -->
-                            <circle cx="60" cy="60" r="16" fill="#1b263b" stroke="#00f2fe" stroke-width="2" />
-                            <circle cx="60" cy="60" r="10" fill="none" stroke="#ffd700" stroke-width="1.5" stroke-dasharray="4,2" />
-                            <circle cx="60" cy="60" r="4" fill="#00f2fe" />
-
-                            <!-- Gate Relays -->
-                            <rect x="54" y="12" width="12" height="8" fill="#ffd700" stroke="#00b4d8" stroke-width="1" />
-                            <rect x="54" y="100" width="12" height="8" fill="#ffd700" stroke="#00b4d8" stroke-width="1" />
-                            <rect x="12" y="54" width="8" height="12" fill="#ffd700" stroke="#00b4d8" stroke-width="1" />
-                            <rect x="100" y="54" width="8" height="12" fill="#ffd700" stroke="#00b4d8" stroke-width="1" />
-
-                            <text x="60" y="112" fill="#00b4d8" font-family="'Orbitron', sans-serif" font-size="6" text-anchor="middle" font-weight="900" letter-spacing="1">REACTOR-GATE CORE</text>
-                        </svg>
-                        <div class="gallery-zoom-overlay">
-                            <i class="fa-solid fa-bolt"></i>
-                        </div>
-                    </div>
-                    <div class="gallery-info">
-                        <h4>Reactor Power Gate</h4>
-                        <span class="gallery-tag">Power Grid Relay</span>
-                    </div>
-                </div>
+    <!-- MODAL BOX: About Studio -->
+    <div class="modal" id="modal-about">
+        <div class="modal-content glass-panel">
+            <div class="modal-header">
+                <h2>About Studio</h2>
+                <button class="close-modal" id="close-about">&times;</button>
             </div>
-        </section>
-
-        <!-- Knowledge & Skills Section (3 Columns) -->
-        <section id="skills" class="section-container">
-            <h2 class="section-title">MY KNOWLEDGE</h2>
-            <div class="skills-wrapper glass-panel">
-                <p class="section-intro-text">Equipped with a diverse set of modern skills matching the fast-paced nature of code, media, and academic science.</p>
-                <div class="skills-grid">
-                    <!-- Column 1: Technical & Development -->
-                    <div class="skills-category">
-                        <h3>Coding & Development</h3>
-                        <div class="skill-item-bar">
-                            <div class="skill-info">
-                                <span>HTML5 / CSS3 / Modern JS</span>
-                                <span class="skill-percentage">95%</span>
-                            </div>
-                            <div class="skill-bar-bg">
-                                <div class="skill-bar-fill" style="width: 95%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item-bar">
-                            <div class="skill-info">
-                                <span>Neural Networks & LLM Deployment</span>
-                                <span class="skill-percentage">95%</span>
-                            </div>
-                            <div class="skill-bar-bg">
-                                <div class="skill-bar-fill" style="width: 95%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item-bar">
-                            <div class="skill-info">
-                                <span>3D Rendering & WebGL (Three.js)</span>
-                                <span class="skill-percentage">85%</span>
-                            </div>
-                            <div class="skill-bar-bg">
-                                <div class="skill-bar-fill" style="width: 85%"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Column 2: Academic Sciences -->
-                    <div class="skills-category">
-                        <h3>Academic Sciences</h3>
-                        <div class="skill-item-bar">
-                            <div class="skill-info">
-                                <span>Applied Physics (Mechanics & Quantum)</span>
-                                <span class="skill-percentage">90%</span>
-                            </div>
-                            <div class="skill-bar-bg">
-                                <div class="skill-bar-fill" style="width: 90%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item-bar">
-                            <div class="skill-info">
-                                <span>Computational Chemistry & Kinetics</span>
-                                <span class="skill-percentage">88%</span>
-                            </div>
-                            <div class="skill-bar-bg">
-                                <div class="skill-bar-fill" style="width: 88%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item-bar">
-                            <div class="skill-info">
-                                <span>Mathematical & Bio-Systems Biology</span>
-                                <span class="skill-percentage">85%</span>
-                            </div>
-                            <div class="skill-bar-bg">
-                                <div class="skill-bar-fill" style="width: 85%"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Column 3: Creative Media & Strategy -->
-                    <div class="skills-category">
-                        <h3>Creative Media & Strategy</h3>
-                        <div class="skill-item-bar">
-                            <div class="skill-info">
-                                <span>Video Editing & Sound Design</span>
-                                <span class="skill-percentage">98%</span>
-                            </div>
-                            <div class="skill-bar-bg">
-                                <div class="skill-bar-fill" style="width: 98%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item-bar">
-                            <div class="skill-info">
-                                <span>VFX & Cybernetic Glitch Animation</span>
-                                <span class="skill-percentage">92%</span>
-                            </div>
-                            <div class="skill-bar-bg">
-                                <div class="skill-bar-fill" style="width: 92%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item-bar">
-                            <div class="skill-info">
-                                <span>Competitive Gaming Strategy & Reflexes</span>
-                                <span class="skill-percentage">96%</span>
-                            </div>
-                            <div class="skill-bar-bg">
-                                <div class="skill-bar-fill" style="width: 96%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- IQ Comparison Section -->
-        <section id="iq" class="section-container">
-            <h2 class="section-title">IQ PERFORMANCE ANALYSIS</h2>
-            <div class="iq-container glass-panel">
-                <div class="iq-info-text">
-                    <h3>Cognitive Intelligence Benchmark</h3>
-                    <p>Comparing general problem-solving, cognitive processing speed, and algorithmic analysis capacity. A visual chart demonstrating cognitive metrics compared to global cohorts.</p>
-                </div>
-                <div class="iq-chart">
-                    <!-- IQ Bar 1: Average Human -->
-                    <div class="iq-bar-group">
-                        <div class="iq-bar-label">
-                            <span class="iq-subject">Average Human</span>
-                            <span class="iq-score">IQ 100</span>
-                        </div>
-                        <div class="iq-bar-track">
-                            <div class="iq-bar-fill-bar average" style="width: 62.5%"></div>
-                        </div>
-                    </div>
-                    <!-- IQ Bar 2: Genius Threshold -->
-                    <div class="iq-bar-group">
-                        <div class="iq-bar-label">
-                            <span class="iq-subject">Genius Baseline</span>
-                            <span class="iq-score">IQ 130</span>
-                        </div>
-                        <div class="iq-bar-track">
-                            <div class="iq-bar-fill-bar genius" style="width: 81.2%"></div>
-                        </div>
-                    </div>
-                    <!-- IQ Bar 3: Albert Einstein -->
-                    <div class="iq-bar-group">
-                        <div class="iq-bar-label">
-                            <span class="iq-subject">Albert Einstein (Estimate)</span>
-                            <span class="iq-score">IQ 160</span>
-                        </div>
-                        <div class="iq-bar-track">
-                            <div class="iq-bar-fill-bar einstein" style="width: 100%"></div>
-                        </div>
-                    </div>
-                    <!-- IQ Bar 4: Victor Ezhil -->
-                    <div class="iq-bar-group victor-iq-group">
-                        <div class="iq-bar-label">
-                            <span class="iq-subject text-glow">Victor Ezhil</span>
-                            <span class="iq-score text-glow">IQ 160+ (Cognitive Max)</span>
-                        </div>
-                        <div class="iq-bar-track victor-track">
-                            <div class="iq-bar-fill-bar victor-bar" style="width: 100%"></div>
-                        </div>
-                        <div class="iq-glitch-badge">OUTSTANDING</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- UPI Booking & QR Section -->
-        <section id="donate" class="section-container">
-            <h2 class="section-title">SECURE RETAINER & CONTRACT</h2>
-            <div class="donation-grid">
-                <!-- QR Code Display Card -->
-                <div class="donation-card qr-card glass-panel">
-                    <div class="qr-glow-layer"></div>
-                    <h3>Scan to Initiate Booking</h3>
-                    <p class="qr-sub">Scan the QR code below using Google Pay, PhonePe, Paytm, or any BHIM UPI App to secure your contract or buy the full 3D template bundle.</p>
-                    
-                    <!-- QR Box -->
-                    <div class="qr-code-wrapper">
-                        <img id="upi-qr" src="" alt="UPI 7000 INR Booking QR Code">
-                        <div class="qr-corner-dots">
-                            <span></span><span></span><span></span><span></span>
-                        </div>
-                    </div>
-
-                    <!-- Payment details -->
-                    <div class="payment-summary">
-                        <div class="summary-row">
-                            <span>Booking Rate:</span>
-                            <span class="amount-val">₹7000.00 INR</span>
-                        </div>
-                        <div class="summary-row">
-                            <span>UPI ID:</span>
-                            <span class="upi-id-val">arasu9629hf@okhdfcbank</span>
-                        </div>
-                    </div>
-
-                    <!-- Action Button to Copy UPI ID -->
-                    <button class="btn btn-secondary copy-btn" id="copy-upi-btn" data-clipboard="arasu9629hf@okhdfcbank">
-                        <i class="fa-regular fa-copy"></i> Copy UPI ID
-                    </button>
-                    <div id="copy-toast">UPI ID Copied!</div>
-                </div>
-
-                <!-- Text Instructions & Details Card -->
-                <div class="donation-card info-card glass-panel">
-                    <div class="card-icon neon-pulse-icon"><i class="fa-solid fa-file-contract"></i></div>
-                    <h3>Project Booking & Source License</h3>
-                    <p>Securing a project with Victor Ezhil starts at an initial booking rate of <strong>₹7,000</strong>. This locks in premium development or editing availability. You can also purchase this exact source code structure with lifetime rights:</p>
-                    
-                    <ul class="benefit-list">
-                        <li><i class="fa-solid fa-code"></i> Full 3D Interactive Codebase License</li>
-                        <li><i class="fa-solid fa-cubes"></i> Three.js Particle Constellation Setup</li>
-                        <li><i class="fa-solid fa-envelope-open-text"></i> Interactive Neural Chat Assistant Integration</li>
-                        <li><i class="fa-solid fa-user-gear"></i> Custom Color Calibration & Branding Support</li>
-                    </ul>
-
-                    <div class="license-notice">
-                        <p><strong>Notice:</strong> After completing the UPI transfer of <strong>₹7,000</strong>, please send a copy of your receipt alongside project requirements to <a href="mailto:victorroot9629@gmail.com" class="neon-hover">victorroot9629@gmail.com</a>, or DM me directly using the chat portal on the bottom right.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="section-container">
-            <h2 class="section-title">GET IN TOUCH</h2>
-            <div class="contact-grid">
-                <!-- Info details -->
-                <div class="contact-details-card glass-panel">
-                    <h3>Contact Information</h3>
-                    <p>Have questions about the profile, need customizations, or looking to collaborate on B.Sc. projects or video editing orders? Drop a message!</p>
-                    
-                    <div class="contact-list">
-                        <div class="contact-list-item">
-                            <i class="fa-solid fa-envelope"></i>
-                            <div>
-                                <span>Gmail</span>
-                                <a href="mailto:victorroot9629@gmail.com">victorroot9629@gmail.com</a>
-                            </div>
-                        </div>
-                        <div class="contact-list-item">
-                            <i class="fa-solid fa-qrcode"></i>
-                            <div>
-                                <span>Support Desk (UPI)</span>
-                                <span>arasu9629hf@okhdfcbank</span>
-                            </div>
-                        </div>
-                        <div class="contact-list-item">
-                            <i class="fa-solid fa-graduation-cap"></i>
-                            <div>
-                                <span>Current Focus</span>
-                                <span>B.Sc. Computer Science</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Form -->
-                <div class="contact-form-card glass-panel">
-                    <h3>Send Message</h3>
-                    <form id="contact-form" action="https://formspree.io/f/your-form-id" method="POST">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="form-name">Name</label>
-                                <input type="text" id="form-name" placeholder="John Doe" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="form-email">Email</label>
-                                <input type="email" id="form-email" placeholder="john@example.com" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="form-subject">Subject</label>
-                            <input type="text" id="form-subject" placeholder="Project Inquiry / Purchase License" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="form-message">Message</label>
-                            <textarea id="form-message" rows="5" placeholder="Write your message here..." required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-glow">Send Transmission</button>
-                    </form>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer id="main-footer">
-        <div class="footer-content">
-            <div class="footer-info">
-                <h3>Victor Ezhil</h3>
-                <p>Creating visual paradigms using code, design, and audio-visual arts.</p>
-            </div>
-            <div class="footer-links">
-                <h4>Legal / Links</h4>
+            <div class="modal-body">
+                <p><strong>WayneTech Free Internet Video Editor</strong> is an interactive web-based media studio built to deliver high-performance video processing directly inside static HTML canvas layers.</p>
+                <p>Engineered by Victor Ezhil (B.Sc. Computer Science student), this editor incorporates elements of top editing apps like CapCut, Alight Motion, and VN Editor to provide real-time custom shader filters, sticker overlays, and dynamic 3D rotations without relying on cloud servers.</p>
+                <h3>Engine Core Specs</h3>
                 <ul>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#donate">Support</a></li>
-                    <li><a href="javascript:void(0)" id="open-privacy">Privacy Policy</a></li>
-                    <li><a href="javascript:void(0)" id="open-terms">Terms & Conditions</a></li>
+                    <li>FPS Playback Targets: 90 / 120 / 144 FPS</li>
+                    <li>Audio/Video feed synchronizer</li>
+                    <li>MediaRecorder Canvas Capture stream recorder</li>
                 </ul>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Victor Ezhil. All rights reserved. Created in WayneTech 3D Glassmorphism.</p>
-        </div>
-    </footer>
-
-    <!-- FLOATING DM CHATBOT -->
-    <div id="dm-bubble" class="dm-bubble-btn">
-        <i class="fa-solid fa-comments"></i>
-        <span class="dm-notification-dot"></span>
     </div>
 
-    <!-- WAYNETECH SECURE COMMS CHATBOX -->
-    <div id="dm-box" class="dm-chat-box glass-panel">
-        <div class="dm-header">
-            <div class="dm-avatar-status">
-                <!-- Glowing mini Bat SVG in chat header -->
-                <div class="dm-status-avatar-svg-wrapper">
-                    <svg class="dm-status-bat-svg" viewBox="0 0 100 45" fill="currentColor">
-                        <path d="M50 8c1-3 1.5-6 1.5-6h-3s.5 3 1.5 6c1.8 3.5 4.5 5.5 7.5 6.5C59 13.5 57 11 57 9.5c0-2.5 3.5-3 5-3.5 3-.5 6 .5 8 2.5 1.5 1.5 1.5 3.5.5 5.5C67.5 17 62 19 59.5 21.5c-2.5 2.5-4 5.5-4 9.5 0 2 .5 4.5 1.5 6.5 1 2 2.5 4 4.5 5 2.5 1.5 5 1.5 7 0 2-1 4-3 5.5-5 1.5-2 3.5-5 5.5-8 3.5-5 7-10.5 10-16.5C92.5 7 94 4 96 3h4s-1.5 5.5-3.5 11.5C94.5 20 91.5 26.5 88 32.5c-3.5 6-7.5 11.5-12 16.5-5 5.5-10.5 9-16.5 10.5-6.5 1.5-13.5.5-20-3C33 53 26 47.5 20.5 41c-5-6-9-12.5-12-19.5C5.5 15.5 3 9.5 1.5 3h4c2 1 3.5 4 6.5 10C15 19 18.5 24.5 22 29.5c2 3 4 6 5.5 8 1.5 2 3.5 4 5.5 5 2 1.5 4.5 1.5 7 0 2-1 3.5-3 4.5-5 1-2 1.5-4.5 1.5-6.5 0-4-1.5-7-4-9.5C39.5 19 34 17 31 14.5c-1-2-1-4 .5-5.5 2-2 5-3 8-2.5 1.5.5 5 1 5 3.5 0 1.5-2 4-3.5 5.5 3-1 5.7-3 7.5-6.5z" />
-                    </svg>
-                </div>
-                <div>
-                    <h4>WayneTech Secure Comms</h4>
-                    <span class="dm-status-text"><span class="pulse-dot"></span> Encrypted Core Active</span>
-                </div>
-            </div>
-            <button class="close-dm" id="close-dm-btn">&times;</button>
-        </div>
-        <div class="dm-messages" id="dm-messages-container">
-            <div class="dm-msg bot">
-                <p>Handshake complete. Secure channel initialized. Choose an operation or query for Victor Ezhil below:</p>
-            </div>
-        </div>
-        <div class="dm-quick-replies">
-            <button class="quick-reply-btn" data-reply="order">Commission Edit (₹7,000 Retainer)</button>
-            <button class="quick-reply-btn" data-reply="template">Deploy WayneTech Profile (₹7,000)</button>
-            <button class="quick-reply-btn" data-reply="project">B.Sc. CS Project Collab</button>
-            <button class="quick-reply-btn" data-reply="hello">Send Handshake</button>
-        </div>
-        <div class="dm-input-area">
-            <input type="text" id="dm-input-field" placeholder="Type a transmission...">
-            <button id="send-dm-btn"><i class="fa-solid fa-paper-plane"></i></button>
-        </div>
-    </div>
-
-    <!-- LIGHTBOX MODAL FOR GALLERY ZOOM -->
-    <div id="lightbox-modal" class="lightbox-modal">
-        <span class="lightbox-close" id="lightbox-close-btn">&times;</span>
-        <div class="lightbox-content-wrapper">
-            <img class="lightbox-img" id="lightbox-img" src="" alt="Zoom Image">
-            <!-- Container where cloned SVG chips will be dynamically placed on click -->
-            <div class="lightbox-caption">
-                <h4 id="lightbox-title"></h4>
-                <p id="lightbox-desc"></p>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL BOX: Build Your Profile Clone Wizard -->
-    <div class="modal" id="clone-modal">
+    <!-- MODAL BOX: Privacy Guidelines -->
+    <div class="modal" id="modal-privacy">
         <div class="modal-content glass-panel">
             <div class="modal-header">
-                <h2>Deploy Your 3D Profile</h2>
-                <button class="close-modal" id="close-clone-wizard">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p><strong>Deploy a premium profile like this in less than 10 minutes.</strong></p>
-                <p>You can purchase a license to copy this complete 3D interactive, glassmorphic portfolio site. All scripts, Three.js 3D globe assets, and your custom AI assistant are included.</p>
-                
-                <div class="step-guide">
-                    <div class="step-item">
-                        <span class="step-num-badge">1</span>
-                        <p>Initiate a booking rate transfer of <strong>₹7,000 INR</strong> via UPI to <code>arasu9629hf@okhdfcbank</code>.</p>
-                    </div>
-                    <div class="step-item">
-                        <span class="step-num-badge">2</span>
-                        <p>Email your transaction receipt screenshot and desired profile details to <a href="mailto:victorroot9629@gmail.com">victorroot9629@gmail.com</a>.</p>
-                    </div>
-                    <div class="step-item">
-                        <span class="step-num-badge">3</span>
-                        <p>Receive your personalized, deploy-ready code ZIP folder via email in less than 10 minutes.</p>
-                    </div>
-                </div>
-
-                <div class="modal-action-row">
-                    <a href="#donate" class="btn btn-primary btn-glow" id="modal-pay-btn">Proceed to Payment QR</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL BOX: Privacy Policy -->
-    <div class="modal" id="privacy-modal">
-        <div class="modal-content glass-panel">
-            <div class="modal-header">
-                <h2>Privacy Policy</h2>
+                <h2>Privacy Guidelines</h2>
                 <button class="close-modal" id="close-privacy">&times;</button>
             </div>
             <div class="modal-body">
                 <p><strong>Effective Date: August 10, 2026</strong></p>
-                <p>Welcome to Victor Ezhil's Profile Website. Your privacy is paramount. This page informs you of our policies regarding the collection, use, and disclosure of personal data when you visit this website.</p>
-                
-                <h3>1. Information Collection</h3>
-                <p>We do not collect any personally identifiable information when you browse this site. If you use the contact form or send an email, we will only use your provided email and name to answer your inquiry.</p>
-
-                <h3>2. Cookies and Tracking</h3>
-                <p>This website is static and does not deploy tracking cookies or pixel tags. Your visit is anonymous.</p>
-
-                <h3>3. UPI and Transactions</h3>
-                <p>All booking payments are processed external to this website via standard third-party UPI applications (e.g., GPay, PhonePe, Paytm). We do not collect or store credit card details, bank account numbers, or transaction IDs on our servers.</p>
-
-                <h3>4. Contact Us</h3>
-                <p>For questions about this policy, contact us at: <a href="mailto:victorroot9629@gmail.com">victorroot9629@gmail.com</a>.</p>
+                <p>Your privacy is absolute. All video processing, frame encoding, and audio compiling run **locally on your machine** inside your browser session.</p>
+                <p>We do not collect, transmit, or store your imported media files, videos, or audio tracks on any external cloud server. Your data never leaves your computer.</p>
             </div>
         </div>
     </div>
 
-    <!-- MODAL BOX: Terms & Conditions -->
-    <div class="modal" id="terms-modal">
+    <!-- MODAL BOX: Terms & Usage -->
+    <div class="modal" id="modal-terms">
         <div class="modal-content glass-panel">
             <div class="modal-header">
                 <h2>Terms and Conditions</h2>
@@ -896,26 +538,17 @@
             </div>
             <div class="modal-body">
                 <p><strong>Effective Date: August 10, 2026</strong></p>
-                <p>By accessing or utilizing Victor Ezhil's Profile Website, you agree to comply with and be bound by the following terms. Please read these terms carefully.</p>
-
-                <h3>1. Intended Use</h3>
-                <p>This website serves as a personal profile portfolio. Users may browse the profile, review the skills list, and secure project bookings.</p>
-
-                <h3>2. Project Booking Rates</h3>
-                <p>When you transfer ₹7,000 via UPI to the ID <code>arasu9629hf@okhdfcbank</code>, you are securing a project booking slot. The booking fee forms a minimum project retainer. Custom deliverables require final signed agreements. All retainer fees are final and non-refundable once work commences.</p>
-
-                <h3>3. Intellectual Property</h3>
-                <p>The code layout, styling definitions, customized 3D algorithms, and asset files are the properties of Victor Ezhil. Unauthorized reselling of the unmodified package is prohibited.</p>
-
-                <h3>4. Limitations of Liability</h3>
-                <p>We are not liable for any discrepancies, payment failures within external UPI applications, or issues arising from website hosting configurations performed by the user.</p>
+                <p>By accessing the WayneTech Editor Studio, you agree to these usage terms:</p>
+                <h3>1. Personal Licensing</h3>
+                <p>This is a free internet video editor. Free accounts can compile WebM streams with a watermark overlay. High-speed rendering at 144 FPS and watermark removals are unlocked by transferring the <strong>₹7,000</strong> Pro Upgrade fee to the secure UPI address: <code>arasu9629hf@okhdfcbank</code>.</p>
+                <h3>2. No Warranties</h3>
+                <p>Although our canvas recorders target 120/144 FPS, final frame output is subject to browser hardware acceleration thresholds and local CPU performance.</p>
             </div>
         </div>
     </div>
 
-    <!-- Three.js Library CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <!-- Main Script -->
-    <script src="script.js"></script>
+    <!-- Copy feedback Toast -->
+    <div id="copy-toast">UPI ID Copied!</div>
+
 </body>
 </html>
