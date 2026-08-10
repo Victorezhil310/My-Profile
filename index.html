@@ -56,6 +56,10 @@
                     <i class="fa-solid fa-photo-film"></i>
                     <span>Media</span>
                 </div>
+                <div class="selector-btn" data-tab="templates">
+                    <i class="fa-solid fa-cubes"></i>
+                    <span>Templates</span>
+                </div>
                 <div class="selector-btn" data-tab="filters">
                     <i class="fa-solid fa-wand-magic-sparkles"></i>
                     <span>Filters</span>
@@ -67,10 +71,6 @@
                 <div class="selector-btn" data-tab="text">
                     <i class="fa-solid fa-font"></i>
                     <span>Text</span>
-                </div>
-                <div class="selector-btn" data-tab="transforms">
-                    <i class="fa-solid fa-cube"></i>
-                    <span>3D Effect</span>
                 </div>
                 <div class="selector-btn highlight-selector" data-tab="upgrade">
                     <i class="fa-solid fa-gem"></i>
@@ -84,10 +84,10 @@
                 <!-- Tab 1: Media Panel -->
                 <div class="tab-pane active" id="pane-media">
                     <h3>Media Library</h3>
-                    <p class="tab-sub">Upload a video/audio file or select from sample tracks to start editing.</p>
+                    <p class="tab-sub">Upload a video/audio file to start editing. The canvas runs procedurally by default.</p>
                     
                     <div class="media-upload-zone" id="media-dropzone">
-                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <i class="fa-cloud-arrow-up fa-solid"></i>
                         <p>Drag & Drop local video or audio files</p>
                         <span>or click to browse</span>
                         <input type="file" id="media-file-input" accept="video/*,audio/*">
@@ -118,7 +118,60 @@
                     </div>
                 </div>
 
-                <!-- Tab 2: Filters Panel -->
+                <!-- Tab 2: Smart Templates Panel -->
+                <div class="tab-pane" id="pane-templates">
+                    <h3>Smart Templates</h3>
+                    <p class="tab-sub">Click a preset timeline card to automatically apply video filters, tracks, stickers, text overlays, and pulse animations.</p>
+                    
+                    <div class="templates-list">
+                        <!-- Template 1 -->
+                        <div class="template-card-item" data-template="batman">
+                            <div class="template-thumb batman-thumb">
+                                <i class="fa-solid fa-mask"></i>
+                            </div>
+                            <div class="template-info">
+                                <h5>Batman Cyber Glitch</h5>
+                                <span>Glitch, Bat Logo, Beats Pulse</span>
+                            </div>
+                        </div>
+                        <!-- Template 2 -->
+                        <div class="template-card-item" data-template="neon">
+                            <div class="template-thumb neon-thumb">
+                                <i class="fa-solid fa-bolt"></i>
+                            </div>
+                            <div class="template-info">
+                                <h5>Neon Core Rotation</h5>
+                                <span>Neon, Energy Bolt, 3D Tilt Roll</span>
+                            </div>
+                        </div>
+                        <!-- Template 3 -->
+                        <div class="template-card-item" data-template="cinematic">
+                            <div class="template-thumb cinema-thumb">
+                                <i class="fa-solid fa-film"></i>
+                            </div>
+                            <div class="template-info">
+                                <h5>Cinematic VN Letterbox</h5>
+                                <span>Sepia, Scope crop, Movie text</span>
+                            </div>
+                        </div>
+                        <!-- Template 4 -->
+                        <div class="template-card-item" data-template="rhythm">
+                            <div class="template-thumb rhythm-thumb">
+                                <i class="fa-solid fa-wave-square"></i>
+                            </div>
+                            <div class="template-info">
+                                <h5>144 FPS Rhythm Zoom</h5>
+                                <span>Chroma split, Target, Beats Zoom</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-secondary" id="btn-clear-templates" style="margin-top: 2rem; width: 100%;">
+                        <i class="fa-solid fa-ban"></i> Reset Custom Animations
+                    </button>
+                </div>
+
+                <!-- Tab 3: Filters Panel -->
                 <div class="tab-pane" id="pane-filters">
                     <h3>Shader Filters</h3>
                     <p class="tab-sub">Choose visual color maps and glitch shaders applied dynamically to the preview canvas.</p>
@@ -171,7 +224,7 @@
                     </div>
                 </div>
 
-                <!-- Tab 3: Stickers Panel -->
+                <!-- Tab 4: Stickers Panel -->
                 <div class="tab-pane" id="pane-stickers">
                     <h3>Sticker Overlays</h3>
                     <p class="tab-sub">Click a sticker to insert it on top of the video canvas. Drag inside viewer to reposition.</p>
@@ -206,9 +259,9 @@
                     </button>
                 </div>
 
-                <!-- Tab 4: Text Overlay Panel -->
+                <!-- Tab 5: Text Overlay Panel -->
                 <div class="tab-pane" id="pane-text">
-                    <h3>Text overlays</h3>
+                    <h3>Text Overlays</h3>
                     <p class="tab-sub">Enter text cards positioned over the preview screen. Select fonts and colors.</p>
                     
                     <div class="form-group">
@@ -239,31 +292,6 @@
 
                     <button class="btn btn-primary" id="btn-apply-text" style="width: 100%; margin-top: 1.5rem;">
                         <i class="fa-solid fa-font"></i> Render Text
-                    </button>
-                </div>
-
-                <!-- Tab 5: 3D Transforms Panel -->
-                <div class="tab-pane" id="pane-transforms">
-                    <h3>3D Canvas Rotation</h3>
-                    <p class="tab-sub">Tilt the video preview player dynamically inside three-dimensional space coordinates.</p>
-                    
-                    <div class="tuner-list">
-                        <div class="tuner-group">
-                            <div class="tuner-label"><span>Rotate X (Pitch)</span><span id="val-rot-x">0 deg</span></div>
-                            <input type="range" id="slider-rot-x" min="-45" max="45" value="0">
-                        </div>
-                        <div class="tuner-group">
-                            <div class="tuner-label"><span>Rotate Y (Yaw)</span><span id="val-rot-y">0 deg</span></div>
-                            <input type="range" id="slider-rot-y" min="-45" max="45" value="0">
-                        </div>
-                        <div class="tuner-group">
-                            <div class="tuner-label"><span>Rotate Z (Roll)</span><span id="val-rot-z">0 deg</span></div>
-                            <input type="range" id="slider-rot-z" min="-45" max="45" value="0">
-                        </div>
-                    </div>
-
-                    <button class="btn btn-secondary" id="btn-reset-transforms" style="margin-top: 2rem; width: 100%;">
-                        <i class="fa-solid fa-rotate"></i> Reset Rotation coordinates
                     </button>
                 </div>
 
@@ -364,9 +392,9 @@
                 <!-- Track 1: Video Clip Track -->
                 <div class="timeline-track" id="track-video">
                     <div class="track-info-label"><i class="fa-solid fa-video"></i> Video Track</div>
-                    <div class="track-clip-container">
+                    <div class="track-clip-container" id="timeline-video-container">
                         <!-- Clip block represent the active loaded video -->
-                        <div class="track-clip active-clip" id="video-clip-block" style="width: 70%; left: 0%;">
+                        <div class="track-clip active-clip" id="video-clip-block" style="width: 70%; left: 5%;">
                             <span class="clip-title">Sample_Video.mp4</span>
                             <div class="clip-trim-handle left-handle"></div>
                             <div class="clip-trim-handle right-handle"></div>
@@ -377,8 +405,8 @@
                 <!-- Track 2: Audio Track -->
                 <div class="timeline-track" id="track-audio">
                     <div class="track-info-label"><i class="fa-solid fa-music"></i> Audio Track</div>
-                    <div class="track-clip-container">
-                        <div class="track-clip audio-clip" id="audio-clip-block" style="width: 70%; left: 0%;">
+                    <div class="track-clip-container" id="timeline-audio-container">
+                        <div class="track-clip audio-clip" id="audio-clip-block" style="width: 70%; left: 5%;">
                             <span class="clip-title">Ambient_Music.mp3</span>
                             <div class="clip-trim-handle left-handle"></div>
                             <div class="clip-trim-handle right-handle"></div>

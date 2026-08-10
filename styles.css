@@ -414,6 +414,70 @@ body.editor-body {
     color: var(--text-secondary);
 }
 
+/* Smart Templates List UI */
+.templates-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.template-card-item {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    gap: 12px;
+}
+
+.template-card-item:hover {
+    border-color: var(--primary-neon);
+    background: rgba(0, 180, 216, 0.04);
+}
+
+.template-card-item.active {
+    background: rgba(0, 180, 216, 0.08);
+    border-color: var(--primary-neon);
+    box-shadow: 0 0 10px rgba(0, 180, 216, 0.2);
+}
+
+.template-thumb {
+    width: 50px;
+    height: 50px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.batman-thumb { background: #03060a; color: #ffd700; border: 1px solid rgba(255, 215, 0, 0.3); }
+.neon-thumb { background: rgba(0, 242, 254, 0.15); color: var(--accent-neon); border: 1px solid var(--accent-neon); }
+.cinema-thumb { background: #1c0e0b; color: #ff5500; border: 1px solid rgba(255, 85, 0, 0.3); }
+.rhythm-thumb { background: #1d0713; color: #ff0055; border: 1px solid rgba(255, 0, 85, 0.3); }
+
+.template-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.template-info h5 {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.template-info span {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+}
+
 /* Filters Grid */
 .filters-grid {
     display: grid;
@@ -677,6 +741,7 @@ body.editor-body {
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: transform var(--transition-speed);
 }
 
 #video-canvas {
@@ -695,7 +760,6 @@ body.editor-body {
     z-index: 10;
     cursor: move;
     user-select: none;
-    transform: translate(0px, 0px);
 }
 
 #canvas-sticker-overlay svg {
@@ -1204,19 +1268,9 @@ body.editor-body {
 /* ----------------------------------------------------
    KEYFRAME ANIMATIONS
    ---------------------------------------------------- */
-@keyframes pulse {
-    0% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(0, 180, 216, 0.7);
-    }
-    70% {
-        transform: scale(1);
-        box-shadow: 0 0 0 8px rgba(0, 180, 216, 0);
-    }
-    100% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(0, 180, 216, 0);
-    }
+@keyframes rotateRing {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 @keyframes fadeIn {
